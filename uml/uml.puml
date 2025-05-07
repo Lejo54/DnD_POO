@@ -1,0 +1,88 @@
+@startuml
+
+' Entités de base
+class Entite {
+  - positionX: int
+  - positionY: int
+  - point_de_vie: int
+  - initiative: int
+  + perdre_des_pv(int vie_a_retirer) : void
+  + dormir(): void
+  + deplacement(): void
+  + attaquer(): void
+}
+
+class Personnage {
+  - nom: String
+  - race: String
+  - classe: String
+  - caracteristiques: Map<String, int>
+  - inventaire: List<Equipement>
+  - equipe: List<Equipement>
+  + sEquiper(): void
+  + ramasserEquipement(): void
+}
+
+class Monstre {
+  - espece: String
+  - numero: int
+  - portee: int
+  - degat: String
+  - force: int
+  - dexterite: int
+  - classe_d_armure: int
+}
+
+class Equipement {
+  - actif: boolean
+}
+
+class Armure {
+  - classe_armure: int
+}
+
+class Arme {
+  - degat: String
+  - portee: int
+}
+
+class Obstacle {
+  - positionX: int
+  - positionY: int
+}
+
+class CarteDonjon {
+  - grille[15][25]: String
+  - personnages: List<Personnage>
+  - monstres: List<Monstre>
+  - equipements: List<Equipement>
+  - obstacles: List<Obstacle>
+  + genererCarte(): void
+}
+
+interface De {
+  + lancerDe(nbLance: int,taille_lancer : int ): int
+
+}
+
+class Tour {
+  - affichage: String
+  - joueur: Entite
+  + bandeau(): String
+  + Tour(joueurs: List<Entite>): String
+}
+
+class Partie {
+  + main(): void
+  + creerPartie(): void
+  + demarrerPartie(): void
+  + deroulement(): void
+}
+
+' Héritages
+Personnage --|> Entite
+Monstre --|> Entite
+Arme --|> Equipement
+Armure --|> Equipement
+
+@enduml
