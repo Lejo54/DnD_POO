@@ -1,49 +1,76 @@
 @startuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+'skinparam style strictuml
+hide empty members
 
-' Entités de base
-class Entite {
-  - positionX: int
-  - positionY: int
-  - point_de_vie: int
-  - initiative: int
-  + perdre_des_pv(int vie_a_retirer) : void
-  + dormir(): void
-  + deplacement(): void
-  + attaquer(): void
+class Main
+{
+    +{static} main(args:String[*])
 }
 
-class Personnage {
-  - nom: String
-  - race: String
-  - classe: String
-  - caracteristiques: Map<String, int>
-  - inventaire: List<Equipement>
-  - equipe: List<Equipement>
-  + sEquiper(): void
-  + ramasserEquipement(): void
+package Entites {
+    class Entite {
+      - m_positionX: int
+      - m_positionY: int
+      - m_point_de_vie: int
+      - m_statistiques: Statistiques
+      - m_actions: Action[*]
+      + perdre_des_pv(int vie_a_retirer) : void
+      + passerLeTour(): void
+      + deplacement(): void
+      + attaquer(): void
+    }
+    class Action{
+      - m_nom: String
+      - m_estUtilisee: boolean
+      + utilise(): void
+      + getNom(): String
+      + getUtilisation(): boolean
+    }
+    class Statistiques {
+      - initiative: int
+      - vitesse: int
+      - force: int
+      - dexterite: int
+    }
+
+    class Personnage extends Entite {
+      - nom: String
+      - race: String
+      - classe: String
+      - inventaire: Equipement[*]
+      + sEquiper(): void
+      + ramasserEquipement(): void
+    }
+
+    class Monstre extends Entite{
+      - espece: String
+      - numero: int
+      - portee: int
+      - degat: String
+      - classe_d_armure: int
+    }
+ 'lien Entites
+  Entite "1" *-> "1\n -m_statistiques" Statistiques : est composé de
+  Entite "*" *-> "*\n -m_actions" Action: peut utiliser
 }
 
-class Monstre {
-  - espece: String
-  - numero: int
-  - portee: int
-  - degat: String
-  - force: int
-  - dexterite: int
-  - classe_d_armure: int
-}
-
+package Equipements {
 class Equipement {
   - actif: boolean
 }
 
 class Armure {
+  - type_armure: String
   - classe_armure: int
 }
 
 class Arme {
+  - type_arme: String
   - degat: String
   - portee: int
+}
 }
 
 class Obstacle {
@@ -51,38 +78,57 @@ class Obstacle {
   - positionY: int
 }
 
-class CarteDonjon {
-  - grille[15][25]: String
-  - personnages: List<Personnage>
-  - monstres: List<Monstre>
-  - equipements: List<Equipement>
-  - obstacles: List<Obstacle>
-  + genererCarte(): void
-}
-
 interface De {
   + lancerDe(nbLance: int,taille_lancer : int ): int
-
 }
 
 class Tour {
   - affichage: String
   - joueur: Entite
-  + bandeau(): String
   + Tour(joueurs: List<Entite>): String
 }
 
 class Partie {
+  - entites: List<Entite> <<triée par initiative>>
+  - obstacles: List<Obstacle>
+  - equipements: List<Equipement>
   + main(): void
   + creerPartie(): void
   + demarrerPartie(): void
   + deroulement(): void
 }
 
+class MJ {
+  - phrasesTaquines: List<String>
+  + commenterAction(): void
+  + creerPersonnage(): Personnage
+  + lancerPartie(): void
+  + piloterTour(): void
+  + annoncerEvenement(String evenement): void
+  + afficherCarte(entites: List<Entite>, obstacles: List<Obstacle>, equipements: List<Equipement>): void
+}
+
 ' Héritages
-Personnage --|> Entite
-Monstre --|> Entite
 Arme --|> Equipement
 Armure --|> Equipement
 
+' Liens logiques
+MJ --> Personnage : crée
+MJ --> Partie : contrôle
+MJ --> Tour : pilote
+MJ --> Monstre : contrôle
+MJ --> De : commente les jets
+MJ --> Entite : affiche
+MJ --> Obstacle : affiche
+MJ --> Equipement : affiche
+Tour --> Entite : joueur
+Partie --> Entite : contient
+Partie --> Obstacle : contient
+Partie --> Equipement : contient
+Personnage --> Equipement : inventaire
+Entite --> De : utilise pour attaque/dégâts
+
+
+
 @enduml
+
