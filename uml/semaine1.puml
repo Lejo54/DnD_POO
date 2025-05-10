@@ -9,7 +9,7 @@ class Main
     +{static} main(args:String[*])
 }
 
-package Entites {
+package Entites #Orange{
     class Entite {
       - m_positionX: int
       - m_positionY: int
@@ -52,26 +52,43 @@ package Entites {
       - classe_d_armure: int
     }
  'lien Entites
-  Entite "1" *-> "1\n -m_statistiques" Statistiques : est composé de
-  Entite "*" *-> "*\n -m_actions" Action: peut utiliser
+  Entite "1" *--> "1\n -m_statistiques" Statistiques : est composé de
+  Entite "*" *--> "*\n -m_actions" Action: peut utiliser
 }
 
-package Equipements {
-class Equipement {
-  - actif: boolean
-}
+package Equipements #LightBlue{
 
-class Armure {
-  - type_armure: String
-  - classe_armure: int
-}
+    class Equipement {
+      - m_actif: boolean
+      - m_nom: String
+      - m_description: String
+      + estEquipe(): boolean
+      + getNom(): String
+    }
 
-class Arme {
-  - type_arme: String
-  - degat: String
-  - portee: int
+    class Armure extends Equipement {
+      - m_classeArmure: int
+    }
+    class ArmureLourde extends Armure{
+      - m_malus: Statistiques
+    }
+    class ArmureLegere extends Armure{
+    }
+
+    class Arme extends Equipement {
+      - degat: String
+      - portee: int
+    }
+    class ArmeGuerre extends Arme{
+      - m_BonusMalus: Statistiques
+    }
+    class ArmeCourante extends Arme{
+    }
+    class ArmeDistance extends Arme{
+    }
 }
-}
+'lien entre Equipements et Entites
+Personnage "*" *--> "*\n -m_inventaire" Equipement: est composé de
 
 class Obstacle {
   - positionX: int
@@ -108,10 +125,6 @@ class MJ {
   + afficherCarte(entites: List<Entite>, obstacles: List<Obstacle>, equipements: List<Equipement>): void
 }
 
-' Héritages
-Arme --|> Equipement
-Armure --|> Equipement
-
 ' Liens logiques
 MJ --> Personnage : crée
 MJ --> Partie : contrôle
@@ -125,7 +138,6 @@ Tour --> Entite : joueur
 Partie --> Entite : contient
 Partie --> Obstacle : contient
 Partie --> Equipement : contient
-Personnage --> Equipement : inventaire
 Entite --> De : utilise pour attaque/dégâts
 
 
