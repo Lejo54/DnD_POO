@@ -3,16 +3,21 @@
 class Entite {
   - positionX: int
   - positionY: int
-  - point_de_vie: int
-  - initiative: int
-  - vitesse: int
-  - force: int
-  - dexterite: int
+  - statut: Status
   + perdre_des_pv(int vie_a_retirer) : void
   + dormir(): void
   + deplacement(): void
   + attaquer(): void
 }
+
+class Status {
+  - point_de_vie: int
+  - initiative: int
+  - vitesse: int
+  - force: int
+  - dexterite: int
+}
+
 
 class Personnage {
   - nom: String
@@ -81,14 +86,14 @@ class MJ {
   + afficherCarte(entites: List<Entite>, obstacles: List<Obstacle>, equipements: List<Equipement>): void
 }
 
-' Héritages
 Personnage --|> Entite
 Monstre --|> Entite
 Arme --|> Equipement
 Armure --|> Equipement
 
-' Liens logiques
+
 MJ --> Personnage : crée
+Entite *-- Status : statut
 MJ --> Partie : contrôle
 MJ --> Tour : pilote
 MJ --> Monstre : contrôle
