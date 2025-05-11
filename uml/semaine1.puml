@@ -1,6 +1,7 @@
 @startuml
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
+left to right direction
 'skinparam style strictuml
 hide empty members
 
@@ -13,13 +14,12 @@ package Entites #Orange{
     class Entite {
       - m_positionX: int
       - m_positionY: int
-      - m_point_de_vie: int
-      - m_statistiques: Statistiques
-      - m_actions: Action[*]
-      + perdre_des_pv(int vie_a_retirer) : void
-      + passerLeTour(): void
-      + deplacement(): void
-      + attaquer(): void
+      + void perdre_des_pv(int vie_a_retirer)
+      + void passerLeTour()
+      + void deplacement()
+      + void attaquer(Monstre monstre)
+      + getPositionX(): int
+      + getPositionY(): int
     }
     class Action{
       - m_nom: String
@@ -29,31 +29,57 @@ package Entites #Orange{
       + getUtilisation(): boolean
     }
     class Statistiques {
-      - initiative: int
-      - vitesse: int
-      - force: int
-      - dexterite: int
+      - m_pv: int
+      - m_initiative: int
+      - m_vitesse: int
+      - m_force: int
+      - m_dexterite: int
+      + getPV(): int
+      +getInitiative(): int
+      +getVitesse(): int
+      +getForce(): int
+      +getForce(): int
+      +getDexterite(): int
     }
 
     class Personnage extends Entite {
-      - nom: String
-      - race: String
-      - classe: String
-      - inventaire: Equipement[*]
-      + sEquiper(): void
+      - m_nom: String
+      - m_classe: String
+      + void equipeArme(Arme arme)
+      + void equipeArmure(Armure armure)
       + ramasserEquipement(): void
     }
 
     class Monstre extends Entite{
-      - espece: String
-      - numero: int
-      - portee: int
-      - degat: String
-      - classe_d_armure: int
+      - m_espece: String
+      - m_numero: int
+      - m_portee: int
+      - m_degat: String
+      - m_classeArmure: int
+
     }
+    abstract class Race{
+      - m_nom: String
+    }
+    class Elfe extends Race{}
+    class Humain extends Race{}
+    class Nain extends Race{}
+    class Halfelin extends Race{}
+
+    abstract class CharClasse{}
+    class Clerc extends CharClasse{}
+    class Guerrier extends CharClasse{}
+    class Magicien extends CharClasse{}
+    class Roublard extends CharClasse{}
  'lien Entites
-  Entite "1" *--> "1\n -m_statistiques" Statistiques : est composé de
+  Entite "1" *-left-> "1\n -m_statistiques" Statistiques : est composé de
   Entite "*" *--> "*\n -m_actions" Action: peut utiliser
+  Personnage "1" *--> "1\n -m_race" Race: est
+  Race "1" *--> "1\n -m_bonusMalus" Statistiques: possède
+  Personnage "1" *--> "1\n -m_race" CharClasse: est
+  CharClasse "1" *--> "1\n -m_bonusMalus" Statistiques: possède
+  Entite .> Entite : attaque
+
 }
 
 package Equipements #LightBlue{
@@ -70,7 +96,6 @@ package Equipements #LightBlue{
       - m_classeArmure: int
     }
     class ArmureLourde extends Armure{
-      - m_malus: Statistiques
     }
     class ArmureLegere extends Armure{
     }
@@ -80,7 +105,6 @@ package Equipements #LightBlue{
       - portee: int
     }
     class ArmeGuerre extends Arme{
-      - m_BonusMalus: Statistiques
     }
     class ArmeCourante extends Arme{
     }
@@ -88,8 +112,10 @@ package Equipements #LightBlue{
     }
 }
 'lien entre Equipements et Entites
-Personnage "*" *--> "*\n -m_inventaire" Equipement: est composé de
-
+Personnage "*" *--> "*\n -m_inventaire" Equipement: possède
+ArmeGuerre "1" *--> "1\n -m_bonusMalus" Statistiques: possède
+ArmureLourde "1" *--> "1\n -m_malus" Statistiques: possède
+Personnage .> Equipement : equipe
 class Obstacle {
   - positionX: int
   - positionY: int
@@ -119,14 +145,13 @@ class MJ {
   - phrasesTaquines: List<String>
   + commenterAction(): void
   + creerPersonnage(): Personnage
+  + creerMonstre(): Monstre
   + lancerPartie(): void
   + piloterTour(): void
-  + annoncerEvenement(String evenement): void
-  + afficherCarte(entites: List<Entite>, obstacles: List<Obstacle>, equipements: List<Equipement>): void
 }
 
 ' Liens logiques
-MJ --> Personnage : crée
+/'MJ --> Personnage : crée
 MJ --> Partie : contrôle
 MJ --> Tour : pilote
 MJ --> Monstre : contrôle
@@ -138,7 +163,7 @@ Tour --> Entite : joueur
 Partie --> Entite : contient
 Partie --> Obstacle : contient
 Partie --> Equipement : contient
-Entite --> De : utilise pour attaque/dégâts
+Entite --> De : utilise pour attaque/dégâts '/
 
 
 
