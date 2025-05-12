@@ -1,15 +1,21 @@
 package stuff;
 
 public class Equipement {
-    boolean actif=false;
-    String nom;
-    String description;
-    public boolean estEquipe() {
-        return actif;
+    boolean m_actif=false;
+    String m_nom;
+    String m_description;
+    public Equipement(String nom, String description, boolean actif) {
+        this.m_nom = nom;
+        this.m_description = description;
+        this.m_actif = actif;
     }
 
-    public String getNom(){
-        return nom;
+    public boolean estEquipe() {
+        return m_actif;
     }
+    public String getNom(){
+        return m_nom;
+    }
+
 }
 
