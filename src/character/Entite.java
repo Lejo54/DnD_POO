@@ -72,15 +72,18 @@ public class Entite {
         //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance ,
         // si cest 1 case ou moins on ajoute la force au resultat du lancer , si c'est plus c'est la dexterite
         int degattotaux=0;
-        De.lancerDe((getDegat()[2]),(getDegat()[0]))
+        String[] decomposeDe = getDegat().split("d"); // ["3", "4"]
+        int nombreLancers = Integer.parseInt(decomposeDe[0]);
+        int typeDe = Integer.parseInt(decomposeDe[1]);
+        degattotaux=De.lancerDe(typeDe,nombreLancers);
         if ((cible.positionX - positionX == 1 || cible.positionX-positionX== -1) && (cible.positionY - positionY == 1 || cible.positionY-positionY == -1)) {
             if (cible.getarmure() < (De.lancerDe(20,1)+ status.getForce())){
-                cible.perdre_Des_Pv(this.getDegat());
+                cible.perdre_Des_Pv(degattotaux);
             }
         }
         else if(cible.getarmure()<(De.lancerDe(20,1)+ status.getDexterite())) {
 
-            cible.perdre_Des_Pv(this.getDegat());
+            cible.perdre_Des_Pv(degattotaux);
         }
         else{
             System.out.println("la cible résiste a l'attaque");
