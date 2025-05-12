@@ -15,8 +15,7 @@ public class Monstre {
     public int getarmure(){
         return class_d_armure;
     }
-    public int getDegat() {
-        //je sais plus comment on a dit qu'on ferait pour les dégats
-        return 0;
+    public String getDegat() {
+        return degat;
     }
 }

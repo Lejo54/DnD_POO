@@ -2,6 +2,8 @@ package character;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import stuff.Armure;
 import stuff.Equipement;
 
 public class Personnage {
@@ -17,10 +19,13 @@ public class Personnage {
     }
     public int getarmure(){
         for(Equipement e:inventaire){
-            if (Equipement.estActif()==true){
-                return armure ;
+            if (e instanceof Armure){
+            if (e.estEquipe()) {
+                return ((Armure) e).getClasseArmure();
+            }
             }
         }
+        return 0;
     }
     public int getDegat() {
         return 0;

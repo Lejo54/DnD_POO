@@ -12,11 +12,13 @@ public class Entite {
         System.out.println(this.getNom() + " perd " + vieARetirer + " PV. PV restants : " + status.getPointDeVie());
         est_mort();
     }
-    public void est_mort(){
+    public boolean est_mort(){
         //verifie si l'entite qui vient d'etre attaquer a toujours des points de vie restant
         if (status.getPointDeVie()<=0){
             System.out.println(this.getNom() +  "est mort");
+            return true;
         }
+        return false;
     }
     public void Passer_Le_Tour(){
         //Lorsque l'entite veut mettre fin a son tour elle peut utiliser dormir
@@ -69,12 +71,15 @@ public class Entite {
     public void attaquer(Entite cible) {
         //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance ,
         // si cest 1 case ou moins on ajoute la force au resultat du lancer , si c'est plus c'est la dexterite
+        int degattotaux=0;
+        De.lancerDe((getDegat()[2]),(getDegat()[0]))
         if ((cible.positionX - positionX == 1 || cible.positionX-positionX== -1) && (cible.positionY - positionY == 1 || cible.positionY-positionY == -1)) {
             if (cible.getarmure() < (De.lancerDe(20,1)+ status.getForce())){
                 cible.perdre_Des_Pv(this.getDegat());
             }
         }
         else if(cible.getarmure()<(De.lancerDe(20,1)+ status.getDexterite())) {
+
             cible.perdre_Des_Pv(this.getDegat());
         }
         else{
@@ -82,14 +87,14 @@ public class Entite {
         }
     }
 
-    
+
     public String getNom() {
         return "";
     }
     public int getarmure(){
         return 0;
     }
-    public int getDegat() {
-        return 0;
+    public String getDegat() {
+        return "";
     }
 }

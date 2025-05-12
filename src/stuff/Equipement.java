@@ -2,8 +2,14 @@ package stuff;
 
 public class Equipement {
     boolean actif=false;
-    public boolean estActif(){
+    String nom;
+    String description;
+    public boolean estEquipe() {
         return actif;
+    }
+
+    public String getNom(){
+        return nom;
     }
 }
 
