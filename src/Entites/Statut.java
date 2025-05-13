@@ -1,4 +1,4 @@
-package character;
+package Entites;
 
 public class Statut {
     private int pointDeVie;
