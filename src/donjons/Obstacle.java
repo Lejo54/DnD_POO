@@ -2,7 +2,6 @@ package donjons;
 
 public class Obstacle extends Position {
 
-
     public Obstacle() {
         super();
     }
