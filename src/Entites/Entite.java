@@ -1,38 +1,40 @@
-package character;
-import lancer.De;
+package Entites;
+
+import static Partie.De.lancerDe;
 
 public class Entite {
-    protected int positionX;
-    protected int positionY;
-    protected Statut status;
+    //private Position m_position;
+    //private Action m_action;
+    private Statistiques m_statistiques;
 
-    public void perdre_Des_Pv(int vieARetirer) {
+    public void perdrePv(int pvRetire) {
         //retire des pv a l'entité subissant une attaque
-        status.setPointDeVie(status.getPointDeVie()-vieARetirer);
-        System.out.println(this.getNom() + " perd " + vieARetirer + " PV. PV restants : " + status.getPointDeVie());
+        this.m_statistiques.retirerPv(pvRetire);
+        String phrase =this.getNom() + " perd " + pvRetire + " PV. PV restants : " + this.m_statistiques.getPv();
+        //affichage
         est_mort();
     }
     public boolean est_mort(){
         //verifie si l'entite qui vient d'etre attaquer a toujours des points de vie restant
-        if (status.getPointDeVie()<=0){
-            System.out.println(this.getNom() +  "est mort");
+        if(this.m_statistiques.getPv()<=0){
+            String phrase=this.getNom() +  "est mort";
+            //Affichage
+            //Sortir l'entite de la liste
             return true;
         }
         return false;
     }
     public void Passer_Le_Tour(){
         //Lorsque l'entite veut mettre fin a son tour elle peut utiliser dormir
-        System.out.println("je suis fatiguée... je vais me reposer...");
+        String phrase="je suis fatiguée... je vais me reposer...";
     }
 
     public void Deplacement() {
         // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
-        int positionInitialeX = positionX;
-        int positionInitialeY = positionY;
 
-        int deplacementsRestants = status.getVitesse() / 3;
+        int deplacementsRestants = this.m_statistiques.getVitesse() / 3;
 
-        System.out.println("Entrez une direction (z = haut, q = gauche, s = bas, d = droite) :");
+        String phrase="Entrez une direction (z = haut, q = gauche, s = bas, d = droite) :";
         java.util.Scanner scanner = new java.util.Scanner(System.in);
 
         // Boucle permettant les déplacements
@@ -75,15 +77,15 @@ public class Entite {
         String[] decomposeDe = getDegat().split("d"); // ["3", "4"]
         int nombreLancers = Integer.parseInt(decomposeDe[0]);
         int typeDe = Integer.parseInt(decomposeDe[1]);
-        degattotaux=De.lancerDe(typeDe,nombreLancers);
+        degattotaux=lancerDe(typeDe,nombreLancers);
         if ((cible.positionX - positionX == 1 || cible.positionX-positionX== -1) && (cible.positionY - positionY == 1 || cible.positionY-positionY == -1)) {
-            if (cible.getarmure() < (De.lancerDe(20,1)+ status.getForce())){
-                cible.perdre_Des_Pv(degattotaux);
+            if (cible.getarmure() < (lancerDe(20,1)+ status.getForce())){
+                cible.perdrePv(degattotaux);
             }
         }
-        else if(cible.getarmure()<(De.lancerDe(20,1)+ status.getDexterite())) {
+        else if(cible.getarmure()<(lancerDe(20,1)+ status.getDexterite())) {
 
-            cible.perdre_Des_Pv(degattotaux);
+            cible.perdrePv(degattotaux);
         }
         else{
             System.out.println("la cible résiste a l'attaque");

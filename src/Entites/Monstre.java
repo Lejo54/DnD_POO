@@ -1,6 +1,4 @@
-package character;
-
-import stuff.Equipement;
+package Entites;
 
 public class Monstre {
     String espece;
