@@ -1,10 +1,12 @@
 package Entites;
 
+import java.util.Scanner;
 import static Partie.De.lancerDe;
 
 public class Entite {
     //private Position m_position;
     //private Action m_action;
+    private String m_nom;
     private Statistiques m_statistiques;
 
     public void perdrePv(int pvRetire) {
@@ -29,30 +31,36 @@ public class Entite {
         String phrase="je suis fatiguée... je vais me reposer...";
     }
 
-    public void Deplacement() {
+    public void deplacement() {
+        // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
+
         // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
 
         int deplacementsRestants = this.m_statistiques.getVitesse() / 3;
 
-        String phrase="Entrez une direction (z = haut, q = gauche, s = bas, d = droite) :";
+        affichePhrase("Entrez une direction (z = haut, q = gauche, s = bas, d = droite, o= retour à l'origine) :");
         java.util.Scanner scanner = new java.util.Scanner(System.in);
 
         // Boucle permettant les déplacements
         for (int i = 0; i < deplacementsRestants; i++) {
             System.out.print("Déplacement " + (i + 1) + "/" + deplacementsRestants + " : ");
             char direction = scanner.next().charAt(0);
+            int initY= this.m_position.getY();
+            int initX= this.m_position.getX();
 
             switch (direction) {
                 case 'z':
-                    positionY--;
+                    this.m_position.changeY(this.m_position.getY() - 1);
                 case 's':
-                    positionY++;
+                    this.m_position.changeY(this.m_position.getY() + 1);
                 case 'q':
-                    positionX--;
+                    this.m_position.changeX(this.m_position.getX() - 1);
                 case 'd':
-                    positionX++;
+                    this.m_position.changeX(this.m_position.getX() + 1);
+                case 'o':
+                    this.m_position.changeXY(initX,initY);
                 default:
-                    System.out.println("Direction invalide ! Entrez z, q, s ou d uniquement.");
+                    System.out.println("Direction invalide ! Entrez z, q, s ,d ou o uniquement.");
                     i--; // Annule cette itération, car le déplacement n'a pas eu lieu
             }
             System.out.println("Nouvelle position : (" + positionX + ", " + positionY + ")");
@@ -67,11 +75,13 @@ public class Entite {
             positionX = positionInitialeX;
             positionY = positionInitialeY;
             System.out.println("Tous vos déplacements ont été annulés. Essayez une autre approche!");
+
+
         }
     }
 
     public void attaquer(Entite cible) {
-        //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance ,
+         //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance ,
         // si cest 1 case ou moins on ajoute la force au resultat du lancer , si c'est plus c'est la dexterite
         int degattotaux=0;
         String[] decomposeDe = getDegat().split("d"); // ["3", "4"]
@@ -79,24 +89,26 @@ public class Entite {
         int typeDe = Integer.parseInt(decomposeDe[1]);
         degattotaux=lancerDe(typeDe,nombreLancers);
         if ((cible.positionX - positionX == 1 || cible.positionX-positionX== -1) && (cible.positionY - positionY == 1 || cible.positionY-positionY == -1)) {
-            if (cible.getarmure() < (lancerDe(20,1)+ status.getForce())){
+            if (cible.getArmure() < (lancerDe(20,1)+ status.getForce())){
                 cible.perdrePv(degattotaux);
             }
         }
-        else if(cible.getarmure()<(lancerDe(20,1)+ status.getDexterite())) {
+        else if(cible.getArmure()<(lancerDe(20,1)+ this.m_statistiques.getDexterite())) {
 
             cible.perdrePv(degattotaux);
         }
         else{
             System.out.println("la cible résiste a l'attaque");
         }
+
+
     }
 
 
     public String getNom() {
-        return "";
+        return m_nom;
     }
-    public int getarmure(){
+    public int getArmure(){
         return 0;
     }
     public String getDegat() {
