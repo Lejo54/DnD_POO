@@ -14,6 +14,7 @@ public class Partie {
 
     // Constructeur avec filtrage
     public Partie(List<Entite> entites, List<Obstacle> obstacles, List<Equipement> equipements) {
+        //
         this.entites = filtrerEntitesParInitiative(entites);
         this.obstacles = obstacles;
         this.equipements = filtrerEquipementsPosition(equipements);
@@ -21,19 +22,11 @@ public class Partie {
 
     // Version "init" si l'on préfère avoir un constructeur vide
     public void init(List<Entite> entites, List<Obstacle> obstacles, List<Equipement> equipements) {
+        //trier la liste entite ici avant de l'insérer
         this.entites = filtrerEntitesParInitiative(entites);
         this.obstacles = obstacles != null ? obstacles : new ArrayList<>();
+        //verifie si les elements sont dans equipements
         this.equipements = filtrerEquipementsPosition(equipements);
-    }
-
-    // Filtrer et trier les entités par initiative (exemple d'une règle fictive)
-    private List<Entite> filtrerEntitesParInitiative(List<Entite> entites) {
-        if (entites == null) return new ArrayList<>();
-        // Garder uniquement les entités valides et les trier
-        return entites.stream()
-                .filter(entite -> entite.getInitiative() > 0) // Exemple de filtrage
-                .sorted((e1, e2) -> Integer.compare(e2.getInitiative(), e1.getInitiative())) // Trier par initiative descendante
-                .collect(Collectors.toList());
     }
 
     // Filtrer les équipements en fonction de leur position (valide si différente de -1)
