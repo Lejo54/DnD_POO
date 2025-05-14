@@ -2,9 +2,10 @@ package Entites;
 
 import java.util.Scanner;
 import static Partie.De.lancerDe;
+import donjons.Position;
 
 public class Entite {
-    //private Position m_position;
+    private Position m_position;
     //private Action m_action;
     private String m_nom;
     private Statistiques m_statistiques;
@@ -104,6 +105,9 @@ public class Entite {
 
     }
 
+    public Position getPosition(){
+        return m_position;
+    }
 
     public String getNom() {
         return m_nom;
