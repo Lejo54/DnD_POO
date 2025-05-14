@@ -1,12 +1,9 @@
 package donjons;
 
-public class Obstacle extends Position {
-
+public class Obstacle  {
+    Position m_position;
     public Obstacle() {
-        super();
+        m_position=new Position();
     }
 
-    public Obstacle(int x, int y) {
-        super(x, y);
-    }
 }
