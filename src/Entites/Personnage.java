@@ -20,7 +20,7 @@ public class Personnage {
     public String getNom() {
         return m_nom;
     }
-    public int getarmure(){
+    public int getArmure(){
         for(Equipement e:inventaire){
             if (e instanceof Armure){
             if (e.estEquipe()) {
@@ -30,4 +30,11 @@ public class Personnage {
         }
         return 0;
     }
+    public int getDegat() {
+        return 0;
+    }
+    public String getType() {
+        return "Personnage";
+    }
+
 }
