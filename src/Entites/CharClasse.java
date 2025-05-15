@@ -1,6 +1,6 @@
 package Entites;
 
-public class CharClasse {
+public abstract class CharClasse {
  private String m_classe;
  private Statistiques m_statistiques;
 

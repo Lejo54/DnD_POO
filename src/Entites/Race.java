@@ -1,6 +1,6 @@
 package Entites;
 
-public class Race {
+public abstract class Race {
  private String m_race;
  private Statistiques m_statistiques;
 
