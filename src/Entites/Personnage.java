@@ -5,27 +5,24 @@ import java.util.List;
 
 import stuff.Armure;
 import stuff.Equipement;
-import stuff.Arme;
 
 public class Personnage {
-    String m_nom;
-    Race m_race;
-    CharClasse m_classe;
+    String nom;
+    String race;
+    String classe;
     List<Equipement> inventaire= new ArrayList<>();
-    Armure m_armureequipe;
-    Arme m_armeequipe;
 
 
     //get nom qui renvoie le nom du personnage et qui remplace getnom de entite
     public String getNom() {
-        return m_nom;
+        return nom;
     }
-    public int getArmure(){
+    public int getarmure(){
         for(Equipement e:inventaire){
             if (e instanceof Armure){
-            if (e.estEquipe()) {
-                return ((Armure) e).getClasseArmure();
-            }
+                if (e.estEquipe()) {
+                    return ((Armure) e).getClasseArmure();
+                }
             }
         }
         return 0;
@@ -36,5 +33,5 @@ public class Personnage {
     public String getType() {
         return "Personnage";
     }
-
 }
+
