@@ -5,17 +5,20 @@ import java.util.List;
 
 import stuff.Armure;
 import stuff.Equipement;
+import stuff.Arme;
 
 public class Personnage {
-    String nom;
-    String race;
-    String classe;
+    String m_nom;
+    Race m_race;
+    CharClasse m_classe;
     List<Equipement> inventaire= new ArrayList<>();
+    Armure m_armureequipe;
+    Arme m_armeequipe;
 
 
     //get nom qui renvoie le nom du personnage et qui remplace getnom de entite
     public String getNom() {
-        return nom;
+        return m_nom;
     }
     public int getarmure(){
         for(Equipement e:inventaire){
@@ -25,9 +28,6 @@ public class Personnage {
             }
             }
         }
-        return 0;
-    }
-    public int getDegat() {
         return 0;
     }
 }

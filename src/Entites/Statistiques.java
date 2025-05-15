@@ -3,12 +3,11 @@ package Entites;
 import static Partie.De.lancerDe;
 
 public class Statistiques {
- private int m_pv;
- private int m_force;
- private int m_initiative;
- private int m_vitesse;
- private int m_dexterite;
- private boolean status= true;
+ private int m_pv=0;
+ private int m_force=0;
+ private int m_initiative=0;
+ private int m_vitesse=0;
+ private int m_dexterite=0;
 
  //Constructeur pour les armes/armures
  public Statistiques(int pv, int force, int initiative, int vitesse, int dexterite) {
@@ -27,8 +26,16 @@ public class Statistiques {
  m_vitesse=stat;
  stat= lancerDe(4,4)+3;
  m_dexterite=stat;
-
-
+ }
+ //Constructeur pour les classes
+ public Statistiques(int pv) {
+  m_pv=pv;
+ }
+ //pour les races Halfelin,Elfe,Nain
+ public Statistiques(int force,int dexterite,int vitesse) {
+  m_force=force;
+  m_dexterite=dexterite;
+  m_vitesse=vitesse;
  }
  //Getters
  public int getPv() {return m_pv;}
@@ -36,7 +43,6 @@ public class Statistiques {
  public int getInitiative() {return m_initiative;}
  public int getVitesse() {return m_vitesse;}
  public int getDexterite() {return m_dexterite;}
- public boolean getStatus() {return status;}
 
  //Méthodes
  public void retirerPv(int pv){m_pv-=pv;}
