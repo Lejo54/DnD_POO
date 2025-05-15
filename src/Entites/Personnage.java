@@ -20,9 +20,9 @@ public class Personnage {
     public int getarmure(){
         for(Equipement e:inventaire){
             if (e instanceof Armure){
-            if (e.estEquipe()) {
-                return ((Armure) e).getClasseArmure();
-            }
+                if (e.estEquipe()) {
+                    return ((Armure) e).getClasseArmure();
+                }
             }
         }
         return 0;
@@ -34,3 +34,4 @@ public class Personnage {
         return "Personnage";
     }
 }
+
