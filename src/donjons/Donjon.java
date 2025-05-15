@@ -1,6 +1,8 @@
 package donjons;
 
 //importer les list
+import Entites.Monstre;
+import Entites.Personnage;
 import stuff.Equipement;
 import Entites.Entite;
 import java.util.List;
@@ -51,6 +53,14 @@ public class Donjon {
             }
         }
         return false;
+    }
+    public String getEntite(int x , int y){
+        for(Entite e:m_entites){
+            if(e.getPosition().getX()==x && e.getPosition().getY()==y){
+                return e.getType();
+            }
+        }
+        return "";
     }
 
 }

@@ -15,13 +15,15 @@ public class Affichage {
 
 
                 else if (donjon.contientObstacle(x,y)) {
-                    System.out.print("O ");
+                    System.out.print("♦ ");
                 } else if (donjon.contientEquipement(x,y)) {
-                    System.out.print("E ");
-                } else if (donjon.contientEntite(x,y)) {
-                    System.out.print("E ");
+                    System.out.print("† ");
+                } else if (donjon.getEntite(x,y).equals("Monstre")) {
+                    System.out.print("¤ ");
+                } else if (donjon.getEntite(x,y).equals("Personnage")) {
+                    System.out.print("¤ ");  //recupere lentite .get nom sub str
                 } else {
-                    System.out.print(". ");
+                    System.out.print("∙ ");
                 }
             }
             System.out.println();

@@ -104,6 +104,9 @@ public class Entite {
 
 
     }
+    public String getType(){
+        return "";
+    }
 
     public Position getPosition(){
         return m_position;

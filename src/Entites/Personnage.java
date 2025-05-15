@@ -30,4 +30,7 @@ public class Personnage {
     public int getDegat() {
         return 0;
     }
+    public String getType() {
+        return "Personnage";
+    }
 }
