@@ -89,8 +89,8 @@ public class Entite {
         int nombreLancers = Integer.parseInt(decomposeDe[0]);
         int typeDe = Integer.parseInt(decomposeDe[1]);
         degattotaux=lancerDe(typeDe,nombreLancers);
-        if ((cible.positionX - positionX == 1 || cible.positionX-positionX== -1) && (cible.positionY - positionY == 1 || cible.positionY-positionY == -1)) {
-            if (cible.getArmure() < (lancerDe(20,1)+ status.getForce())){
+        if ((cible.m_position.getX() - m_position.getX()== 1 || cible.m_position.getX()-m_position.getX()== -1) && (cible.m_position.getY() - m_position.getY() == 1 || cible.m_position.getY()-m_position.getY() == -1)) {
+            if (cible.getArmure() < (lancerDe(20,1)+ this.m_statistiques.getForce())){
                 cible.perdrePv(degattotaux);
             }
         }
@@ -101,9 +101,9 @@ public class Entite {
         else{
             System.out.println("la cible résiste a l'attaque");
         }
-
-
     }
+
+
     public String getType(){
         return "";
     }

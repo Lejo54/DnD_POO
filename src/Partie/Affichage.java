@@ -1,6 +1,5 @@
 package Partie;
 import  donjons.Donjon;
-import donjons.Position;
 
 public class Affichage {
 
@@ -18,10 +17,8 @@ public class Affichage {
                     System.out.print("♦ ");
                 } else if (donjon.contientEquipement(x,y)) {
                     System.out.print("† ");
-                } else if (donjon.getEntite(x,y).equals("Monstre")) {
-                    System.out.print("¤ ");
-                } else if (donjon.getEntite(x,y).equals("Personnage")) {
-                    System.out.print("¤ ");  //recupere lentite .get nom sub str
+                } else if (donjon.contientEntite(x,y)) {
+                    System.out.print(donjon.getNomEntite(x,y));
                 } else {
                     System.out.print("∙ ");
                 }
