@@ -33,7 +33,7 @@ public class Partie {
     private List<Equipement> filtrerEquipementsPosition(List<Equipement> equipements) {
         if (equipements == null) return new ArrayList<>();
         return equipements.stream()
-                .filter(equipement -> equipement.getPosition() != -1)
+                .filter(equipement -> equipement.getPosition().getX() != -1)
                 .collect(Collectors.toList());
     }
 

@@ -16,4 +16,7 @@ public class Monstre {
     public String getDegat() {
         return degat;
     }
+    public String getType() {
+        return "Monstre";
+    }
 }

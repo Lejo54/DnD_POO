@@ -1,7 +1,5 @@
 package Entites;
 
-import static Partie.De.lancerDe;
-
 import donjons.Position;
 import donjons.Donjon.contientObstacle;
 import donjons.Donjon.contientEntite;
@@ -22,7 +20,7 @@ public abstract class Entite {
     public boolean est_mort(){
         //verifie si l'entite qui vient d'etre attaquer a toujours des points de vie restant
         if(this.m_statistiques.getPv()<=0){
-            affichePhrase(this.getNom() +  "est mort");
+            String phrase=this.getNom() +  "est mort";
             //Affichage
             //Sortir l'entite de la liste
             return true;
@@ -40,8 +38,7 @@ public abstract class Entite {
         // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
 
         int deplacementsRestants = this.m_statistiques.getVitesse() / 3;
-        int initY= this.m_position.getY();
-        int initX= this.m_position.getX();
+
         affichePhrase("Entrez une direction (z = haut, q = gauche, s = bas, d = droite, o= retour à l'origine) :");
         java.util.Scanner scanner = new java.util.Scanner(System.in);
 
@@ -49,73 +46,51 @@ public abstract class Entite {
         for (int i = 0; i < deplacementsRestants; i++) {
             System.out.print("Déplacement " + (i + 1) + "/" + deplacementsRestants + " : ");
             char direction = scanner.next().charAt(0);
-            int oldY= this.m_position.getY();
-            int oldX= this.m_position.getX();
-            String erreur= "entite sur le chemin ou passage hors de la carte ";
+            int initY= this.m_position.getY();
+            int initX= this.m_position.getX();
+
             switch (direction) {
                 case 'z':
-                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()-1)){
-                        this.m_position.changeY(this.m_position.getY() - 1);
-                    }
-                    else{
-                        i--;
-                        affichePhrase(erreur);
-                    }
-                    break;
+                    this.m_position.changeY(this.m_position.getY() - 1);
                 case 's':
-                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()+1)){
-                        this.m_position.changeY(this.m_position.getY() + 1);
-                    }
-                    else{
-                        i--;
-                        affichePhrase(erreur);
-                    }
+                    this.m_position.changeY(this.m_position.getY() + 1);
                 case 'q':
-                    if(deplacementEstPossible(this.m_position.getX()-1,this.m_position.getY())){
-                        this.m_position.changeX(this.m_position.getX() - 1);
-                    }
-                    else{
-                        i--;
-                        affichePhrase(erreur);
-                    }
-
+                    this.m_position.changeX(this.m_position.getX() - 1);
                 case 'd':
-                    if(deplacementEstPossible(this.m_position.getX() + 1,this.m_position.getY())){
-                        this.m_position.changeX(this.m_position.getX() + 1);
-                    }
-                    else{
-                        i--;
-                        affichePhrase(erreur);
-                    }
+                    this.m_position.changeX(this.m_position.getX() + 1);
                 case 'o':
                     this.m_position.changeXY(initX,initY);
                 default:
                     System.out.println("Direction invalide ! Entrez z, q, s ,d ou o uniquement.");
                     i--; // Annule cette itération, car le déplacement n'a pas eu lieu
             }
-
-            //on transforme la position numérique en alphabétique avec 0=A et 26=Z
-            affichePhrase("Nouvelle position : (" + this.changeEntierEnLettre(this.m_position.getX()) + ", " + this.m_position.getY() + ")");
+            System.out.println("Nouvelle position : (" + positionX + ", " + positionY + ")");
         }
-    }
-    public char changeEntierEnLettre(int number) {
-        return (char) ('A'+number);
-    }
-    public boolean deplacementEstPossible(int x, int y){
 
-        return !((contientObstacle(int x,int y)) && (contientEntite(int x,int y)) && (x<=0) && (y<=0));
+        //changer cette partie quand on aura fais les liste de monstre et d'obstacle
+        if (positionX < 0 || positionY < 0) {
+            // Si la position finale est invalide, annuler tous les déplacements
+            System.out.println("Position finale invalide! Revenir à la position de départ.");
+
+            // Retourner à la position de départ
+            positionX = positionInitialeX;
+            positionY = positionInitialeY;
+            System.out.println("Tous vos déplacements ont été annulés. Essayez une autre approche!");
+
+
+        }
     }
 
     public void attaquer(Entite cible) {
-         //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance,
-        // si c'est 1 case ou moins, on ajoute la force au resultat du lancer, si c'est plus c'est la dexterite
+         //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance ,
+        // si cest 1 case ou moins on ajoute la force au resultat du lancer , si c'est plus c'est la dexterite
         int degattotaux=0;
         String[] decomposeDe = getDegat().split("d"); // ["3", "4"]
         int nombreLancers = Integer.parseInt(decomposeDe[0]);
         int typeDe = Integer.parseInt(decomposeDe[1]);
         degattotaux=lancerDe(typeDe,nombreLancers);
-        if ((cible.positionX - positionX == 1 || cible.positionX-positionX== -1) && (cible.positionY - positionY == 1 || cible.positionY-positionY == -1)) {
-            if (cible.getArmure() < (lancerDe(20,1)+ m_statistiques.getForce())){
+        if ((cible.m_position.getX() - m_position.getX() == 1 || cible.m_position.getX()-m_position.getX()== -1) && (cible.m_position.getY() - m_position.getY() == 1 || cible.m_position.getY()-m_position.getY() == -1)) {
+            if (cible.getArmure() < (lancerDe(20,1)+ this.m_statistiques.getForce())){
                 cible.perdrePv(degattotaux);
             }
         }
