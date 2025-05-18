@@ -1,11 +1,10 @@
 package Entites;
 
 import donjons.Position;
+import donjons.Donjon.contientObstacle;
+import donjons.Donjon.contientEntite;
 
-import java.util.Scanner;
-import static Partie.De.lancerDe;
-
-public class Entite {
+public abstract class Entite {
     private Position m_position;
     //private Action m_action;
     private String m_nom;
