@@ -1,8 +1,8 @@
 @startuml
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
-top to bottom direction
-'skinparam style strictuml
+left to right direction
+skinparam style strictuml
 hide empty members
 skinparam linetype ortho
 class Main
