@@ -1,17 +1,24 @@
 package Entites;
 
+import static Partie.Affichage.afficherPhrase;
 import static Partie.De.lancerDe;
 
 import donjons.Position;
-import donjons.Donjon.contientObstacle;
-import donjons.Donjon.contientEntite;
+import donjons.Donjon;
+
 
 public abstract class Entite {
     private Position m_position;
     //private Action m_action;
     private String m_nom;
     private Statistiques m_statistiques;
+    private Donjon m_donjon;
 
+
+    public void changementDonjon(Donjon donjon) {
+        m_donjon = donjon;
+    }
+    public Donjon getDonjon() {return m_donjon;}
     public void perdrePv(int pvRetire) {
         //retire des pv a l'entité subissant une attaque
         this.m_statistiques.retirerPv(pvRetire);
@@ -22,7 +29,7 @@ public abstract class Entite {
     public boolean est_mort(){
         //verifie si l'entite qui vient d'etre attaquer a toujours des points de vie restant
         if(this.m_statistiques.getPv()<=0){
-            affichePhrase(this.getNom() +  "est mort");
+            afficherPhrase(this.getNom() +  "est mort");
             //Affichage
             //Sortir l'entite de la liste
             return true;
@@ -42,7 +49,7 @@ public abstract class Entite {
         int deplacementsRestants = this.m_statistiques.getVitesse() / 3;
         int initY= this.m_position.getY();
         int initX= this.m_position.getX();
-        affichePhrase("Entrez une direction (z = haut, q = gauche, s = bas, d = droite, o= retour à l'origine) :");
+        afficherPhrase("Entrez une direction (z = haut, q = gauche, s = bas, d = droite, o= retour à l'origine) :");
         java.util.Scanner scanner = new java.util.Scanner(System.in);
 
         // Boucle permettant les déplacements
@@ -54,38 +61,38 @@ public abstract class Entite {
             String erreur= "entite sur le chemin ou passage hors de la carte ";
             switch (direction) {
                 case 'z':
-                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()-1)){
+                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()-1, this.getDonjon())){
                         this.m_position.changeY(this.m_position.getY() - 1);
                     }
                     else{
                         i--;
-                        affichePhrase(erreur);
+                        afficherPhrase(erreur);
                     }
                     break;
                 case 's':
-                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()+1)){
+                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()+1, this.getDonjon())){
                         this.m_position.changeY(this.m_position.getY() + 1);
                     }
                     else{
                         i--;
-                        affichePhrase(erreur);
+                        afficherPhrase(erreur);
                     }
                 case 'q':
-                    if(deplacementEstPossible(this.m_position.getX()-1,this.m_position.getY())){
+                    if(deplacementEstPossible(this.m_position.getX()-1,this.m_position.getY(), this.getDonjon())){
                         this.m_position.changeX(this.m_position.getX() - 1);
                     }
                     else{
                         i--;
-                        affichePhrase(erreur);
+                        afficherPhrase(erreur);
                     }
 
                 case 'd':
-                    if(deplacementEstPossible(this.m_position.getX() + 1,this.m_position.getY())){
+                    if(deplacementEstPossible(this.m_position.getX() + 1,this.m_position.getY(), this.getDonjon())){
                         this.m_position.changeX(this.m_position.getX() + 1);
                     }
                     else{
                         i--;
-                        affichePhrase(erreur);
+                        afficherPhrase(erreur);
                     }
                 case 'o':
                     this.m_position.changeXY(initX,initY);
@@ -95,15 +102,15 @@ public abstract class Entite {
             }
 
             //on transforme la position numérique en alphabétique avec 0=A et 26=Z
-            affichePhrase("Nouvelle position : (" + this.changeEntierEnLettre(this.m_position.getX()) + ", " + this.m_position.getY() + ")");
+            afficherPhrase("Nouvelle position : (" + this.changeEntierEnLettre(this.m_position.getX()) + ", " + this.m_position.getY() + ")");
         }
     }
     public char changeEntierEnLettre(int number) {
         return (char) ('A'+number);
     }
-    public boolean deplacementEstPossible(int x, int y){
+    public boolean deplacementEstPossible(int x, int y, Donjon donjon){
 
-        return !((contientObstacle(int x,int y)) && (contientEntite(int x,int y)) && (x<=0) && (y<=0));
+        return !((donjon.contientObstacle(x,y)) && (donjon.contientEntite(x,y)) && (x<=0) && (y<=0));
     }
 
     public void attaquer(Entite cible) {
@@ -130,7 +137,7 @@ public abstract class Entite {
 
     }
 
-
+    public Position getPosition() {return m_position;}
     public String getNom() {
         return m_nom;
     }
