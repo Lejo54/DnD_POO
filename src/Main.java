@@ -1,8 +1,4 @@
-import Partie.De;
-
-import java.util.Scanner;
-
-import static Partie.De.lancerDe;
+import static partie.De.lancerDe;
 
 public class Main {
     public static void main(String args[]) {

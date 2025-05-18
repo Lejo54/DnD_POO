@@ -1,4 +1,4 @@
-package Entites;
+package entites;
 
 public abstract class Race {
  private String m_race;

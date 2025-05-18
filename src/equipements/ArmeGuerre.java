@@ -1,18 +1,20 @@
-package stuff;
+package equipements;
 
 public class ArmeGuerre extends Arme {
     public ArmeGuerre(String nom, String description, boolean actif) {
-        super(nom, description, actif);
+        int portee=0;
+        String degat="";
         switch (nom.toLowerCase()) {
             case "epee longue":
-                this.m_degat = "1d8";
-                this.m_portee = 1;
+                degat = "1d8";
+                portee = 1;
                 break;
             case "rapiere":
-                this.m_degat = "1d8";
-                this.m_portee = 1;
+                degat = "1d8";
+                portee = 1;
                 break;
                 //vitesse du personnage -2 force +4
         }
+        super(nom, description, actif,portee,degat);
     }
 }

@@ -1,18 +1,20 @@
-package stuff;
+package equipements;
 
 public class ArmeCourante extends Arme {
     public ArmeCourante(String nom, String description, boolean actif) {
-        super(nom, description, actif);
+        int portee=0;
+        String degat="";
         switch (nom.toLowerCase()) {
             case "baton":
-                this.m_degat = "1d6";
-                this.m_portee = 1;
+                degat = "1d6";
+                portee = 1;
                 break;
             case "masse d'armes":
-                this.m_degat = "1d6";
-                this.m_portee = 1;
+                degat = "1d6";
+                portee = 1;
                 break;
 
         }
+        super(nom, description, actif,portee,degat);
     }
 }

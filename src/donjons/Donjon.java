@@ -1,8 +1,8 @@
 package donjons;
 
 //importer les list
-import stuff.Equipement;
-import Entites.Entite;
+import equipements.Equipement;
+import entites.Entite;
 import java.util.List;
 
 public class Donjon {
@@ -11,7 +11,7 @@ public class Donjon {
     List<Obstacle> m_obstacles;
     Position m_taille;
 
-    public Donjon(List<Equipement> m_objetAuSol, List<Entite> m_entites,List<Obstacle> m_obstacles) {
+    public Donjon(List<Equipement> objetAuSol, List<Entite> entites,List<Obstacle> obstacles) {
         this.m_objetAuSol = m_objetAuSol;
         this.m_entites = m_entites;
         this.m_obstacles = m_obstacles;

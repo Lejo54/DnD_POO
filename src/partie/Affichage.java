@@ -1,4 +1,4 @@
-package Partie;
+package partie;
 import  donjons.Donjon;
 
 public abstract class Affichage {

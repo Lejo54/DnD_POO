@@ -1,4 +1,4 @@
-package Entites;
+package entites;
 
 public abstract class CharClasse {
  private String m_classe;

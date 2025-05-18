@@ -9,9 +9,11 @@ class Main
 {
     +{static} main(args:String[*])
 }
+Main .-> partie.MJ : <<Instantiate>> >
 
-package Entites #Orange{
-    class Entite {
+package entites #Orange{
+    abstract class Entite <<abstract>>{
+      -m_nom: String
       + void perdrePV(int pvRetire)
       + void passerLeTour()
       + void deplacement()
@@ -19,6 +21,7 @@ package Entites #Orange{
       + getPositionX(): integer
       + getPositionY(): integer
     }
+    Entite .-> partie.De : <<use>> >
     class Action{
       - m_nom: String
       - m_estUtilisee: boolean
@@ -56,128 +59,153 @@ package Entites #Orange{
       - m_classeArmure: integer
 
     }
-    abstract class Race{
+    abstract class Race <<abtract>>{
       - m_nom: String
+      +getNom(): String
     }
     class Elfe extends Race{}
     class Humain extends Race{}
     class Nain extends Race{}
     class Halfelin extends Race{}
 
-    abstract class CharClasse{}
+    abstract class CharClasse <<abstract>>{
+      - m_nom: String
+      +getNom(): String
+    }
     class Clerc extends CharClasse{}
     class Guerrier extends CharClasse{}
     class Magicien extends CharClasse{}
     class Roublard extends CharClasse{}
  'lien Entites
-  Entite "1" *-left-> "1\n -m_statistiques" Statistiques : est composé de
-  Entite "*" *--> "*\n -m_actions" Action: peut utiliser
-  Personnage "1" *--> "1\n -m_race" Race: est
-  Race "1" *--> "1\n -m_bonusMalus" Statistiques: possède
-  Personnage "1" *--> "1\n -m_race" CharClasse: est
-  CharClasse "1" *--> "1\n -m_bonusMalus" Statistiques: possède
-  Entite .> Entite : attaque
+  Entite "1" *-----> "1\n -m_statistiques" Statistiques : est composé de >
+  Entite "*" *---> "*\n -m_actions" Action: peut utiliser >
+  Personnage "1" *--> "1\n -m_race" Race: est >
+  Race "1" *--> "1\n -m_bonusMalus" Statistiques: possède >
+  Personnage "1" *--> "1\n -m_race" CharClasse: est >
+  CharClasse "1" *--> "1\n -m_bonusMalus" Statistiques: possède >
+  Entite .> Entite : attaque >
+
 
 }
 
-package Equipements #LightBlue{
+package equipements #LightBlue{
 
-    class Equipement {
+    abstract class Equipement <<abstract>>{
       - m_actif: boolean
       - m_nom: String
       - m_description: String
+      +<<create>> Equipement(nom: String, description: String, actif: boolean)
+      +<<create>> Equipement()
       + estEquipe(): boolean
       + getNom(): String
+      + getPosition: Position
+      + void Equiper()
     }
 
-    class Armure extends Equipement {
+
+    abstract class Armure <<abstract>> extends Equipement {
       - m_classeArmure: integer
+      +<<create>> Armure(nom: String, description: String, actif: boolean, classArmure: integer)
+      + getClasseArmure(): integer
     }
     class ArmureLourde extends Armure{
+     +<<create>> ArmureLourde(nom: String, description: String, actif: boolean)
     }
     class ArmureLegere extends Armure{
+    +<<create>> ArmureLegere(nom: String, description: String, actif: boolean)
     }
 
-    class Arme extends Equipement {
+    abstract class Arme <<abstract>> extends Equipement {
       - m_degat: String
       - m_portee: integer
-      //dans chaque heritage faire un "constructeur" pour chaques armes et les armures aussi
+      +<<create>> Arme (nom: String, description: String, actif: boolean)
+
     }
     class ArmeGuerre extends Arme{
+      +<<create>> ArmeGuerre(nom: String, description: String, actif: boolean, portee: integer, degat: String)
     }
     class ArmeCourante extends Arme{
+      +<<create>> ArmeCourante(nom: String, description: String, actif: boolean, portee: integer, degat: String)
     }
     class ArmeDistance extends Arme{
+      +<<create>> ArmeDistance(nom: String, description: String, actif: boolean, portee: integer, degat: String)
     }
 }
 'lien entre Equipements et Entites
-Personnage "*" *--> "*\n -m_inventaire" Equipement: possède
-ArmeGuerre "1" *----> "1\n -m_bonusMalus" Statistiques: possède
-ArmureLourde "1" *----> "1\n -m_malus" Statistiques: possède
-Personnage .> Equipement : equipe
+Personnage "*" *--> "*\n -m_inventaire" Equipement: possède >
+ArmeGuerre "1" *----> "1\n -m_bonusMalus" Statistiques: possède >
+ArmureLourde "1" *----> "1\n -m_malus" Statistiques: possède >
+Personnage .> Equipement : equipe >
 'Autres liens
-Equipement "1" *----> "1\n -m_position" Donjons.Position: est en
-Entite "1" *----> "1\n -m_position" Donjons.Position: est en
-Donjons.Obstacle "1" *--> "1\n -m_position" Donjons.Position: est en
+Equipement "1" *----> "1\n -m_position" donjons.Position: est en >
+Entite "1" *----> "1\n -m_position" donjons.Position: est en >
 
-package Partie #purple{
+package partie #purple{
     class Partie {
-      - entites: List<Entite> <<triée par initiative>>
-      - obstacles: List<Obstacle>
-      - equipementsSol: List<Equipement>
-
-
+      + creerMonstre(): Monstre[*]
+      + creerObstacle(): Obstacle[*]
+      + creerEquipement(): Equipement[*]
+      + creerDonjon(): Donjon
     }
+    Partie "*" o---> "*\n -m_joueurs" Personnage : jouent >
+    Partie "*" .> Monstre : <<Instantiate>> >
+    Partie "*" .> donjons.Obstacle : <<Instantiate>> >
+    Partie "*" .> Equipement : <<Instantiate>> >
+    Partie "1" .-> donjons.Donjon : <<Instantiate>> >
+
     class MJ {
-      + void commenterAction()
-      + creerEntite(): List<Entite>
       + creerPersonnage(): Personnage
-      + creerMonstre(): Monstre
-      + void lancerPartie() //boucle for de 3 pour les 3 donjons
-      + void piloterTour()
+      + void lancerPartie(Donjon donjon)
     }
-    class Affichage{
-     + {static}void afficherDonjon(Donjon donjon)
-     + {static}void afficherBandeauTour()
-     + {static}void afficherPhrase(String phrase)
-     + {static}void afficherInfoEntite(Entite entite)
-     + {static}void afficherActionEntite(Entite entite)
+    MJ "*" .-> Personnage : <<Instantiate>> >
+    MJ .-> Partie : <<use>> >
+    abstract class Affichage <<abstract>>{
+      + {static}void afficherDonjon(donjon: Donjon)
+      + {static}void afficherBandeauTour()
+      + {static}void afficherPhrase(phrase: String )
+      + {static}void afficherInfoEntite(entite: Entite )
+      + {static}void afficherActionEntite(entite: Entite )
     }
-    class De {
+    abstract class De <<abstract>>{
       + {static}lancerDe(nbLance: integer,tailleLancer : integer ): integer
     }
 }
-package Donjons #Lightgreen{
+package donjons #Lightgreen{
     class Donjon{
-          - m_objetAuSol: List<Equipement>
-          - m_entites: List<Entite>
-
+        +<<create>> Donjon(objetAuSol: Equipement[*] ,entites: Entite[*] ,obstacles:Obstacle[*] )
+        getTaille(): Position
+        getObstacle(): Obstacle[*]
+        getObjets(): Equipement[*]
+        getEntites(): Entite[*]
+        contientObstacle(x: integer, y: integer): boolean
+        contientEntite(x: integer, y: integer ): boolean
+        contientEquipement(x: integer ,y: integer ): boolean
         }
+
+    Donjon "1" *---> "1\n -m_taille" Position : mesure >
+    Donjon "*" *---> "*\n -m_obstacle" donjons.Obstacle : contient >
+    Donjon "*" *---> "*\n -m_objetAuSol" Equipement : contient >
+    Donjon "*" o---> "*\n -m_Entite" Entite : contient >
+
+
     class Position{
-       - m_x: integer //-1 si non placé
-       - m_y: integer //same
-       +void changeX( int newX)
-       +void changeY( int newY)
-       +void changeXY( integer newX, integer newY)
+       - m_x: integer
+       - m_y: integer
+       +<<create>> Position()
+       +<<create>> Position(x: integer , y: integer)
+       + getX(): integer
+       + getY(): integer
+       +void changeX(newX: integer )
+       +void changeY(newY: integer )
+       +void changeXY(newX: integer ,newY: integer )
      }
-     class Obstacle {
-       +getPosition(): integer
+    class Obstacle {
+       +<<create>> Obstacle(x: integer, y: interger)
+       +getPosition(): Position
      }
+     donjons.Obstacle "1" *--> "1\n -m_position" donjons.Position: est en >
 }
-' Liens logiques
-/'MJ --> Personnage : crée
-MJ --> Partie : contrôle
-MJ --> Tour : pilote
-MJ --> Monstre : contrôle
-MJ --> De : commente les jets
-MJ --> Entite : affiche
-MJ --> Obstacle : affiche
-MJ --> Equipement : affiche
-Tour --> Entite : joueur
-Partie --> Entite : contient
-Partie --> Obstacle : contient
-Partie --> Equipement : contient
-Entite --> De : utilise pour attaque/dégâts '/
+
 
 
 

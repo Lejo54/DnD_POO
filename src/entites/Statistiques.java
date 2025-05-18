@@ -1,6 +1,6 @@
-package Entites;
+package entites;
 
-import static Partie.De.lancerDe;
+import static partie.De.lancerDe;
 
 public class Statistiques {
  private int m_pv=0;
