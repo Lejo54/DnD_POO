@@ -107,15 +107,15 @@ public abstract class Entite {
     }
 
     public void attaquer(Entite cible) {
-         //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance,
-        // si c'est 1 case ou moins, on ajoute la force au resultat du lancer, si c'est plus c'est la dexterite
+        //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance ,
+        // si cest 1 case ou moins on ajoute la force au resultat du lancer , si c'est plus c'est la dexterite
         int degattotaux=0;
         String[] decomposeDe = getDegat().split("d"); // ["3", "4"]
         int nombreLancers = Integer.parseInt(decomposeDe[0]);
         int typeDe = Integer.parseInt(decomposeDe[1]);
         degattotaux=lancerDe(typeDe,nombreLancers);
-        if ((cible.positionX - positionX == 1 || cible.positionX-positionX== -1) && (cible.positionY - positionY == 1 || cible.positionY-positionY == -1)) {
-            if (cible.getArmure() < (lancerDe(20,1)+ m_statistiques.getForce())){
+        if ((cible.m_position.getX() - m_position.getX() == 1 || cible.m_position.getX()-m_position.getX()== -1) && (cible.m_position.getY() - m_position.getY() == 1 || cible.m_position.getY()-m_position.getY() == -1)) {
+            if (cible.getArmure() < (lancerDe(20,1)+ this.m_statistiques.getForce())){
                 cible.perdrePv(degattotaux);
             }
         }
@@ -129,6 +129,7 @@ public abstract class Entite {
 
 
     }
+
 
 
     public String getNom() {
