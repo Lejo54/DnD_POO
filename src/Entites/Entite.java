@@ -107,8 +107,8 @@ public abstract class Entite {
     }
 
     public void attaquer(Entite cible) {
-        //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance ,
-        // si cest 1 case ou moins on ajoute la force au resultat du lancer , si c'est plus c'est la dexterite
+         //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance,
+        // si c'est 1 case ou moins, on ajoute la force au resultat du lancer, si c'est plus c'est la dexterite
         int degattotaux=0;
         String[] decomposeDe = getDegat().split("d"); // ["3", "4"]
         int nombreLancers = Integer.parseInt(decomposeDe[0]);
@@ -129,7 +129,6 @@ public abstract class Entite {
 
 
     }
-
 
 
     public String getNom() {
