@@ -1,13 +1,13 @@
 package Partie;
 import  donjons.Donjon;
 
-public class Affichage {
+public abstract class Affichage {
 
-    void afficherDonjon(Donjon donjon) {
-        for (int y = 0; y < donjon.taille.getY(); y++) {
+    public static void afficherDonjon(Donjon donjon) {
+        for (int y = 0; y < donjon.getTaille().getY(); y++) {
             System.out.print((char) ('A' + y) + " ");
 
-            for (int x = 0; x < donjon.taille.getX(); x++) {
+            for (int x = 0; x < donjon.getTaille().getX(); x++) {
                 if (y==0){
                     System.out.print(x + " ");
                 }
@@ -26,5 +26,8 @@ public class Affichage {
             System.out.println();
 
         }
+    }
+    public static void afficherPhrase(String phrase) {
+        System.out.println(phrase);
     }
 }

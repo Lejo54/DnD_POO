@@ -9,12 +9,14 @@ public class Donjon {
     List<Equipement> m_objetAuSol;
     List<Entite> m_entites;
     List<Obstacle> m_obstacles;
+    Position m_taille;
 
     public Donjon(List<Equipement> m_objetAuSol, List<Entite> m_entites,List<Obstacle> m_obstacles) {
         this.m_objetAuSol = m_objetAuSol;
         this.m_entites = m_entites;
         this.m_obstacles = m_obstacles;
     }
+    public Position getTaille() {return m_taille;}
     public List<Obstacle> getObstacles() {
         return m_obstacles;
     }
@@ -30,7 +32,7 @@ public class Donjon {
 
     public boolean contientObstacle(int x, int y) {
         for (Obstacle obstacle : m_obstacles) {
-            if (obstacle.m_position.getX() == x && obstacle.m_position.getY() == y) {
+            if (obstacle.getPosition().getX() == x && obstacle.getPosition().getY() == y) {
                 return true;
             }
         }

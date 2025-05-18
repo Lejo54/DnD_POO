@@ -5,5 +5,6 @@ public class Obstacle  {
     public Obstacle() {
         m_position=new Position();
     }
+    public Position getPosition() {return m_position;}
 
 }

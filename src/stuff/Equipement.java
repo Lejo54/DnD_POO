@@ -1,5 +1,6 @@
 package stuff;
 
+import donjons.Position;
 public abstract class Equipement {
     boolean m_actif=false;
     String m_nom;
@@ -18,9 +19,7 @@ public abstract class Equipement {
     public String getNom(){
         return m_nom;
     }
-    public Position getPosition(){
-        return m_position;
-    }
+    public Position getPosition(){return m_position;}
 
 }
 
