@@ -1,4 +1,4 @@
-package stuff;
+package equipements;
 
 import donjons.Position;
 public abstract class Equipement {

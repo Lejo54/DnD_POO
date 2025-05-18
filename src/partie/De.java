@@ -1,4 +1,4 @@
-package Partie;
+package partie;
 
 import java.util.Random;
 
@@ -8,7 +8,6 @@ public class De {
         Random random = new Random();
         int total = 0;
         for (int i = 0; i < nbLancer; i++) {
-            System.out.println(total);
             total += random.nextInt(tailleLancer + 1);
         }
         return total;

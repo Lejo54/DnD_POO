@@ -1,10 +1,10 @@
-package Entites;
+package entites;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import stuff.Armure;
-import stuff.Equipement;
+import equipements.Armure;
+import equipements.Equipement;
 
 public class Personnage {
     String nom;

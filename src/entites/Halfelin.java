@@ -1,4 +1,4 @@
-package Entites;
+package entites;
 
 public class Halfelin extends Race{
  public Halfelin() {

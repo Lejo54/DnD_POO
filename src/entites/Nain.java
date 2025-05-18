@@ -1,4 +1,4 @@
-package Entites;
+package entites;
 
 public class Nain extends Race{
  public Nain() {

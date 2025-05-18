@@ -1,7 +1,7 @@
-package Entites;
+package entites;
 
-import static Partie.Affichage.afficherPhrase;
-import static Partie.De.lancerDe;
+import static partie.Affichage.afficherPhrase;
+import static partie.De.lancerDe;
 
 import donjons.Position;
 import donjons.Donjon;
@@ -13,6 +13,7 @@ public abstract class Entite {
     private String m_nom;
     private Statistiques m_statistiques;
     private Donjon m_donjon;
+    private String m_pseudo;
 
 
     public void changementDonjon(Donjon donjon) {
@@ -106,6 +107,7 @@ public abstract class Entite {
         }
     }
     public char changeEntierEnLettre(int number) {
+
         return (char) ('A'+number);
     }
     public boolean deplacementEstPossible(int x, int y, Donjon donjon){

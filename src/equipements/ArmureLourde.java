@@ -1,15 +1,16 @@
-package stuff;
+package equipements;
 
 public class ArmureLourde extends Armure {
     public ArmureLourde(String nom, String description, boolean actif) {
-        super(nom, description, actif);
+        int classeArmure=0;
         switch (nom.toLowerCase()) {
             case "armure d'ecailles":
-                this.m_classe_Armure =9 ;
+                classeArmure =9 ;
                 break;
             case "demi-plate":
-                this.m_classe_Armure= 10;
+                classeArmure= 10;
                 break;
         }
+        super(nom, description, actif,classeArmure);
     }
 }
