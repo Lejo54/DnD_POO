@@ -3,10 +3,10 @@ package Entites;
 import static Partie.De.lancerDe;
 
 import donjons.Position;
-import donjon.contientObstacle;
-import donjon.contientEntite;
+import donjons.Donjon.contientObstacle;
+import donjons.Donjon.contientEntite;
 
-public class Entite {
+public abstract class Entite {
     private Position m_position;
     //private Action m_action;
     private String m_nom;

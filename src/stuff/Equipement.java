@@ -1,6 +1,6 @@
 package stuff;
 
-public class Equipement {
+public abstract class Equipement {
     boolean m_actif=false;
     String m_nom;
     String m_description;

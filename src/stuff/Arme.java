@@ -1,6 +1,6 @@
 package stuff;
 
-public class Arme extends Equipement {
+public abstract class Arme extends Equipement {
     String m_degat;
     int m_portee;
 
