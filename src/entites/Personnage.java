@@ -14,6 +14,15 @@ public class Personnage {
 
 
     //get nom qui renvoie le nom du personnage et qui remplace getnom de entite
+
+
+    public Personnage(String nom, String race, String classe, List<Equipement> inventaire) {
+        this.nom = nom;
+        this.race = race;
+        this.classe = classe;
+        this.inventaire = inventaire;
+    }
+
     public String getNom() {
         return nom;
     }
