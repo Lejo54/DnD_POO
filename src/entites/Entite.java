@@ -140,6 +140,7 @@ public abstract class Entite {
     }
 
     public Position getPosition() {return m_position;}
+    public Statistiques getStatistiques(){return m_statistiques;}
     public String getNom() {
         return m_nom;
     }

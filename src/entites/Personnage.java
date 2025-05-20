@@ -36,6 +36,7 @@ public class Personnage {
         }
         return 0;
     }
+
     public int getDegat() {
         return 0;
     }
