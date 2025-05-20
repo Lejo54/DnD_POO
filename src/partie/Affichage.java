@@ -3,6 +3,7 @@ import  donjons.Donjon;
 import entites.Entite;
 
 import java.lang.*;
+import java.util.List;
 
 public abstract class Affichage {
 
@@ -31,8 +32,16 @@ public abstract class Affichage {
 
         }
     }
+    public static void afficherActionEntite(Entite entite){
+        List<Map> action=new List<Map> (Entite.getAction());
+        for(action action : Map){
+            if (action.elements()==false){
+                System.out.println(action.keys());
+            }
+        }
+    }
     public static void afficherInfoEntite(Entite entite){
-        System.out.println(entite.getNom()+ "a une armure de "+entite.getArmure() +" de résistance et il inflige "+entite.getDegat()+" et il se trouve en "+entite.getPosition().getX()+entite.changeEntierEnLettre(entite.getPosition().getY()));
+        System.out.println(entite.getNom()+ "à une armure de "+entite.getArmure() +" de résistance et il inflige "+entite.getDegat()+" et il se trouve en "+entite.getPosition().getX()+entite.changeEntierEnLettre(entite.getPosition().getY()));
         System.out.println("voici les differentes informations de l'entite : \nInitiative de "+entite.getStatistiques().getInitiative()+"\nVitesse de "+entite.getStatistiques().getVitesse()+" case/action");
         System.out.println("Il lui reste "+entite.getStatistiques().getPv()+"point de vie restants\nUne force de "+entite.getStatistiques().getForce()+"\nUne dextérité de "+entite.getStatistiques().getDexterite());
     }
