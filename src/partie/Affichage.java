@@ -11,8 +11,6 @@ public abstract class Affichage {
                 if (y==0){
                     System.out.print(x + " ");
                 }
-
-
                 else if (donjon.contientObstacle(x,y)) {
                     System.out.print("♦ ");
                 } else if (donjon.contientEquipement(x,y)) {
