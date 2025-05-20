@@ -145,6 +145,7 @@ public abstract class Entite {
     }
     public boolean getStatusAction(String action) { return m_actions.get(action); }
     public Position getPosition() {return m_position;}
+    public Statistiques getStatistiques(){return m_statistiques;}
     public String getNom() {
         return m_nom;
     }
