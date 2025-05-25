@@ -1,5 +1,7 @@
 package entites;
 
+import java.util.HashMap;
+import java.util.Map;
 import static partie.Affichage.afficherPhrase;
 import static partie.De.lancerDe;
 
@@ -9,17 +11,20 @@ import donjons.Donjon;
 
 public abstract class Entite {
     private Position m_position;
-    //private Action m_action;
     private String m_nom;
     private Statistiques m_statistiques;
-    private Donjon m_donjon;
-    private String m_pseudo;
+    private Map<String,Boolean> m_actions;
 
 
-    public void changementDonjon(Donjon donjon) {
-        m_donjon = donjon;
+    public Entite(String nom) {
+     m_nom=nom;
+     m_statistiques=new Statistiques();
+     m_actions=new HashMap<>();
+     m_actions.put("attaquer",false);
+     m_actions.put("ramasser",false);
+     m_actions.put("déplacer",false);
     }
-    public Donjon getDonjon() {return m_donjon;}
+
     public void perdrePv(int pvRetire) {
         //retire des pv a l'entité subissant une attaque
         this.m_statistiques.retirerPv(pvRetire);
@@ -38,11 +43,10 @@ public abstract class Entite {
         return false;
     }
     public void Passer_Le_Tour(){
-        //Lorsque l'entite veut mettre fin a son tour elle peut utiliser dormir
-        String phrase="je suis fatiguée... je vais me reposer...";
+        afficherPhrase("je suis fatiguée... je vais me reposer...");
     }
 
-    public void deplacement() {
+    public void deplacement(Donjon donjon) {
         // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
 
         // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
@@ -62,7 +66,7 @@ public abstract class Entite {
             String erreur= "entite sur le chemin ou passage hors de la carte ";
             switch (direction) {
                 case 'z':
-                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()-1, this.getDonjon())){
+                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()-1, donjon)){
                         this.m_position.changeY(this.m_position.getY() - 1);
                     }
                     else{
@@ -71,7 +75,7 @@ public abstract class Entite {
                     }
                     break;
                 case 's':
-                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()+1, this.getDonjon())){
+                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()+1, donjon)){
                         this.m_position.changeY(this.m_position.getY() + 1);
                     }
                     else{
@@ -79,7 +83,7 @@ public abstract class Entite {
                         afficherPhrase(erreur);
                     }
                 case 'q':
-                    if(deplacementEstPossible(this.m_position.getX()-1,this.m_position.getY(), this.getDonjon())){
+                    if(deplacementEstPossible(this.m_position.getX()-1,this.m_position.getY(), donjon)){
                         this.m_position.changeX(this.m_position.getX() - 1);
                     }
                     else{
@@ -88,7 +92,7 @@ public abstract class Entite {
                     }
 
                 case 'd':
-                    if(deplacementEstPossible(this.m_position.getX() + 1,this.m_position.getY(), this.getDonjon())){
+                    if(deplacementEstPossible(this.m_position.getX() + 1,this.m_position.getY(), donjon)){
                         this.m_position.changeX(this.m_position.getX() + 1);
                     }
                     else{
@@ -116,6 +120,7 @@ public abstract class Entite {
     }
 
     public void attaquer(Entite cible) {
+        this.m_actions.put("attaquer",true);
          //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance,
         // si c'est 1 case ou moins, on ajoute la force au resultat du lancer, si c'est plus c'est la dexterite
         int degattotaux=0;
@@ -133,12 +138,12 @@ public abstract class Entite {
             cible.perdrePv(degattotaux);
         }
         else{
-            System.out.println("la cible résiste a l'attaque");
+            afficherPhrase("la cible résiste a l'attaque");
         }
 
 
     }
-
+    public boolean getStatusAction(String action) { return m_actions.get(action); }
     public Position getPosition() {return m_position;}
     public Statistiques getStatistiques(){return m_statistiques;}
     public String getNom() {
@@ -147,7 +152,6 @@ public abstract class Entite {
     public int getArmure(){
         return 0;
     }
-    public String getDegat() {
-        return "";
-    }
+    public Map<String,Boolean> getActions() {return m_actions;}
+
 }
