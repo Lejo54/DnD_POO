@@ -1,5 +1,6 @@
 package entites;
 
+import java.util.Map;
 import static partie.Affichage.afficherPhrase;
 import static partie.De.lancerDe;
 
@@ -9,17 +10,17 @@ import donjons.Donjon;
 
 public abstract class Entite {
     private Position m_position;
-    //private Action m_action;
     private String m_nom;
     private Statistiques m_statistiques;
-    private Donjon m_donjon;
-    private String m_pseudo;
 
 
-    public void changementDonjon(Donjon donjon) {
-        m_donjon = donjon;
+
+    public Entite(String nom) {
+     m_nom=nom;
+     m_statistiques=new Statistiques();
+
     }
-    public Donjon getDonjon() {return m_donjon;}
+
     public void perdrePv(int pvRetire) {
         //retire des pv a l'entité subissant une attaque
         this.m_statistiques.retirerPv(pvRetire);
@@ -49,6 +50,7 @@ public abstract class Entite {
     }
 
     public void attaquer(Entite cible) {
+        this.m_actions.put("attaquer",true);
          //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance,
         // si c'est 1 case ou moins, on ajoute la force au resultat du lancer, si c'est plus c'est la dexterite
         int degattotaux=0;
@@ -76,7 +78,7 @@ public abstract class Entite {
             else {afficherPhrase("hors de portée\n");}
         }
     }
-
+    public boolean getStatusAction(String action) { return m_actions.get(action); }
     public Position getPosition() {return m_position;}
     public Statistiques getStatistiques(){return m_statistiques;}
     public String getNom() {

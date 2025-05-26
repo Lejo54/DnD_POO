@@ -7,26 +7,21 @@ import equipements.Arme;
 import equipements.Armure;
 import equipements.Equipement;
 
-public class Personnage {
-    String nom;
-    String race;
-    String classe;
-    List<Equipement> inventaire= new ArrayList<>();
+public class Personnage extends Entite{
+    Race m_race;
+    CharClasse m_classe;
+    List<Equipement> m_inventaire= new ArrayList<>();
 
+    public Personnage(String nom, Race race, CharClasse classe) {
+        super(nom);
+        m_race= race;
+        m_classe= classe;
+        //Faire un inventaire en fonction de la classe avec des switch case
 
-    //get nom qui renvoie le nom du personnage et qui remplace getnom de entite
-
-
-    public Personnage(String nom, String race, String classe, List<Equipement> inventaire) {
-        this.nom = nom;
-        this.race = race;
-        this.classe = classe;
-        this.inventaire = inventaire;
     }
 
-    public String getNom() {
-        return nom;
-    }
+
+    //getters
     public int getarmure(){
         for(Equipement e:inventaire){
             if (e.getType().equals("armure")){
