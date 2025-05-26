@@ -25,13 +25,14 @@ public abstract class Entite {
         //retire des pv a l'entité subissant une attaque
         this.m_statistiques.retirerPv(pvRetire);
         String phrase =this.getNom() + " perd " + pvRetire + " PV. PV restants : " + this.m_statistiques.getPv();
+        afficherPhrase(phrase+"\n");
         //affichage
         est_mort();
     }
     public boolean est_mort(){
         //verifie si l'entite qui vient d'etre attaquer a toujours des points de vie restant
         if(this.m_statistiques.getPv()<=0){
-            afficherPhrase(this.getNom() +  "est mort");
+            afficherPhrase(this.getNom() +  "est mort\n");
             //Affichage
             //Sortir l'entite de la liste
             return true;
@@ -39,15 +40,14 @@ public abstract class Entite {
         return false;
     }
     public void Passer_Le_Tour(){
-        afficherPhrase("je suis fatiguée... je vais me reposer...");
+        //Lorsque l'entite veut mettre fin a son tour elle peut utiliser dormir
+        String phrase="je suis fatiguée... je vais me reposer...\n";
+        afficherPhrase(phrase);
     }
-
-
     public static char changeEntierEnLettre(int number) {
 
         return (char) ('A'+number);
     }
-
 
     public void attaquer(Entite cible) {
         this.m_actions.put("attaquer",true);
@@ -58,20 +58,25 @@ public abstract class Entite {
         int nombreLancers = Integer.parseInt(decomposeDe[0]);
         int typeDe = Integer.parseInt(decomposeDe[1]);
         degattotaux=lancerDe(typeDe,nombreLancers);
-        if ((cible.m_position.getX() - m_position.getX() == 1 || cible.m_position.getX()-m_position.getX()== -1) && (cible.m_position.getY() - m_position.getY() == 1 || cible.m_position.getY()-m_position.getY() == -1)) {
-            if (cible.getArmure() < (lancerDe(20,1)+ this.m_statistiques.getForce())){
-                cible.perdrePv(degattotaux);
+        if ((cible.getPosition().getX() - getPosition().getX() == 1 || cible.getPosition().getX()-getPosition().getX()== -1) && (cible.getPosition().getY() - getPosition().getY() == 1 || cible.getPosition().getY()-getPosition().getY() == -1)) {
+            if (getPortee()==1) {
+                if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getForce())) {
+                    cible.perdrePv(degattotaux);
+                }
+                else{
+                    afficherPhrase("la cible résiste a l'attaque\n");
+                }
             }
+            if(getPortee()>1) {
+                if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getDexterite())) {
+                    cible.perdrePv(degattotaux);
+                }
+                else{
+                    afficherPhrase("la cible résiste a l'attaque\n");
+                }
+            }
+            else {afficherPhrase("hors de portée\n");}
         }
-        else if(cible.getArmure()<(lancerDe(20,1)+ this.m_statistiques.getDexterite())) {
-
-            cible.perdrePv(degattotaux);
-        }
-        else{
-            afficherPhrase("la cible résiste a l'attaque");
-        }
-
-
     }
     public boolean getStatusAction(String action) { return m_actions.get(action); }
     public Position getPosition() {return m_position;}
@@ -79,9 +84,8 @@ public abstract class Entite {
     public String getNom() {
         return m_nom;
     }
-    public int getArmure(){
-        return 0;
-    }
-    public Map<String,Boolean> getActions() {return m_actions;}
+    public abstract int getArmure() ;
+    public abstract int getPortee() ;
 
+    public abstract String getDegat() ;
 }
