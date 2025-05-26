@@ -23,4 +23,8 @@ public class ArmeCourante extends Arme {
         }
         return "";
     }
+    @Override
+    public String Poid() {
+        return "courante";
+    }
 }

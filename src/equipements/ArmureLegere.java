@@ -15,4 +15,9 @@ public class ArmureLegere extends Armure {
         }
         return 0;
     }
+
+    @Override
+    public String Poid() {
+        return "leger";
+    }
 }

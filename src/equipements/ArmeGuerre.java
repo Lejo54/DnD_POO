@@ -28,4 +28,8 @@ public class ArmeGuerre extends Arme {
         }
         return "";
     }
+    @Override
+    public String Poid() {
+        return "guerre";
+    }
 }
