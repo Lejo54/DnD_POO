@@ -1,20 +1,26 @@
 package equipements;
 
 public class ArmeCourante extends Arme {
+
     public ArmeCourante(String nom, String description, boolean actif) {
-        int portee=0;
-        String degat="";
+        super(nom, description, actif, calculportee(nom), calculdegat(nom));
+    }
+    private static int calculportee(String nom){
         switch (nom.toLowerCase()) {
             case "baton":
-                degat = "1d6";
-                portee = 1;
-                break;
+                return 1;
             case "masse d'armes":
-                degat = "1d6";
-                portee = 1;
-                break;
-
+                return 1;
         }
-        super(nom, description, actif,portee,degat);
+        return 0;
+    }
+    private static String calculdegat(String nom){
+        switch (nom.toLowerCase()) {
+            case "baton":
+                return "1d6";
+            case "masse d'armes":
+                return  "1d6";
+        }
+        return "";
     }
 }

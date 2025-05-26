@@ -1,24 +1,30 @@
 package equipements;
 
 public class ArmeDistante extends Arme{
+
     public ArmeDistante(String nom, String description, boolean actif) {
-        int portee=0;
-        String degat="";
+        super(nom, description, actif, calculportee(nom), calculdegat(nom));
+    }
+    private static int calculportee(String nom){
         switch (nom.toLowerCase()) {
             case "arc court":
-                degat = "1d6";
-                portee = 16;
-                break;
+                return 16;
             case "arbalete legere":
-                degat = "1d8";
-                portee = 16;
-                break;
-            case "fronde":
-                degat = "1d4";
-                portee = 6;
-                break;
-
+                return  16;
+            case "fronde" :
+                return 6;
         }
-        super(nom, description, actif,portee,degat);
+        return 0;
+    }
+    private static String calculdegat(String nom){
+        switch (nom.toLowerCase()) {
+            case "epee longue":
+                return "1d6";
+            case "rapiere":
+                return  "1d8";
+            case "epee_à_deux_mains" :
+                return "1d4";
+        }
+        return "";
     }
 }

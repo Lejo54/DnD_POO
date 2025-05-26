@@ -2,19 +2,30 @@ package equipements;
 
 public class ArmeGuerre extends Arme {
     public ArmeGuerre(String nom, String description, boolean actif) {
-        int portee=0;
-        String degat="";
+        super(nom, description, actif, calculportee(nom), calculdegat(nom));
+    }
+    private static int calculportee(String nom){
         switch (nom.toLowerCase()) {
             case "epee longue":
-                degat = "1d8";
-                portee = 1;
-                break;
+                return 1;
             case "rapiere":
-                degat = "1d8";
-                portee = 1;
-                break;
+                return  1;
+            case "epee_à_deux_mains" :
+                return 1;
                 //vitesse du personnage -2 force +4
         }
-        super(nom, description, actif,portee,degat);
+        return 0;
+    }
+    private static String calculdegat(String nom){
+        switch (nom.toLowerCase()) {
+            case "epee longue":
+                return "1d8";
+            case "rapiere":
+                return  "1d8";
+            case "epee_à_deux_mains" :
+                return "2d6";
+            //vitesse du personnage -2 force +4
+        }
+        return "";
     }
 }

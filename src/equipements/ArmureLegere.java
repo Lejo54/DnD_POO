@@ -2,16 +2,17 @@ package equipements;
 
 public class ArmureLegere extends Armure {
     public ArmureLegere(String nom, String description, boolean actif) {
-        int classeArmure=0;
+        super(nom, description, actif, calculclasseArmure(nom));
+    }
+
+    private static int calculclasseArmure(String nom){
         switch (nom.toLowerCase()) {
             case "cotte de mailles":
-                classeArmure =11 ;
-                break;
+                return 11 ;
             case "harnois":
-                classeArmure= 12;
-                break;
+                return 12;
                 //vitesse -4
         }
-        super(nom, description, actif,classeArmure);
+        return 0;
     }
 }

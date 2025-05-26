@@ -2,15 +2,15 @@ package equipements;
 
 public class ArmureLourde extends Armure {
     public ArmureLourde(String nom, String description, boolean actif) {
-        int classeArmure=0;
+        super(nom, description, actif, calculclasseArmure(nom));
+    }
+    private static int calculclasseArmure(String nom){
         switch (nom.toLowerCase()) {
             case "armure d'ecailles":
-                classeArmure =9 ;
-                break;
+                return 9 ;
             case "demi-plate":
-                classeArmure= 10;
-                break;
+                return  10;
         }
-        super(nom, description, actif,classeArmure);
+        return 0;
     }
 }
