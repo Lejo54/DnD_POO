@@ -11,11 +11,12 @@ public class Personnage extends Entite{
     CharClasse m_classe;
     List<Equipement> m_inventaire= new ArrayList<>();
 
-    public Personnage(String nom, Race race, CharClasse classe, List<Equipement> inventaire) {
+    public Personnage(String nom, Race race, CharClasse classe) {
         super(nom);
         m_race= race;
         m_classe= classe;
-        m_inventaire.addAll(inventaire);
+        //Faire un inventaire en fonction de la classe avec des switch case
+
     }
 
 
