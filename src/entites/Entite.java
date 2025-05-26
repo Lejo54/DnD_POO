@@ -1,6 +1,5 @@
 package entites;
 
-import java.util.HashMap;
 import java.util.Map;
 import static partie.Affichage.afficherPhrase;
 import static partie.De.lancerDe;
@@ -13,16 +12,13 @@ public abstract class Entite {
     private Position m_position;
     private String m_nom;
     private Statistiques m_statistiques;
-    private Map<String,Boolean> m_actions;
+
 
 
     public Entite(String nom) {
      m_nom=nom;
      m_statistiques=new Statistiques();
-     m_actions=new HashMap<>();
-     m_actions.put("attaquer",false);
-     m_actions.put("ramasser",false);
-     m_actions.put("déplacer",false);
+
     }
 
     public void perdrePv(int pvRetire) {
@@ -46,78 +42,12 @@ public abstract class Entite {
         afficherPhrase("je suis fatiguée... je vais me reposer...");
     }
 
-    public void deplacement(Donjon donjon) {
-        // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
 
-        // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
-
-        int deplacementsRestants = this.m_statistiques.getVitesse() / 3;
-        int initY= this.m_position.getY();
-        int initX= this.m_position.getX();
-        afficherPhrase("Entrez une direction (z = haut, q = gauche, s = bas, d = droite, o= retour à l'origine) :");
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
-
-        // Boucle permettant les déplacements
-        for (int i = 0; i < deplacementsRestants; i++) {
-            System.out.print("Déplacement " + (i + 1) + "/" + deplacementsRestants + " : ");
-            char direction = scanner.next().charAt(0);
-            int oldY= this.m_position.getY();
-            int oldX= this.m_position.getX();
-            String erreur= "entite sur le chemin ou passage hors de la carte ";
-            switch (direction) {
-                case 'z':
-                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()-1, donjon)){
-                        this.m_position.changeY(this.m_position.getY() - 1);
-                    }
-                    else{
-                        i--;
-                        afficherPhrase(erreur);
-                    }
-                    break;
-                case 's':
-                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()+1, donjon)){
-                        this.m_position.changeY(this.m_position.getY() + 1);
-                    }
-                    else{
-                        i--;
-                        afficherPhrase(erreur);
-                    }
-                case 'q':
-                    if(deplacementEstPossible(this.m_position.getX()-1,this.m_position.getY(), donjon)){
-                        this.m_position.changeX(this.m_position.getX() - 1);
-                    }
-                    else{
-                        i--;
-                        afficherPhrase(erreur);
-                    }
-
-                case 'd':
-                    if(deplacementEstPossible(this.m_position.getX() + 1,this.m_position.getY(), donjon)){
-                        this.m_position.changeX(this.m_position.getX() + 1);
-                    }
-                    else{
-                        i--;
-                        afficherPhrase(erreur);
-                    }
-                case 'o':
-                    this.m_position.changeXY(initX,initY);
-                default:
-                    System.out.println("Direction invalide ! Entrez z, q, s ,d ou o uniquement.");
-                    i--; // Annule cette itération, car le déplacement n'a pas eu lieu
-            }
-
-            //on transforme la position numérique en alphabétique avec 0=A et 26=Z
-            afficherPhrase("Nouvelle position : (" + this.changeEntierEnLettre(this.m_position.getX()) + ", " + this.m_position.getY() + ")");
-        }
-    }
-    public char changeEntierEnLettre(int number) {
+    public static char changeEntierEnLettre(int number) {
 
         return (char) ('A'+number);
     }
-    public boolean deplacementEstPossible(int x, int y, Donjon donjon){
 
-        return !((donjon.contientObstacle(x,y)) && (donjon.contientEntite(x,y)) && (x<=0) && (y<=0));
-    }
 
     public void attaquer(Entite cible) {
         this.m_actions.put("attaquer",true);
