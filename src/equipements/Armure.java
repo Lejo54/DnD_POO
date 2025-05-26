@@ -7,6 +7,7 @@ public abstract class Armure extends Equipement {
         super(nom, description, actif);
         m_classe_Armure = classe_Armure;
     }
+    public String getType(){return "armure";}
 
     public int getClasseArmure(){
         return m_classe_Armure;

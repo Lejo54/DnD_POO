@@ -9,4 +9,8 @@ public abstract class Arme extends Equipement {
         m_degat = degat;
         m_portee = portee;
     }
+    public String getType(){return "arme";}
+    public String getDegat() {return m_degat;
+    }
+    public int getPortee(){return m_portee;}
 }

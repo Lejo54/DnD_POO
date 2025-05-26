@@ -19,4 +19,5 @@ public class Monstre {
     public String getType() {
         return "Monstre";
     }
+    public int getPortee(){return portee;}
 }

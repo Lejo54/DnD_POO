@@ -24,6 +24,7 @@ public abstract class Entite {
         //retire des pv a l'entité subissant une attaque
         this.m_statistiques.retirerPv(pvRetire);
         String phrase =this.getNom() + " perd " + pvRetire + " PV. PV restants : " + this.m_statistiques.getPv();
+        afficherPhrase(phrase);
         //affichage
         est_mort();
     }
@@ -41,78 +42,9 @@ public abstract class Entite {
         //Lorsque l'entite veut mettre fin a son tour elle peut utiliser dormir
         String phrase="je suis fatiguée... je vais me reposer...";
     }
-
-    public void deplacement() {
-        // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
-
-        // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
-
-        int deplacementsRestants = this.m_statistiques.getVitesse() / 3;
-        int initY= this.m_position.getY();
-        int initX= this.m_position.getX();
-        afficherPhrase("Entrez une direction (z = haut, q = gauche, s = bas, d = droite, o= retour à l'origine) :");
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
-
-        // Boucle permettant les déplacements
-        for (int i = 0; i < deplacementsRestants; i++) {
-            System.out.print("Déplacement " + (i + 1) + "/" + deplacementsRestants + " : ");
-            char direction = scanner.next().charAt(0);
-            int oldY= this.m_position.getY();
-            int oldX= this.m_position.getX();
-            String erreur= "entite sur le chemin ou passage hors de la carte ";
-            switch (direction) {
-                case 'z':
-                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()-1, this.getDonjon())){
-                        this.m_position.changeY(this.m_position.getY() - 1);
-                    }
-                    else{
-                        i--;
-                        afficherPhrase(erreur);
-                    }
-                    break;
-                case 's':
-                    if(deplacementEstPossible(this.m_position.getX(),this.m_position.getY()+1, this.getDonjon())){
-                        this.m_position.changeY(this.m_position.getY() + 1);
-                    }
-                    else{
-                        i--;
-                        afficherPhrase(erreur);
-                    }
-                case 'q':
-                    if(deplacementEstPossible(this.m_position.getX()-1,this.m_position.getY(), this.getDonjon())){
-                        this.m_position.changeX(this.m_position.getX() - 1);
-                    }
-                    else{
-                        i--;
-                        afficherPhrase(erreur);
-                    }
-
-                case 'd':
-                    if(deplacementEstPossible(this.m_position.getX() + 1,this.m_position.getY(), this.getDonjon())){
-                        this.m_position.changeX(this.m_position.getX() + 1);
-                    }
-                    else{
-                        i--;
-                        afficherPhrase(erreur);
-                    }
-                case 'o':
-                    this.m_position.changeXY(initX,initY);
-                default:
-                    System.out.println("Direction invalide ! Entrez z, q, s ,d ou o uniquement.");
-                    i--; // Annule cette itération, car le déplacement n'a pas eu lieu
-            }
-
-            //on transforme la position numérique en alphabétique avec 0=A et 26=Z
-            afficherPhrase("Nouvelle position : (" + this.changeEntierEnLettre(this.m_position.getX()) + ", " + this.m_position.getY() + ")");
-        }
-    }
-    public char changeEntierEnLettre(int number) {
+    public static char changeEntierEnLettre(int number) {
 
         return (char) ('A'+number);
-    }
-    public boolean deplacementEstPossible(int x, int y, Donjon donjon){
-
-        return !((donjon.contientObstacle(x,y)) && (donjon.contientEntite(x,y)) && (x<=0) && (y<=0));
     }
 
     public void attaquer(Entite cible) {
@@ -123,20 +55,21 @@ public abstract class Entite {
         int nombreLancers = Integer.parseInt(decomposeDe[0]);
         int typeDe = Integer.parseInt(decomposeDe[1]);
         degattotaux=lancerDe(typeDe,nombreLancers);
-        if ((cible.m_position.getX() - m_position.getX() == 1 || cible.m_position.getX()-m_position.getX()== -1) && (cible.m_position.getY() - m_position.getY() == 1 || cible.m_position.getY()-m_position.getY() == -1)) {
-            if (cible.getArmure() < (lancerDe(20,1)+ this.m_statistiques.getForce())){
-                cible.perdrePv(degattotaux);
+        if ((cible.getPosition().getX() - m_position.getX() == 1 || cible.getPosition().getX()-getPosition().getX()== -1) && (cible.getPosition().getY() - getPosition().getY() == 1 || cible.getPosition().getY()-getPosition().getY() == -1)) {
+            if (getPortee()==1) {
+                if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getForce())) {
+                    cible.perdrePv(degattotaux);
+                }
+            }
+            if(getPortee()>1) {
+                if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getDexterite())) {
+                    cible.perdrePv(degattotaux);
+                }
+            }
+            else{
+                afficherPhrase("la cible résiste a l'attaque");
             }
         }
-        else if(cible.getArmure()<(lancerDe(20,1)+ this.m_statistiques.getDexterite())) {
-
-            cible.perdrePv(degattotaux);
-        }
-        else{
-            System.out.println("la cible résiste a l'attaque");
-        }
-
-
     }
 
     public Position getPosition() {return m_position;}
@@ -144,10 +77,8 @@ public abstract class Entite {
     public String getNom() {
         return m_nom;
     }
-    public int getArmure(){
-        return 0;
-    }
-    public String getDegat() {
-        return "";
-    }
+    public abstract int getArmure() ;
+    public abstract int getPortee() ;
+
+    public abstract String getDegat() ;
 }
