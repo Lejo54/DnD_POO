@@ -2,6 +2,7 @@ package partie;
 
 import entites.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static partie.Affichage.*;
@@ -9,15 +10,19 @@ import static partie.Affichage.*;
 public class Mj {
 
     private List<Personnage> m_joueurs;
+    private
+
     public Mj() {
+        List<Personnage> joueurs = new ArrayList<>();
         int nbJoueur= demanderInt("Entrez un nombre de joueur :\n");
         for (int i = 0; i < nbJoueur; i++) {
-            m_joueurs.add(creerPersonnage());
+            joueurs.add(creerJoueurs());
         }
+        m_joueurs = joueurs;
     }
 
 
-    public Personnage creerPersonnage(){
+    public Personnage creerJoueurs(){
         String nom= demanderString("Entrez un nom de personnage :\n");
         afficherPhrase("Choisir votre classe parmis:\n");
         afficherPhrase("1/ Clerc:\n");
