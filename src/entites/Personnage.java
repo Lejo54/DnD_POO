@@ -3,6 +3,7 @@ package entites;
 import java.util.ArrayList;
 import java.util.List;
 
+import equipements.Arme;
 import equipements.Armure;
 import equipements.Equipement;
 
@@ -21,9 +22,9 @@ public class Personnage extends Entite{
 
 
     //getters
-    public int getarmure(){
+    public int getArmure(){
         for(Equipement e:m_inventaire){
-            if (e.getClass() == Armure.class){
+            if (e.getType().equals("armure")){
                 if (e.estEquipe()) {
                     return ((Armure) e).getClasseArmure();
                 }
@@ -31,6 +32,26 @@ public class Personnage extends Entite{
         }
         return 0;
     }
+
+    public String getDegat(){
+        for(Equipement e:m_inventaire){
+            if (e.getType().equals("arme")){
+                if (e.estEquipe()) {
+                    return ((Arme) e).getDegat();
+                }
+            }
+        }
+        return "";
+    }
+    public int getPortee(){
+        for(Equipement e:m_inventaire){
+            if (e.getType().equals("arme")){
+                if (e.estEquipe()) {
+                    return ((Arme) e).getPortee();
+                }
+            }
+        }
+        return 0;}
 
     public String getType() {
         return "Personnage";

@@ -12,7 +12,7 @@ public abstract class Equipement {
         this.m_actif = actif;
         m_position=new Position();
     }
-
+    public abstract String getType();
     public boolean estEquipe() {
         return m_actif;
     }
