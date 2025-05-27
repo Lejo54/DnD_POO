@@ -22,8 +22,8 @@ public class Personnage extends Entite{
 
 
     //getters
-    public int getarmure(){
-        for(Equipement e:inventaire){
+    public int getArmure(){
+        for(Equipement e:m_inventaire){
             if (e.getType().equals("armure")){
                 if (e.estEquipe()) {
                     return ((Armure) e).getClasseArmure();
@@ -33,8 +33,8 @@ public class Personnage extends Entite{
         return 0;
     }
 
-    public String getdegat(){
-        for(Equipement e:inventaire){
+    public String getDegat(){
+        for(Equipement e:m_inventaire){
             if (e.getType().equals("arme")){
                 if (e.estEquipe()) {
                     return ((Arme) e).getDegat();
@@ -43,8 +43,8 @@ public class Personnage extends Entite{
         }
         return "";
     }
-    public int Portee(){
-        for(Equipement e:inventaire){
+    public int getPortee(){
+        for(Equipement e:m_inventaire){
             if (e.getType().equals("arme")){
                 if (e.estEquipe()) {
                     return ((Arme) e).getPortee();
@@ -52,6 +52,7 @@ public class Personnage extends Entite{
             }
         }
         return 0;}
+
     public String getType() {
         return "Personnage";
     }

@@ -11,6 +11,7 @@ import donjons.Donjon;
 public abstract class Entite {
     private Position m_position;
     private String m_nom;
+    private String m_type;
     private Statistiques m_statistiques;
 
 
@@ -49,16 +50,36 @@ public abstract class Entite {
         return (char) ('A'+number);
     }
 
+
     public void attaquer(Entite cible) {
-        this.m_actions.put("attaquer",true);
-         //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance,
+        //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance,
         // si c'est 1 case ou moins, on ajoute la force au resultat du lancer, si c'est plus c'est la dexterite
         int degattotaux=0;
+        int grandx=0;
+        int petitx=0;
+        int grandy=0;
+        int petity=0;
+        if (cible.getPosition().getX()>getPosition().getX()){
+            grandx=cible.getPosition().getX();
+            petitx=getPosition().getX();
+        }
+        else {
+            grandx=cible.getPosition().getX();
+            petitx=getPosition().getX();
+        }
+        if (cible.getPosition().getY()>getPosition().getY()){
+            grandy=cible.getPosition().getY();
+            petity=getPosition().getY();
+        }
+        else {
+            grandy=cible.getPosition().getY();
+            petity=getPosition().getY();
+        }
         String[] decomposeDe = getDegat().split("d"); // ["3", "4"]
         int nombreLancers = Integer.parseInt(decomposeDe[0]);
         int typeDe = Integer.parseInt(decomposeDe[1]);
         degattotaux=lancerDe(typeDe,nombreLancers);
-        if ((cible.getPosition().getX() - getPosition().getX() == 1 || cible.getPosition().getX()-getPosition().getX()== -1) && (cible.getPosition().getY() - getPosition().getY() == 1 || cible.getPosition().getY()-getPosition().getY() == -1)) {
+        if ((grandx - petitx < 2) && (grandy - petity < 2)) {
             if (getPortee()==1) {
                 if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getForce())) {
                     cible.perdrePv(degattotaux);
@@ -67,7 +88,7 @@ public abstract class Entite {
                     afficherPhrase("la cible résiste a l'attaque\n");
                 }
             }
-            if(getPortee()>1) {
+            if((getPortee()<grandx-petitx)||(getPortee()<grandy-petity)) {
                 if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getDexterite())) {
                     cible.perdrePv(degattotaux);
                 }
@@ -78,7 +99,8 @@ public abstract class Entite {
             else {afficherPhrase("hors de portée\n");}
         }
     }
-    public boolean getStatusAction(String action) { return m_actions.get(action); }
+
+    public abstract String getType();
     public Position getPosition() {return m_position;}
     public Statistiques getStatistiques(){return m_statistiques;}
     public String getNom() {

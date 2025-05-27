@@ -34,12 +34,15 @@ public abstract class Affichage {
         }
     }
     public static void afficherActionEntite(Entite entite){
-       /* List<Map> action=new List<Map> (Entite.getAction());
-        for(action action : Map){
-            if (action.elements()==false){
-                System.out.println(action.keys());
-            }
-        }*/
+        afficherPhrase(entite.getNom()+" , c'est a vous que voulez vous faire ?\n");
+        afficherPhrase("1 - attaquer un ennemi\n");
+        afficherPhrase("2 - se deplacer dans le donjon\n");
+        if (entite.getType().equals("Personnage")){
+            afficherPhrase("3 - ramasser un équipement\n");
+            afficherPhrase("4 - changer d'arme équipé\n");
+            afficherPhrase("5 - changer d'armure équipé\n");
+        }
+        afficherPhrase("chaque ligne correspond a une action (1 = action citez à la ligne 1 etc...\n");
     }
     public static void afficherInfoEntite(Entite entite){
         System.out.println(entite.getNom()+ "à une armure de "+entite.getArmure() +" de résistance et il inflige "+entite.getDegat()+" et il se trouve en "+entite.getPosition().getX()+changeEntierEnLettre(entite.getPosition().getY()));
