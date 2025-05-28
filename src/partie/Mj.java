@@ -10,7 +10,7 @@ public class Mj {
 
     private List<Personnage> m_joueurs;
     public Mj() {
-        int nbJoueur= demanderInt("Entrez un nombre de joueur :\n");
+        int nbJoueur= demanderInt("quel taille fais notre groupe d'aventurier ?\n");
         for (int i = 0; i < nbJoueur; i++) {
             m_joueurs.add(creerPersonnage());
         }
