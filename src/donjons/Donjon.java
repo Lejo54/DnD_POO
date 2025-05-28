@@ -11,10 +11,11 @@ public class Donjon {
     List<Obstacle> m_obstacles;
     Position m_taille;
 
-    public Donjon(List<Equipement> objetAuSol, List<Entite> entites,List<Obstacle> obstacles) {
+    public Donjon(List<Equipement> objetAuSol, List<Entite> entites,List<Obstacle> obstacles,int x, int y) {
         this.m_objetAuSol = m_objetAuSol;
         this.m_entites = m_entites;
         this.m_obstacles = m_obstacles;
+        this.m_taille=new Position(x,y);
     }
     public Position getTaille() {return m_taille;}
     public List<Obstacle> getObstacles() {

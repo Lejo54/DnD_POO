@@ -26,6 +26,8 @@ public class Statistiques {
  m_vitesse=stat;
  stat= lancerDe(4,4)+3;
  m_dexterite=stat;
+ stat= lancerDe(1,20);
+ m_initiative=stat;
  }
  //Constructeur pour les classes
  public Statistiques(int pv) {

@@ -59,7 +59,6 @@ public class Personnage extends Entite{
         m_statistiques.setDexterite(m_statistiques.getDexterite()+m_race.getStatistiques().getDexterite());
         m_statistiques.setPV(m_classe.getStatistiques().getPv());
         m_statistiques.setForce(m_statistiques.getForce()+m_race.getStatistiques().getForce());
-        m_statistiques.setInitiative(lancerDe(1,20));
         m_statistiques.setVitesse(m_statistiques.getVitesse()+m_race.getStatistiques().getVitesse());
     }
 
