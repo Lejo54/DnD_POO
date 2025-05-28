@@ -1,8 +1,9 @@
 package partie;
 
+import donjons.Position;
 import entites.*;
 import equipements.*;
-
+import donjons.Obstacle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,8 +104,14 @@ public class Mj {
         return res;
     }
 
-    public int creerObstacle(int nbo){
-        
+    public List<Obstacle> creerObstacle(int nbo){
+        List<Obstacle> res=new ArrayList<>();
+        for(int i =0 ; i<nbo ; i++){
+            int x =demanderInt("position x de votre obstacle Overlord?");
+            int y =demanderInt("position y de votre obstacle Overlord?");
+            res.add(new Obstacle(x,y));
+        }
+        return res;
     }
 
 
@@ -112,9 +119,8 @@ public class Mj {
         int x=demanderInt("quelle taille fera votre donjon en longueur (x)");
         int y=demanderInt("quelle taille fera votre donjon en largeur (y)");
         List<Equipement> equipements=creerEquipementAuSol(demanderInt("combien d'objet ramassable seront au sol pour les joueurs"));
-
-
-        Donjon d=new Donjon()
+        List<Obstacle> obstacles=creerObstacle(demanderInt("combien d'obstacle se trouveront sur la carte ?"));
+        Donjon d=new Donjon(equipements,jsp faut quon voit ensemble , obstacles,x,y);
     }
 
 }
