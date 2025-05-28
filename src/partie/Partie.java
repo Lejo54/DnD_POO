@@ -2,14 +2,22 @@ package partie;
 import entites.Entite;
 import entites.Personnage;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static partie.Affichage.*;
+import static partie.Affichage.afficherPhrase;
 
 public class Partie {
     private List<Personnage> m_joueurs;
 
     // Constructeur avec filtrage
     public Partie(List<Personnage> joueurs) {
-        //
+        m_joueurs = new ArrayList<>();
+        int nbJoueur= demanderInt("Entrez un nombre de joueur :\n");
+        for (int i = 0; i < nbJoueur; i++) {
+            m_joueurs.add(creerJoueurs());
+        }
         this.m_joueurs = rangerParInitiative(joueurs);
 
     }
@@ -17,7 +25,6 @@ public class Partie {
     public List<Personnage> getEntites() {
         return m_joueurs;
     }
-    public List<Personnage> rangerParInitiative(List<Personnage> joueurs) { return joueurs;}
 
     public void trierParInitiative(Entite[] entites) {
         int n = entites.length;
