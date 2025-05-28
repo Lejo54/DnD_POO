@@ -39,10 +39,15 @@ public class Statistiques {
  }
  //Getters
  public int getPv() {return m_pv;}
+ public void setPV(int pv){m_pv=pv;}
  public int getForce() {return m_force;}
+ public void setForce(int force){m_force=force;}
  public int getInitiative() {return m_initiative;}
+ public void setInitiative(int initiative){m_initiative=initiative;}
  public int getVitesse() {return m_vitesse;}
+ public void setVitesse(int vitesse){m_vitesse=vitesse;}
  public int getDexterite() {return m_dexterite;}
+ public void setDexterite(int dexterite){m_dexterite=dexterite;}
 
  //Méthodes
  public void retirerPv(int pv){m_pv-=pv;}
