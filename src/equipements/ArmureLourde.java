@@ -14,7 +14,7 @@ public class ArmureLourde extends Armure {
         return 0;
     }
     @Override
-    public String Poid() {
+    public String getPoid() {
         return "lourd";
     }
 }

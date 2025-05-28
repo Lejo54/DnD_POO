@@ -17,7 +17,7 @@ public class ArmureLegere extends Armure {
     }
 
     @Override
-    public String Poid() {
+    public String getPoid() {
         return "leger";
     }
 }

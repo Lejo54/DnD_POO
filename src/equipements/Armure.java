@@ -8,7 +8,7 @@ public abstract class Armure extends Equipement {
         m_classe_Armure = classe_Armure;
     }
     public String getType(){return "armure";}
-    public abstract String Poid();
+    public abstract String getPoid();
 
     public int getClasseArmure(){
         return m_classe_Armure;

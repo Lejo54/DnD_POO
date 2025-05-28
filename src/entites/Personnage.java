@@ -6,11 +6,13 @@ import java.util.List;
 import equipements.Arme;
 import equipements.Armure;
 import equipements.Equipement;
+import static partie.De.lancerDe;
 
 public class Personnage extends Entite{
-    Race m_race;
-    CharClasse m_classe;
-    List<Equipement> m_inventaire= new ArrayList<>();
+    private Race m_race;
+    private CharClasse m_classe;
+    private Statistiques m_statistiques;
+    private List<Equipement> m_inventaire= new ArrayList<>();
 
     public Personnage(String nom, Race race, CharClasse classe) {
         super(nom);
@@ -52,6 +54,14 @@ public class Personnage extends Entite{
             }
         }
         return 0;}
+    public void fusionStat(){
+        m_statistiques=new Statistiques();
+        m_statistiques.setDexterite(m_statistiques.getDexterite()+m_race.getStatistiques().getDexterite());
+        m_statistiques.setPV(m_classe.getStatistiques().getPv());
+        m_statistiques.setForce(m_statistiques.getForce()+m_race.getStatistiques().getForce());
+        m_statistiques.setInitiative(lancerDe(1,20));
+        m_statistiques.setVitesse(m_statistiques.getVitesse()+m_race.getStatistiques().getVitesse());
+    }
 
     public String getType() {
         return "Personnage";
