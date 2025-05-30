@@ -1,9 +1,14 @@
 package donjons;
 
 //importer les list
-import equipements.Equipement;
+import equipements.*;
 import entites.Entite;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import static partie.Affichage.*;
+import static partie.Affichage.demanderString;
 
 public class Donjon {
     List<Equipement> m_objetAuSol;
@@ -63,6 +68,40 @@ public class Donjon {
             }
         }
         return "";
+    }
+
+    public List<Equipement> creerEquipementAuSol(int nbe) {
+        List<Equipement> res = new ArrayList<>();
+        String[] tabstuff = {
+         "baton", "masse d'armes", "arc court", "arbalete legere", "fronde",
+         "epee longue", "rapiere", "epee à deux mains","cotte de mailles", "harnois"
+        };
+        Equipement nouvelleArme = null;
+        for (int i = 0; i < nbe; i++) {
+            afficherPhrase("Quelle est le nom de l'arme parmi celles-ci ?");
+            for (int j = 0; j < tabstuff.length; j++) {
+                afficherPhrase("arme " + j + " = " + tabstuff[j]);
+            }
+
+            int numero=-1;
+            while (numero < 0 || numero >= tabstuff.length){
+                numero = demanderInt("Veuillez entrer un numéro entre 0 et " + (tabstuff.length - 1));
+            }
+            switch (numero){
+                case 1,2 :
+                    nouvelleArme = new ArmeCourante(tabstuff[numero],demanderString("une description pour cette armes?(sinon appuyer sur entree)"),false);
+                case 5,3,4 :
+                    nouvelleArme = new ArmeDistante(tabstuff[numero],demanderString("une description pour cette armes?(sinon appuyer sur entree)"),false);
+                case 8,6,7:
+                    nouvelleArme = new ArmeGuerre(tabstuff[numero],demanderString("une description pour cette armes?(sinon appuyer sur entree)"),false);
+                case 9,10 :
+                    nouvelleArme = new ArmureLegere(tabstuff[numero],demanderString("une description pour cette armes?(sinon appuyer sur entree)"),false);
+                case 11,12 :
+                    nouvelleArme = new ArmureLourde(tabstuff[numero],demanderString("une description pour cette armes?(sinon appuyer sur entree)"),false);
+            }
+            res.add(nouvelleArme);
+        }
+        return res;
     }
 
 }
