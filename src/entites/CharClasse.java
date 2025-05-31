@@ -9,6 +9,6 @@ public abstract class CharClasse {
   m_statistiques = statistiques;
  }
  public Statistiques getStatistiques() {return m_statistiques;}
- public String getClasse(){return m_classe;};
+ public abstract String toString();
 
 }

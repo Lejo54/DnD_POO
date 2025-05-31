@@ -6,5 +6,5 @@ public class Guerrier extends CharClasse {
   Statistiques statistiques = new Statistiques(20);
   super("Guerrier",statistiques);
  }
-
+ public String toString() {return "Guerrier";}
 }
