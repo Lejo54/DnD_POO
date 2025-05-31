@@ -23,15 +23,13 @@ public abstract class Entite {
      m_pseudo=setPseudo(nom);
 
     }
+    public Entite(String nom,Statistiques statistiques) {
+        m_nom=nom;
+        m_statistiques=statistiques;
+    }
     public abstract String setPseudo(String nom);
     public abstract String toString();
-    public void fusionStat(Personnage entite) {
-        m_statistiques=new Statistiques();
-        m_statistiques.setDexterite(m_statistiques.getDexterite()+entite.getRace().getStatistiques().getDexterite());
-        m_statistiques.setPV(entite.getClasse().getStatistiques().getPv());
-        m_statistiques.setForce(m_statistiques.getForce()+entite.getRace().getStatistiques().getForce());
-        m_statistiques.setVitesse(m_statistiques.getVitesse()+entite.getRace().getStatistiques().getVitesse());
-    }
+
     public void perdrePv(int pvRetire) {
         //retire des pv a l'entité subissant une attaque
         this.m_statistiques.retirerPv(pvRetire);

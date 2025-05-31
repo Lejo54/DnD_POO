@@ -17,6 +17,13 @@ public class Statistiques {
   m_vitesse=vitesse;
   m_dexterite=dexterite;
  }
+ //COnstructeur pour les monstres
+ public Statistiques(int pv, int force, int dexterite, int vitesse) {
+  m_pv=pv;
+  m_force=force;
+  m_dexterite=dexterite;
+  m_vitesse=vitesse;
+ }
  //Constructeur pour les entités
  public Statistiques(){
  int stat;
@@ -53,4 +60,13 @@ public class Statistiques {
 
  //Méthodes
  public void retirerPv(int pv){m_pv-=pv;}
+
+ public Statistiques fusionStat(Personnage perso) {
+  Statistiques stat=new Statistiques();
+  stat.setDexterite(stat.getDexterite()+perso.getRace().getStatistiques().getDexterite());
+  stat.setPV(perso.getClasse().getStatistiques().getPv());
+  stat.setForce(stat.getForce()+perso.getRace().getStatistiques().getForce());
+  stat.setVitesse(stat.getVitesse()+perso.getRace().getStatistiques().getVitesse());
+  return stat;
+ }
 }

@@ -30,7 +30,8 @@ public class Partie {
     }
 
     public Personnage creerJoueurs(){
-        String nom= demanderString("Entrez un nom de personnage :\n");
+        String nom= demanderString("Entrez un nom de personnage (Minimum 3 caractères):\n");
+
         afficherPhrase("Choisir votre classe parmis:\n");
         afficherPhrase("1/ Clerc:\n");
         afficherPhrase("2/ Guerrier:\n");
@@ -90,24 +91,61 @@ public class Partie {
         List<Entite> entites= new ArrayList<>();
         entites.addAll(getJoueurs());
         int nbMonstre=demanderInt("Entrez le nombre de monstre présent dans le donjon:\n");
-        entites.addAll(creerMonstre(nbMonstre));
+        entites.addAll(creerListMonstres(nbMonstre));
 
         Donjon donjon=new Donjon(objetAuSol,entites,obstacle,x,y);
         return donjon;
     }
 
-    public List<Monstre> creerMonstre(int nbMonstre){
+    public List<Monstre> creerListMonstres(int nbMonstre){
+        //On demande le nombre d'espèces de monstre
+        int nbEspece=0;
+        do {
+            nbEspece= demanderInt("Donnez le nombre d'espèce pour les monstres (inférieur à "+nbMonstre+" !)\n");
+        } while (nbEspece<nbMonstre);
+        //On demande le nom des différentes espèces
+        List<String> nomsEspece= new ArrayList<>();
+        List<Integer> nbParEspeces= new ArrayList<>();
+        int nbParEspece=0;
+        for (int i = 0; i < nbEspece; i++) {
+            nomsEspece.add(demanderString("Donner le nom de votre espèce N°"+i+"\n"));
+            do {
+                nbParEspece=demanderInt("Donner le nombre de spécimen de " + nomsEspece.get(i) + "\n");
+            } while (nbParEspece<nbMonstre);
+            nbParEspeces.add(nbParEspece);
+        }
+        //On crée la liste des monstres
         List<Monstre> monstres= new ArrayList<>();
-        for (int i = 0; i < nbMonstre; i++) {
-            String espece= demanderString("Entrez le nom de l'espèce du monstre:\n");
-            int numéro= demanderInt("Entrez le numero de monstre:\n");
-            int portee= demanderInt("Entrez la portée de l'attaque du monstre (1 pour une attaque au corps à corps):\n");
-            String Degat=creerDegat();
-            //On créé le monstre et on l'ajoute dans la liste des monstres
-            monstres.add(new Monstre(espece,numéro,portee,Degat));
+        for (int i = 0; i < nbEspece; i++) {
+            for (int j = 0; j < nbParEspeces.get(i); j++) {
+                //On crée le monstre et on l'ajoute dans la liste des monstres
+                monstres.add(creerMonstre(j, nomsEspece.get(i)));
+            }
         }
 
         return monstres;
+    }
+    public Monstre creerMonstre(int numero,String espece){
+        int portee= demanderInt("Entrez la portée de l'attaque du monstre (1 pour une attaque au corps à corps):\n");
+        String degat=creerDegat();
+
+        //On crée les stat du monstre
+        int pv=demanderInt("Nombre de pv du monstre:\n");
+        int vitesse= demanderInt("Vitesse du monstre:\n");
+        int force=0;
+        int dexterite=0;
+        if(portee==1){
+            force= demanderInt("Force du monstre :\n");
+            dexterite=0;
+        }
+        else {
+            force=0;
+            dexterite=demanderInt("Dextérité du monstre :\n");
+        }
+        Statistiques stat= new Statistiques(pv,force,dexterite,vitesse);
+
+        int classeArmure= demanderInt("Classe d'armure du monstre:\n");
+        return new Monstre(espece,numero,portee,degat,classeArmure,stat);
     }
     public String creerDegat(){
         String nbFace=String.valueOf(demanderInt("Entrez le nombre de face de votre dé de dégat:\n"));
