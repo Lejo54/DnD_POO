@@ -19,4 +19,5 @@ public class Mj {
         m_partie = new Partie();
     }
 
+    public Partie getPartie() {return m_partie;}
 }

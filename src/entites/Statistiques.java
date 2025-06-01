@@ -4,6 +4,7 @@ import static partie.De.lancerDe;
 
 public class Statistiques {
  private int m_pv=0;
+ private int m_pvMax=0;
  private int m_force=0;
  private int m_initiative=0;
  private int m_vitesse=0;
@@ -12,14 +13,16 @@ public class Statistiques {
  //Constructeur pour les armes/armures
  public Statistiques(int pv, int force, int initiative, int vitesse, int dexterite) {
   m_pv=pv;
+  m_pvMax=pv;
   m_force=force;
   m_initiative=initiative;
   m_vitesse=vitesse;
   m_dexterite=dexterite;
  }
- //COnstructeur pour les monstres
+ //Constructeur pour les monstres
  public Statistiques(int pv, int force, int dexterite, int vitesse) {
   m_pv=pv;
+  m_pvMax=pv;
   m_force=force;
   m_dexterite=dexterite;
   m_vitesse=vitesse;
@@ -39,6 +42,7 @@ public class Statistiques {
  //Constructeur pour les classes
  public Statistiques(int pv) {
   m_pv=pv;
+  m_pvMax=pv;
  }
  //pour les races Halfelin,Elfe,Nain
  public Statistiques(int force,int dexterite,int vitesse) {
@@ -48,6 +52,7 @@ public class Statistiques {
  }
  //Getters
  public int getPv() {return m_pv;}
+ public int getPvMax() {return m_pvMax;}
  public void setPV(int pv){m_pv=pv;}
  public int getForce() {return m_force;}
  public void setForce(int force){m_force=force;}

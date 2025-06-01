@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static partie.Affichage.*;
-import static partie.Affichage.afficherPhrase;
+
 
 public class Partie {
     private List<Personnage> m_joueurs;
@@ -25,14 +25,19 @@ public class Partie {
             joueurs.add(creerJoueurs());
         }
         m_joueurs.addAll(joueurs);
-        m_donjons.add(creerDonjon());
     }
     public void lancerPartie(){
         //Liste des personnages mis à jour à la fin de la partie
         List<Personnage> newJoueurs= new ArrayList<>();
 
         //Déroulement de la partie
+        for(int donjon=0;donjon<3;donjon++){
+            //création et ajout du ie donjon
+            m_donjons.add(creerDonjon());
+            getDonjons().get(donjon).afficherInfoDonjon(donjon);
+            getDonjons().get(donjon).lancerTour();
 
+        }
 
         //MIse à jour de la liste des joueurs
         m_joueurs.addAll(newJoueurs);
@@ -41,6 +46,7 @@ public class Partie {
     public List<Personnage> getJoueurs() {
         return m_joueurs;
     }
+    public List<Donjon> getDonjons() {return m_donjons;}
 
     public Personnage creerJoueurs(){
         String nom= demanderString("Entrez un nom de personnage (Minimum 3 caractères):\n");
