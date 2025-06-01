@@ -5,4 +5,5 @@ public class Magicien extends CharClasse{
   Statistiques statistiques = new Statistiques(12);
   super("Magicien",statistiques);
  }
+ public String toString() {return "Magicien";}
 }

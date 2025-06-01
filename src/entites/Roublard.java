@@ -6,7 +6,7 @@ public class Roublard extends CharClasse{
   Statistiques statistiques = new Statistiques(16);
   super("Roublard",statistiques);
  }
-
+ public String toString() {return "Roublard";}
 
 }
 

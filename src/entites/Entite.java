@@ -11,6 +11,7 @@ import donjons.Donjon;
 public abstract class Entite {
     private Position m_position;
     private String m_nom;
+    private String m_pseudo;
     private String m_type;
     private Statistiques m_statistiques;
 
@@ -19,8 +20,15 @@ public abstract class Entite {
     public Entite(String nom) {
      m_nom=nom;
      m_statistiques=new Statistiques();
+     m_pseudo=setPseudo(nom);
 
     }
+    public Entite(String nom,Statistiques statistiques) {
+        m_nom=nom;
+        m_statistiques=statistiques;
+    }
+    public abstract String setPseudo(String nom);
+    public abstract String toString();
 
     public void perdrePv(int pvRetire) {
         //retire des pv a l'entité subissant une attaque
@@ -100,7 +108,6 @@ public abstract class Entite {
         }
     }
 
-    public abstract String getType();
     public Position getPosition() {return m_position;}
     public Statistiques getStatistiques(){return m_statistiques;}
     public String getNom() {
@@ -110,4 +117,5 @@ public abstract class Entite {
     public abstract int getPortee() ;
 
     public abstract String getDegat() ;
+    public abstract void afficherEntite();
 }

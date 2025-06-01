@@ -10,8 +10,8 @@ import static partie.De.lancerDe;
 
 public class Personnage extends Entite{
     private Race m_race;
+    private String m_nom;
     private CharClasse m_classe;
-    private Statistiques m_statistiques;
     private List<Equipement> m_inventaire= new ArrayList<>();
 
     public Personnage(String nom, Race race, CharClasse classe) {
@@ -24,6 +24,8 @@ public class Personnage extends Entite{
 
 
     //getters
+    public CharClasse getClasse() { return m_classe; }
+    public Race getRace() { return m_race; }
     public int getArmure(){
         for(Equipement e:m_inventaire){
             if (e.getType().equals("armure")){
@@ -54,16 +56,17 @@ public class Personnage extends Entite{
             }
         }
         return 0;}
-    public void fusionStat(){
-        m_statistiques=new Statistiques();
-        m_statistiques.setDexterite(m_statistiques.getDexterite()+m_race.getStatistiques().getDexterite());
-        m_statistiques.setPV(m_classe.getStatistiques().getPv());
-        m_statistiques.setForce(m_statistiques.getForce()+m_race.getStatistiques().getForce());
-        m_statistiques.setVitesse(m_statistiques.getVitesse()+m_race.getStatistiques().getVitesse());
-    }
 
-    public String getType() {
+
+    public String toString() {
         return "Personnage";
+    }
+    public String setPseudo(String nom){
+        String temp = nom.substring(0, 3); // extrait les 3 premiers caractères
+        return temp.substring(0, 1).toUpperCase() + temp.substring(1).toLowerCase();
+    }
+    public void afficherEntite(){
+        //On affiche les information du personnage
     }
 }
 
