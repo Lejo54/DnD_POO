@@ -16,7 +16,7 @@ public class Mj {
     private Partie m_partie;
 
     public Mj() {
-
+        m_partie = new Partie();
     }
 
 }

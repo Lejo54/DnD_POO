@@ -65,5 +65,8 @@ public class Personnage extends Entite{
         String temp = nom.substring(0, 3); // extrait les 3 premiers caractères
         return temp.substring(0, 1).toUpperCase() + temp.substring(1).toLowerCase();
     }
+    public void afficherEntite(){
+        //On affiche les information du personnage
+    }
 }
 

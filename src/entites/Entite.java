@@ -117,4 +117,5 @@ public abstract class Entite {
     public abstract int getPortee() ;
 
     public abstract String getDegat() ;
+    public abstract void afficherEntite();
 }

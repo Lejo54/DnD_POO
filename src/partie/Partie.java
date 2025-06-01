@@ -18,11 +18,24 @@ public class Partie {
     public Partie() {
         List<Personnage> joueurs= new ArrayList<>();
         int nbJoueur= demanderInt("Entrez un nombre de joueur :\n");
+        while (nbJoueur <= 0) {
+            nbJoueur= demanderInt("Nombre erroné, entrez un nombre de joueur :\n");
+        }
         for (int i = 0; i < nbJoueur; i++) {
             joueurs.add(creerJoueurs());
         }
         m_joueurs.addAll(joueurs);
         m_donjons.add(creerDonjon());
+    }
+    public void lancerPartie(){
+        //Liste des personnages mis à jour à la fin de la partie
+        List<Personnage> newJoueurs= new ArrayList<>();
+
+        //Déroulement de la partie
+
+
+        //MIse à jour de la liste des joueurs
+        m_joueurs.addAll(newJoueurs);
     }
     // Getters
     public List<Personnage> getJoueurs() {
@@ -90,28 +103,23 @@ public class Partie {
         //Création des monstres
         List<Entite> entites= new ArrayList<>();
         entites.addAll(getJoueurs());
-        int nbMonstre=demanderInt("Entrez le nombre de monstre présent dans le donjon:\n");
-        entites.addAll(creerListMonstres(nbMonstre));
+        entites.addAll(creerListMonstres());
 
-        Donjon donjon=new Donjon(objetAuSol,entites,obstacle,x,y);
-        return donjon;
+        return new Donjon(objetAuSol,entites,obstacle,x,y);
     }
 
-    public List<Monstre> creerListMonstres(int nbMonstre){
+    public List<Monstre> creerListMonstres(){
         //On demande le nombre d'espèces de monstre
-        int nbEspece=0;
-        do {
-            nbEspece= demanderInt("Donnez le nombre d'espèce pour les monstres (inférieur à "+nbMonstre+" !)\n");
-        } while (nbEspece<nbMonstre);
+        int nbEspece= demanderInt("Donnez le nombre d'espèce pour les monstres \n");
+
         //On demande le nom des différentes espèces
         List<String> nomsEspece= new ArrayList<>();
         List<Integer> nbParEspeces= new ArrayList<>();
         int nbParEspece=0;
         for (int i = 0; i < nbEspece; i++) {
             nomsEspece.add(demanderString("Donner le nom de votre espèce N°"+i+"\n"));
-            do {
-                nbParEspece=demanderInt("Donner le nombre de spécimen de " + nomsEspece.get(i) + "\n");
-            } while (nbParEspece<nbMonstre);
+            //On récupère le nombre de spécimen d'une espèce
+            nbParEspece=demanderInt("Donner le nombre de spécimen de " + nomsEspece.get(i) + "\n");
             nbParEspeces.add(nbParEspece);
         }
         //On crée la liste des monstres
@@ -127,7 +135,6 @@ public class Partie {
     }
     public Monstre creerMonstre(int numero,String espece){
         int portee= demanderInt("Entrez la portée de l'attaque du monstre (1 pour une attaque au corps à corps):\n");
-        String degat=creerDegat();
 
         //On crée les stat du monstre
         int pv=demanderInt("Nombre de pv du monstre:\n");
@@ -136,23 +143,16 @@ public class Partie {
         int dexterite=0;
         if(portee==1){
             force= demanderInt("Force du monstre :\n");
-            dexterite=0;
         }
         else {
-            force=0;
             dexterite=demanderInt("Dextérité du monstre :\n");
         }
         Statistiques stat= new Statistiques(pv,force,dexterite,vitesse);
 
         int classeArmure= demanderInt("Classe d'armure du monstre:\n");
-        return new Monstre(espece,numero,portee,degat,classeArmure,stat);
+        return new Monstre(espece,numero,portee,classeArmure,stat);
     }
-    public String creerDegat(){
-        String nbFace=String.valueOf(demanderInt("Entrez le nombre de face de votre dé de dégat:\n"));
-        String nbLancer=String.valueOf(demanderInt("Entrez le numero de lancer de votre dé de dégat:\n"));
-        String de=nbLancer+"d"+nbFace;
-        return de;
-    }
+
     public List<Obstacle> creerObstacle(int nbo){
         List<Obstacle> res=new ArrayList<>();
         for(int i =0 ; i<nbo ; i++){
@@ -171,9 +171,9 @@ public class Partie {
         };
         Equipement nouvelleArme=null;
         for (int i = 0; i < nbe; i++) {
-            afficherPhrase("Quelle est le nom de l'arme parmi celles-ci ?");
+            afficherPhrase("Quelle est le nom de l'arme parmi celles-ci ?\n");
             for (int j = 0; j < tabstuff.length; j++) {
-                afficherPhrase("arme " + j + " = " + tabstuff[j]);
+                afficherPhrase("arme " + j + " = " + tabstuff[j]+"\n");
             }
 
             int numero=-1;
@@ -182,19 +182,19 @@ public class Partie {
             }
             switch (numero){
                 case 1,2 :
-                    nouvelleArme = new ArmeCourante(tabstuff[numero],demanderString("une description pour cette armes?(sinon appuyer sur entree)"),false);
+                    nouvelleArme = new ArmeCourante(tabstuff[numero],demanderString("Donnez une description pour cette armes?(sinon appuyer sur entree)"),false);
                     break;
                 case 5,3,4 :
-                    nouvelleArme = new ArmeDistante(tabstuff[numero],demanderString("une description pour cette armes?(sinon appuyer sur entree)"),false);
+                    nouvelleArme = new ArmeDistante(tabstuff[numero],demanderString("Donnezune description pour cette armes?(sinon appuyer sur entree)"),false);
                     break;
                 case 8,6,7:
-                    nouvelleArme = new ArmeGuerre(tabstuff[numero],demanderString("une description pour cette armes?(sinon appuyer sur entree)"),false);
+                    nouvelleArme = new ArmeGuerre(tabstuff[numero],demanderString("Donnez une description pour cette armes?(sinon appuyer sur entree)"),false);
                     break;
                 case 9,10 :
-                    nouvelleArme = new ArmureLegere(tabstuff[numero],demanderString("une description pour cette armes?(sinon appuyer sur entree)"),false);
+                    nouvelleArme = new ArmureLegere(tabstuff[numero],demanderString("Donnez une description pour cette armes?(sinon appuyer sur entree)"),false);
                     break;
                 case 11,12 :
-                    nouvelleArme = new ArmureLourde(tabstuff[numero],demanderString("une description pour cette armes?(sinon appuyer sur entree)"),false);
+                    nouvelleArme = new ArmureLourde(tabstuff[numero],demanderString("Donnez une description pour cette armes?(sinon appuyer sur entree)"),false);
                     break;
             }
             res.add(nouvelleArme);

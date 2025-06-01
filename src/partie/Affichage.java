@@ -1,6 +1,8 @@
 package partie;
 import donjons.Donjon;
 import entites.Entite;
+import entites.Monstre;
+import entites.Personnage;
 
 import java.lang.*;
 import java.util.List;
@@ -33,6 +35,7 @@ public abstract class Affichage {
 
         }
     }
+
     public static void afficherActionEntite(Entite entite){
         afficherPhrase(entite.getNom()+" , c'est a vous que voulez vous faire ?\n");
         afficherPhrase("1 - attaquer un ennemi\n");
@@ -64,6 +67,6 @@ public abstract class Affichage {
         return rendu;
     }
     public static void afficherPhrase(String phrase) {
-        System.out.println(phrase);
+        System.out.print(phrase);
     }
 }
