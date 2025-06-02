@@ -29,7 +29,7 @@ public abstract class Entite {
     }
     public abstract String setPseudo(String nom);
     public abstract String toString();
-
+    public abstract String infoBref();
     public void perdrePv(int pvRetire) {
         //retire des pv a l'entité subissant une attaque
         this.m_statistiques.retirerPv(pvRetire);
@@ -113,6 +113,7 @@ public abstract class Entite {
     public String getNom() {
         return m_nom;
     }
+    public String getPseudo() {return m_pseudo;}
     public abstract int getArmure() ;
     public abstract int getPortee() ;
 

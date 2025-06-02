@@ -6,7 +6,9 @@ import java.util.List;
 import equipements.Arme;
 import equipements.Armure;
 import equipements.Equipement;
-import static partie.De.lancerDe;
+
+import static partie.Affichage.*;
+
 
 public class Personnage extends Entite{
     private Race m_race;
@@ -58,6 +60,9 @@ public class Personnage extends Entite{
         return 0;}
 
 
+    public String infoBref(){
+        return this.getPseudo()+" "+this.getNom()+"("+this.getRace()+" "+this.getClasse()+","+ this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")";
+    }
     public String toString() {
         return "Personnage";
     }

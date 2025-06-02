@@ -1,6 +1,6 @@
 package entites;
 
-import static partie.Affichage.demanderInt;
+import static partie.Affichage.*;
 
 public class Monstre extends Entite {
     int m_numero;
@@ -15,7 +15,9 @@ public class Monstre extends Entite {
         m_class_armure = classe_armure;
         m_degat = creerDegat();
     }
-
+    public String infoBref(){
+       return this.getPseudo()+" "+this.getNom()+"("+this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")";
+    }
     public int getArmure(){
         return m_class_armure;
     }

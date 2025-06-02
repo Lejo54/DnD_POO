@@ -1,6 +1,6 @@
 package donjons;
 
-//importer les list
+
 import equipements.*;
 import entites.Entite;
 
@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static partie.Affichage.*;
-import static partie.Affichage.demanderString;
 
 public class Donjon {
     List<Equipement> m_objetAuSol;
@@ -17,9 +16,9 @@ public class Donjon {
     Position m_taille;
 
     public Donjon(List<Equipement> objetAuSol, List<Entite> entites,List<Obstacle> obstacles,int x, int y) {
-        this.m_objetAuSol = m_objetAuSol;
-        this.m_entites = m_entites;
-        this.m_obstacles = m_obstacles;
+        this.m_objetAuSol = objetAuSol;
+        this.m_entites = trierParInitiative(entites);
+        this.m_obstacles = obstacles;
         this.m_taille=new Position(x,y);
     }
     public Position getTaille() {return m_taille;}
@@ -36,8 +35,29 @@ public class Donjon {
         return m_entites;
     }
 
+    public void lancerTour(){
+
+    }
+    public void afficherInfoDonjon(int n){
+        String info="";
+        for(int i=0;i<80;i++){
+            info+="*";
+        }
+        info+="\n\n";
+        String d="Donjon numéro "+n+"\n";
+        int espacement=(80+d.length())/2;
+        for(int i=0;i<espacement;i++){
+            info+=" ";
+        }
+        info+=d;
+        for(int i=0;i<getEntites().size();i++){
+            info+=getEntites().get(i).infoBref();
+        }
+        afficherPhrase(info);
+        afficherDonjon();
+    }
     public boolean contientObstacle(int x, int y) {
-        for (Obstacle obstacle : m_obstacles) {
+        for (Obstacle obstacle : getObstacles()) {
             if (obstacle.getPosition().getX() == x && obstacle.getPosition().getY() == y) {
                 return true;
             }
@@ -45,7 +65,7 @@ public class Donjon {
         return false;
     }
     public boolean contientEntite(int x, int y) {
-        for (Entite entite : m_entites) {
+        for (Entite entite : getEntites()) {
             if (entite.getPosition().getX() == x && entite.getPosition().getY() == y) {
                 return true;
             }
@@ -53,7 +73,7 @@ public class Donjon {
         return false;
     }
     public boolean contientEquipement(int x, int y) {
-        for (Equipement equipement : m_objetAuSol) {
+        for (Equipement equipement : getObjets()) {
             if (equipement.getPosition().getX() == x && equipement.getPosition().getY() == y) {
                 return true;
             }
@@ -61,7 +81,7 @@ public class Donjon {
         return false;
     }
     public String getNomEntite(int x , int y){
-        for(Entite e:m_entites){
+        for(Entite e:getEntites()){
             if(e.getPosition().getX()==x && e.getPosition().getY()==y){
                 //que les 3 premiers caractere de nom
                 return e.getNom().substring(0, 3);
@@ -70,29 +90,50 @@ public class Donjon {
         return "";
     }
 
+   public void afficherDonjon() {
+       for (int y = 0; y < this.getTaille().getY(); y++) {
+           System.out.print((char) ('A' + y) + " ");
 
-   /* public void creerDonjon(){
-        int x=demanderInt("quelle taille fera votre donjon en longueur (x)");
-        int y=demanderInt("quelle taille fera votre donjon en largeur (y)");
-        List<Equipement> equipements=creerEquipementAuSol(demanderInt("combien d'objet ramassable seront au sol pour les joueurs"));
-        List<Obstacle> obstacles=creerObstacle(demanderInt("combien d'obstacle se trouveront sur la carte ?"));
-        Donjon d=new Donjon(equipements,jsp faut quon voit ensemble , obstacles,x,y);
-    }
-*/
-    public void trierParInitiative(Entite[] entites) {
-        int n = entites.length;
-        for (int i = 0; i < n - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < n; j++) {
-                if (entites[j].getStatistiques().getInitiative() < entites[minIndex].getStatistiques().getInitiative()) {
-                    minIndex = j;
-                }
-            }
-            Entite temp = entites[i];
-            entites[i] = entites[minIndex];
-            entites[minIndex] = temp;
-        }
-    }
+           for (int x = 0; x < this.getTaille().getX(); x++) {
+               if (y==0){
+                   System.out.print(" "+x + " ");
+               }
+               else if (this.contientObstacle(x,y)) {
+                   System.out.print("♦ ");
+               } else if (this.contientEquipement(x,y)) {
+                   System.out.print("† ");
+               } else if (this.contientEntite(x,y)) {
+                   String petitnom=this.getNomEntite(x,y).substring(0,2);
+                   System.out.print(petitnom);
+               } else {
+                   System.out.print("∙ ");
+               }
+           }
+           System.out.println();
+
+       }
+   }
+   public List<Entite> trierParInitiative(List<Entite> entites) {
+       //On crée une nouvelle liste qui va être trié par ordre d'initiative
+       List<Entite> entitesTriees = new ArrayList<>(entites);
+
+       // Tri par sélection
+       int n = entitesTriees.size();
+       for (int i = 0; i < n - 1; i++) {
+           int maxIndex = i;
+           for (int j = i + 1; j < n; j++) {
+               if (entitesTriees.get(j).getStatistiques().getInitiative() > entitesTriees.get(maxIndex).getStatistiques().getInitiative()) {
+                   maxIndex = j;
+               }
+           }
+           // Échange des entités
+           Entite temp = entitesTriees.get(i);
+           entitesTriees.set(i, entitesTriees.get(maxIndex));
+           entitesTriees.set(maxIndex, temp);
+       }
+
+       return entitesTriees;
+   }
 
 
 }
