@@ -3,8 +3,7 @@ package entites;
 public class Roublard extends CharClasse{
 
  public Roublard() {
-  Statistiques statistiques = new Statistiques(16);
-  super("Roublard",statistiques);
+  super("Roublard",new Statistiques(16));
  }
  public String toString() {return "Roublard";}
 
