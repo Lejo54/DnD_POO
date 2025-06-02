@@ -53,8 +53,8 @@ public class Donjon {
         for(int i=0;i<getEntites().size();i++){
             info+=getEntites().get(i).infoBref();
         }
-
         afficherPhrase(info);
+        afficherDonjon();
     }
     public boolean contientObstacle(int x, int y) {
         for (Obstacle obstacle : getObstacles()) {
@@ -90,15 +90,29 @@ public class Donjon {
         return "";
     }
 
+   public void afficherDonjon() {
+       for (int y = 0; y < this.getTaille().getY(); y++) {
+           System.out.print((char) ('A' + y) + " ");
 
-   /* public void creerDonjon(){
-        int x=demanderInt("quelle taille fera votre donjon en longueur (x)");
-        int y=demanderInt("quelle taille fera votre donjon en largeur (y)");
-        List<Equipement> equipements=creerEquipementAuSol(demanderInt("combien d'objet ramassable seront au sol pour les joueurs"));
-        List<Obstacle> obstacles=creerObstacle(demanderInt("combien d'obstacle se trouveront sur la carte ?"));
-        Donjon d=new Donjon(equipements,jsp faut quon voit ensemble , obstacles,x,y);
-    }
-*/
+           for (int x = 0; x < this.getTaille().getX(); x++) {
+               if (y==0){
+                   System.out.print(" "+x + " ");
+               }
+               else if (this.contientObstacle(x,y)) {
+                   System.out.print("♦ ");
+               } else if (this.contientEquipement(x,y)) {
+                   System.out.print("† ");
+               } else if (this.contientEntite(x,y)) {
+                   String petitnom=this.getNomEntite(x,y).substring(0,2);
+                   System.out.print(petitnom);
+               } else {
+                   System.out.print("∙ ");
+               }
+           }
+           System.out.println();
+
+       }
+   }
    public List<Entite> trierParInitiative(List<Entite> entites) {
        //On crée une nouvelle liste qui va être trié par ordre d'initiative
        List<Entite> entitesTriees = new ArrayList<>(entites);
