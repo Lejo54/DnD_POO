@@ -35,7 +35,7 @@ public class Partie {
             //création et ajout du ie donjon
             m_donjons.add(creerDonjon());
             getDonjons().get(donjon).afficherInfoDonjon(donjon);
-            getDonjons().get(donjon).lancerTour();
+            getDonjons().get(donjon).lancerTours();
 
         }
 

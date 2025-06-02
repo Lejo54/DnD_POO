@@ -36,13 +36,13 @@ public abstract class Entite {
         String phrase =this.getNom() + " perd " + pvRetire + " PV. PV restants : " + this.m_statistiques.getPv();
         afficherPhrase(phrase+"\n");
         //affichage
-        est_mort();
+        if(!this.getStatistiques().estVivant()){
+            afficherPhrase(this.getNom()+" est mort !");
+        }
     }
     public boolean est_mort(){
         //verifie si l'entite qui vient d'etre attaquer a toujours des points de vie restant
         if(this.m_statistiques.getPv()<=0){
-            afficherPhrase(this.getNom() +  "est mort\n");
-            //Affichage
             //Sortir l'entite de la liste
             return true;
         }

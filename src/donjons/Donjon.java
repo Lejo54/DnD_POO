@@ -3,6 +3,8 @@ package donjons;
 
 import equipements.*;
 import entites.Entite;
+import static entites.Statistiques.persosVivant;
+import static entites.Statistiques.monstresVivant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +37,29 @@ public class Donjon {
         return m_entites;
     }
 
-    public void lancerTour(){
-
+    public void lancerTours(){
+        while(!finPartie()){
+            //afficher le bandeau du tour
+            //afficher la map
+            //afficher les actions en fonction du mob je crois
+            //en fonction de l'action choisit faire l'action
+            //et en vrai je crois que c'est la fin après
+            //faire en sorte qu'au début du jeu les gens peuvent choisir les armes à équiper
+            //et les armures aussi
+            //en vrai ca peut le faire demain matin je pense et après gros débug
+            //test d'abord si la création de joueurs fonctionne avant tt
+        }
+    }
+    public boolean finPartie(){
+        if(!monstresVivant(getEntites())){
+            afficherPhrase("Victoire aventuriers, vous avez vaincu tout les monstres de ce donjon !\n");
+            return true;
+        }
+        else if(!persosVivant(getEntites())){
+            afficherPhrase("Défaite, toute l'équipe s'est faite éliminé !\n");
+            return true;
+        }
+        return false;
     }
     public void afficherInfoDonjon(int n){
         String info="";
@@ -50,19 +73,19 @@ public class Donjon {
             info+=" ";
         }
         info+=d;
-        for(int i=0;i<getEntites().size();i++){
-            info+=getEntites().get(i).infoBref();
+        for(int i=0;i<this.getEntites().size();i++){
+            info+=this.getEntites().get(i).infoBref();
         }
 
         info+="\n" +
          "Nombre de Monstres: "+this.compteurMonstre()+"\n"
         +"Nombre de Joueurs"+this.compteurJoueur()+"\n";
         afficherPhrase(info);
-        afficherDonjon();
+        this.afficherDonjon();
     }
     public int compteurJoueur(){
         int nbJoueur=0;
-        for(Entite entite : getEntites()){
+        for(Entite entite : this.getEntites()){
             if(entite.toString().equals("Personnage")){
                 nbJoueur++;
             }
@@ -71,7 +94,7 @@ public class Donjon {
     }
     public int compteurMonstre(){
         int nbMonstre=0;
-        for(Entite entite : getEntites()){
+        for(Entite entite : this.getEntites()){
             if(entite.toString().equals("Monstre")){
                 nbMonstre++;
             }
@@ -80,7 +103,7 @@ public class Donjon {
     }
 
     public boolean contientObstacle(int x, int y) {
-        for (Obstacle obstacle : getObstacles()) {
+        for (Obstacle obstacle : this.getObstacles()) {
             if (obstacle.getPosition().getX() == x && obstacle.getPosition().getY() == y) {
                 return true;
             }
@@ -88,7 +111,7 @@ public class Donjon {
         return false;
     }
     public boolean contientEntite(int x, int y) {
-        for (Entite entite : getEntites()) {
+        for (Entite entite : this.getEntites()) {
             if (entite.getPosition().getX() == x && entite.getPosition().getY() == y) {
                 return true;
             }
@@ -96,7 +119,7 @@ public class Donjon {
         return false;
     }
     public boolean contientEquipement(int x, int y) {
-        for (Equipement equipement : getObjets()) {
+        for (Equipement equipement : this.getObjets()) {
             if (equipement.getPosition().getX() == x && equipement.getPosition().getY() == y) {
                 return true;
             }
@@ -104,7 +127,7 @@ public class Donjon {
         return false;
     }
     public String getNomEntite(int x , int y){
-        for(Entite e:getEntites()){
+        for(Entite e:this.getEntites()){
             if(e.getPosition().getX()==x && e.getPosition().getY()==y){
                 //que les 3 premiers caractere de nom
                 return e.getNom().substring(0, 3);

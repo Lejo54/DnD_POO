@@ -1,5 +1,7 @@
 package entites;
 
+import java.util.List;
+
 import static partie.De.lancerDe;
 
 public class Statistiques {
@@ -65,6 +67,29 @@ public class Statistiques {
 
  //Méthodes
  public void retirerPv(int pv){m_pv-=pv;}
+ public boolean estVivant(){
+  if(getPv()==0){
+   return false;
+  }
+  return true;
+ }
+ public static boolean persosVivant(List<Entite> entites) {
+  for (Entite perso: entites){
+   if(!perso.getStatistiques().estVivant() && perso.toString().equals("Personnage")){
+    return false;
+   }
+  }
+  return true;
+ }
+ public static boolean monstresVivant(List<Entite> entites) {
+  for (Entite monstre: entites){
+   if(!monstre.getStatistiques().estVivant() && monstre.toString().equals("Monstre")){
+    return false;
+   }
+  }
+  return true;
+ }
+
 
  public Statistiques fusionStat(Personnage perso) {
   Statistiques stat=new Statistiques();
