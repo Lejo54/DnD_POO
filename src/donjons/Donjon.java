@@ -53,9 +53,32 @@ public class Donjon {
         for(int i=0;i<getEntites().size();i++){
             info+=getEntites().get(i).infoBref();
         }
+
+        info+="\n" +
+         "Nombre de Monstres: "+this.compteurMonstre()+"\n"
+        +"Nombre de Joueurs"+this.compteurJoueur()+"\n";
         afficherPhrase(info);
         afficherDonjon();
     }
+    public int compteurJoueur(){
+        int nbJoueur=0;
+        for(Entite entite : getEntites()){
+            if(entite.toString().equals("Personnage")){
+                nbJoueur++;
+            }
+        }
+        return nbJoueur;
+    }
+    public int compteurMonstre(){
+        int nbMonstre=0;
+        for(Entite entite : getEntites()){
+            if(entite.toString().equals("Monstre")){
+                nbMonstre++;
+            }
+        }
+        return nbMonstre;
+    }
+
     public boolean contientObstacle(int x, int y) {
         for (Obstacle obstacle : getObstacles()) {
             if (obstacle.getPosition().getX() == x && obstacle.getPosition().getY() == y) {
@@ -110,7 +133,6 @@ public class Donjon {
                }
            }
            System.out.println();
-
        }
    }
    public List<Entite> trierParInitiative(List<Entite> entites) {
