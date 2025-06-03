@@ -1,8 +1,12 @@
 package donjons;
 
 
+import entites.Personnage;
 import equipements.*;
 import entites.Entite;
+
+import static donjons.Position.deplacement;
+import static entites.Entite.afficherBandeauTour;
 import static entites.Statistiques.persosVivant;
 import static entites.Statistiques.monstresVivant;
 
@@ -38,7 +42,24 @@ public class Donjon {
     }
 
     public void lancerTours(){
+        int tour=0;
         while(!finPartie()){
+            if (tour==0){
+                 for(Entite entite: getEntites()){
+                     if(entite.toString().equals("Personnage")){
+                         entite.choixEquipement();
+                     }
+                 }
+            }
+            tour++;
+            for (int i=0;i<this.getEntites().size();i++) {
+                for (int x = 3; x < 0; x--) {
+                    afficherPhrase("vous avez "+x+" action restantes pour ce tour\n");
+                    afficherBandeauTour(tour,i,this.getEntites());
+                    afficherDonjon();
+                    if (finPartie()){return;}
+                }
+            }
             //afficher le bandeau du tour
             //afficher la map
             //afficher les actions en fonction du mob je crois
@@ -49,6 +70,33 @@ public class Donjon {
             //en vrai ca peut le faire demain matin je pense et après gros débug
             //test d'abord si la création de joueurs fonctionne avant tt
         }
+    }
+    public void choixAction(Entite e) {
+        e.afficherAction();
+        int indexAction= demanderInt("Quelle est votre action ?\n");
+        switch (indexAction){
+            case 1: e.attaquer(choixCible());
+                    break;
+            case 2: deplacement(this,e);
+                    break;
+            case 3: e.ramasser(this,e);
+                    break;
+            case 4: e.choixEquipement();
+                    break;
+        }
+    }
+    public Entite choixCible(){
+        afficherPhrase("Choisissez votre cible ");
+        this.afficherEntites();
+        int indexCible= demanderInt("Donnez l'indice de la cible");
+        return this.getEntites().get(indexCible);
+    }
+    public void afficherEntites() {
+        String info="";
+        for(int i=0;i<this.getEntites().size();i++){
+            info+=(i+1)+". "+this.getEntites().get(i).infoBref();
+        }
+        afficherPhrase(info+"\n");
     }
     public boolean finPartie(){
         if(!monstresVivant(getEntites())){
@@ -61,6 +109,8 @@ public class Donjon {
         }
         return false;
     }
+
+
     public void afficherInfoDonjon(int n){
         String info="";
         for(int i=0;i<80;i++){
@@ -73,9 +123,7 @@ public class Donjon {
             info+=" ";
         }
         info+=d;
-        for(int i=0;i<this.getEntites().size();i++){
-            info+=this.getEntites().get(i).infoBref();
-        }
+        afficherEntites();
 
         info+="\n" +
          "Nombre de Monstres: "+this.compteurMonstre()+"\n"
@@ -83,6 +131,7 @@ public class Donjon {
         afficherPhrase(info);
         this.afficherDonjon();
     }
+
     public int compteurJoueur(){
         int nbJoueur=0;
         for(Entite entite : this.getEntites()){

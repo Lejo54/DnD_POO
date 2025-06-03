@@ -18,7 +18,7 @@ public class Position {
     }
 
 
-    public void deplacement(Donjon donjon,Entite entite) {
+    public static void deplacement(Donjon donjon,Entite entite) {
         // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
 
         // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
@@ -83,7 +83,7 @@ public class Position {
         }
     }
 
-    public boolean deplacementEstPossible(int x, int y, Donjon donjon){
+    public static boolean deplacementEstPossible(int x, int y, Donjon donjon){
 
         return !((donjon.contientObstacle(x,y)) && (donjon.contientEntite(x,y)) && (x<=0) && (y<=0));
     }

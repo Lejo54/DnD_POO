@@ -1,8 +1,12 @@
 package equipements;
 
+import entites.Statistiques;
+
+import static partie.Affichage.afficherPhrase;
+
 public class ArmeDistante extends Arme{
     public ArmeDistante(String nom, String description, boolean actif) {
-        super(nom, description, actif, calculportee(nom), calculdegat(nom));
+        super(nom, description, actif, calculportee(nom), calculdegat(nom),new Statistiques(0,0,0));
     }
     private static int calculportee(String nom){
         switch (nom.toLowerCase()) {
@@ -30,6 +34,9 @@ public class ArmeDistante extends Arme{
     @Override
     public String Poid() {
         return "courante";
+    }
+    public void afficherInfo(){
+        afficherPhrase(this.getNom()+":\n -Dégat: "+getDegat()+"\n -Portée: "+getPortee()+"\n");
     }
 }
 

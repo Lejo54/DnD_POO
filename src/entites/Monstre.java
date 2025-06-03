@@ -1,5 +1,7 @@
 package entites;
 
+import donjons.Donjon;
+
 import static partie.Affichage.*;
 
 public class Monstre extends Entite {
@@ -37,6 +39,18 @@ public class Monstre extends Entite {
         String nbLancer=String.valueOf(demanderInt("Entrez le numero de lancer de votre dé de dégat:\n"));
         return nbLancer+"d"+nbFace;
     }
+
+    public void afficherAction(){
+        afficherPhrase(this.getNom()+" , c'est à vous, que voulez vous faire ?\n");
+        afficherPhrase("1 - attaquer un ennemi\n");
+        afficherPhrase("2 - se deplacer dans le donjon\n");
+        afficherPhrase("chaque ligne correspond a une action (1 = action citez à la ligne 1 etc...\n");
+    }
+
+    public void ramasser(Donjon donjon,Entite entite){}
+    public void choixEquipement(){};
+    public void afficherArme(){}
+    public void afficherArmure(){}
     public void afficherEntite(){
         //On affiche les informations du monstre
 
