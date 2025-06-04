@@ -187,21 +187,29 @@ public class Donjon {
 
    public void afficherDonjon() {
        for (int y = 0; y < this.getTaille().getY(); y++) {
-           System.out.print((char) ('A' + y) + " ");
+           if (y != 0) {
+               System.out.print((char) ('A' + y - 1) + "  ");
+           } else {
+               System.out.print("   ");
+           }
 
            for (int x = 0; x < this.getTaille().getX(); x++) {
-               if (y==0){
-                   System.out.print(" "+x + " ");
-               }
-               else if (this.contientObstacle(x,y)) {
-                   System.out.print("♦ ");
-               } else if (this.contientEquipement(x,y)) {
-                   System.out.print("† ");
-               } else if (this.contientEntite(x,y)) {
-                   String petitnom=this.getNomEntite(x,y).substring(0,2);
+               if (y == 0) {
+                   if (x > 7) {
+                       System.out.print(x + 1 + " ");
+                   }
+                   else {
+                       System.out.print(x + 1 + "  ");
+                   }
+               } else if (this.contientObstacle(x, y)) {
+                   System.out.print("♦  ");
+               } else if (this.contientEquipement(x, y)) {
+                   System.out.print("†  ");
+               } else if (this.contientEntite(x, y)) {
+                   String petitnom = this.getNomEntite(x, y).substring(0, 2);
                    System.out.print(petitnom);
                } else {
-                   System.out.print("∙ ");
+                   System.out.print("∙  ");
                }
            }
            System.out.println();
@@ -225,7 +233,6 @@ public class Donjon {
            entitesTriees.set(i, entitesTriees.get(maxIndex));
            entitesTriees.set(maxIndex, temp);
        }
-
        return entitesTriees;
    }
 
