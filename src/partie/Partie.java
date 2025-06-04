@@ -171,6 +171,8 @@ public class Partie {
     public List<Obstacle> creerObstacle(int nbo){
         List<Obstacle> res=new ArrayList<>();
         for(int i =0 ; i<nbo ; i++){
+            Donjon temp=new Donjon(null,null,res,25,25);
+            temp.afficherDonjon();
             int x =demanderInt("position x de votre obstacle ?\n");
             int y =demanderInt("position y de votre obstacle ?\n");
             res.add(new Obstacle(x,y));
