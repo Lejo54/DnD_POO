@@ -119,7 +119,6 @@ public class Partie {
         List<Entite> entites= new ArrayList<>();
         entites.addAll(getJoueurs());
         entites.addAll(creerListMonstres());
-        afficherPhrase("on arrive la ");
 
         return new Donjon(objetAuSol,entites,obstacle,x,y);
     }
@@ -151,7 +150,6 @@ public class Partie {
                 int y =demanderInt("quel est la position y de "+ monstres.get(i).getNom() +" ?\n");
                 monstres.get(j).getPosition().changeXY(x,y);
             }
-            afficherPhrase("fin de boucle");
         }
 
         return monstres;
