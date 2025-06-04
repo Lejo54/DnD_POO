@@ -80,7 +80,7 @@ public class Partie {
         Race race= new Humain();
         int numerorace=0;
         while (numerorace!=1 && numerorace!=2 && numerorace!=3 && numerorace!=4){
-            numerorace=demanderInt("Entrez le numéro de la classe:\n");
+            numerorace=demanderInt("Entrez le numéro de la Race choisi:\n");
         }
         switch (numerorace){
             case 1:
@@ -107,7 +107,7 @@ public class Partie {
         }
         
         //Création des obstacles
-        List<Obstacle> obstacle=creerObstacle(demanderInt("combien d'obstacle se trouveront sur la carte ?\n"));
+        List<Obstacle> obstacle=creerObstacle(demanderInt("combien d'obstacle se trouveront sur la carte ?\n"),x,y);
 
         //Création des objets ramassables
         List<Equipement> objetAuSol=creerEquipementAuSol(demanderInt("combien d'objet ramassable seront au sol pour les joueurs\n"));
@@ -168,10 +168,14 @@ public class Partie {
         return new Monstre(espece,numero,portee,classeArmure,stat);
     }
 
-    public List<Obstacle> creerObstacle(int nbo){
+    public List<Obstacle> creerObstacle(int nbo,int xd,int yd){
         List<Obstacle> res=new ArrayList<>();
+        List<Entite> entitevide =new ArrayList<>();
+        List<Equipement> objvide =new ArrayList<>();
         for(int i =0 ; i<nbo ; i++){
-            int x =demanderInt("position x de votre obstacle ?\n");
+            Donjon temp=new Donjon(objvide,entitevide,res,xd,yd);
+            temp.afficherDonjon();
+            int x =demanderInt("position x de votre obstacle ?\n")-1;
             int y =demanderInt("position y de votre obstacle ?\n");
             res.add(new Obstacle(x,y));
         }
@@ -195,23 +199,45 @@ public class Partie {
             while (numero < 0 || numero >= tabstuff.length){
                 numero = demanderInt("Veuillez entrer un numéro entre 0 et " + (tabstuff.length - 1));
             }
-            switch (numero){
-                case 1,2 :
-                    nouvelleArme = new ArmeCourante(tabstuff[numero],demanderString("Donnez une description pour cette armes?(sinon appuyer sur entree)"),false);
+            switch (numero) {
+                case 1:
+                case 2:
+                    nouvelleArme = new ArmeCourante(tabstuff[numero],
+                            demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
+                            false);
                     break;
-                case 5,3,4 :
-                    nouvelleArme = new ArmeDistante(tabstuff[numero],demanderString("Donnezune description pour cette armes?(sinon appuyer sur entree)"),false);
+
+                case 3:
+                case 4:
+                case 5:
+                    nouvelleArme = new ArmeDistante(tabstuff[numero],
+                            demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
+                            false);
                     break;
-                case 8,6,7:
-                    nouvelleArme = new ArmeGuerre(tabstuff[numero],demanderString("Donnez une description pour cette armes?(sinon appuyer sur entree)"),false);
+
+                case 6:
+                case 7:
+                case 8:
+                    nouvelleArme = new ArmeGuerre(tabstuff[numero],
+                            demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
+                            false);
                     break;
-                case 9,10 :
-                    nouvelleArme = new ArmureLegere(tabstuff[numero],demanderString("Donnez une description pour cette armes?(sinon appuyer sur entree)"),false);
+
+                case 9:
+                case 10:
+                    nouvelleArme = new ArmureLegere(tabstuff[numero],
+                            demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
+                            false);
                     break;
-                case 11,12 :
-                    nouvelleArme = new ArmureLourde(tabstuff[numero],demanderString("Donnez une description pour cette armes?(sinon appuyer sur entree)"),false);
+
+                case 11:
+                case 12:
+                    nouvelleArme = new ArmureLourde(tabstuff[numero],
+                            demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
+                            false);
                     break;
             }
+
             res.add(nouvelleArme);
         }
         return res;
