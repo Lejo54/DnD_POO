@@ -100,16 +100,10 @@ public class Partie {
 
     public Donjon creerDonjon(){
         //taille de la map
-        int x=0,y=0,compteur=0;
+        int x=0,y=0;
         while ((x<15 || x>25) &&(y<15 || y>25)) {
             x = demanderInt("Entrez la longeur de votre donjon (entre 15 et 25):\n");
             y = demanderInt("Entrez la hauteur de votre donjon (entre 15 et 25):\n");
-            /*if (compteur == 1) {
-                afficherPhrase("entrez un nombre valide\n");
-                x = demanderInt("Entrez la longeur de votre donjon (entre 15 et 25):\n");
-                y = demanderInt("Entrez la hauteur de votre donjon (entre 15 et 25):\n");
-                compteur++;
-            }*/
         }
         
         //Création des obstacles
