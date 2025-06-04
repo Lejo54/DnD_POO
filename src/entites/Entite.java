@@ -21,11 +21,13 @@ public abstract class Entite {
      m_nom=nom;
      m_statistiques=new Statistiques();
      m_pseudo=setPseudo(nom);
+     m_position=new Position();
 
     }
     public Entite(String nom,Statistiques statistiques) {
         m_nom=nom;
         m_statistiques=statistiques;
+        m_position=new Position();
     }
     public abstract String setPseudo(String nom);
     public abstract String toString();
