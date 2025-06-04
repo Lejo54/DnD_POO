@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import donjons.Donjon;
-import equipements.Arme;
-import equipements.Armure;
-import equipements.Equipement;
+import equipements.*;
 
 import static partie.Affichage.*;
 
@@ -21,7 +19,9 @@ public class Personnage extends Entite{
         super(nom);
         m_race= race;
         m_classe= classe;
-        //Faire un inventaire en fonction de la classe avec des switch case
+
+        //Faire un inventaire en fonction de la classe
+        m_inventaire.addAll(baseStuff(classe));
 
     }
 
@@ -40,6 +40,34 @@ public class Personnage extends Entite{
         return 0;
     }
 
+    public List<Equipement> baseStuff(CharClasse classe){
+        List<Equipement> equipements= new ArrayList<>();
+        switch(classe.toString()){
+            case "Clerc":
+                equipements.add(new ArmeCourante("masse d'arme","",false));
+                equipements.add(new ArmeDistante("arbalete legere","",false));
+                equipements.add(new ArmureLourde("armure d'ecaille","",false));
+                break;
+            case "Magicien":
+                equipements.add(new ArmeDistante("fronde","",false));
+                equipements.add(new ArmeCourante("baton","c'est un beau baton",false));
+                break;
+            case "Roublard":
+                equipements.add(new ArmeDistante("arc court","",false));
+                equipements.add(new ArmeGuerre("rapiere","",false));
+                break;
+            case "Guerrier":
+                equipements.add(new ArmureLegere("cotte de mailles","",false));
+                equipements.add(new ArmeGuerre("epee longue","",false));
+                equipements.add(new ArmeDistante("arbalete legere","",false));
+                break;
+        }
+        return equipements;
+    }
+    /*
+les Roublards possèdent à leur création:
+un équipement contenant une rapière et un arc court
+*/
     public void afficherAction(){
         afficherPhrase(this.getNom()+" , c'est à vous, que voulez vous faire ?\n");
         afficherPhrase("1 - attaquer un ennemi\n");
