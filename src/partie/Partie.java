@@ -11,8 +11,8 @@ import static partie.Affichage.*;
 
 
 public class Partie {
-    private List<Personnage> m_joueurs;
-    private List<Donjon> m_donjons;
+    private List<Personnage> m_joueurs= new ArrayList<>();
+    private List<Donjon> m_donjons=new ArrayList<>();
 
     // Constructeur avec filtrage
     public Partie() {
@@ -27,20 +27,14 @@ public class Partie {
         m_joueurs.addAll(joueurs);
     }
     public void lancerPartie(){
-        //Liste des personnages mis à jour à la fin de la partie
-        List<Personnage> newJoueurs= new ArrayList<>();
-
         //Déroulement de la partie
+
         for(int donjon=0;donjon<3;donjon++){
             //création et ajout du ie donjon
             m_donjons.add(creerDonjon());
             getDonjons().get(donjon).afficherInfoDonjon(donjon);
             getDonjons().get(donjon).lancerTours();
-
         }
-
-        //MIse à jour de la liste des joueurs
-        m_joueurs.addAll(newJoueurs);
     }
     // Getters
     public List<Personnage> getJoueurs() {
@@ -49,7 +43,10 @@ public class Partie {
     public List<Donjon> getDonjons() {return m_donjons;}
 
     public Personnage creerJoueurs(){
-        String nom= demanderString("Entrez un nom de personnage (Minimum 3 caractères):\n");
+        String nom="";
+        while (nom.length()<2) {
+            nom = demanderString("Entrez un nom de personnage (Minimum 3 caractères):\n");
+        }
 
         afficherPhrase("Choisir votre classe parmis:\n");
         afficherPhrase("1/ Clerc:\n");
@@ -57,9 +54,12 @@ public class Partie {
         afficherPhrase("3/ Roublard:\n");
         afficherPhrase("4/ Magicien:\n");
         CharClasse classe= new Clerc();
-        switch (demanderInt("Entrez le numéro de la classe:\n")){
+        int numeroclasse=0;
+        while (numeroclasse!=1 && numeroclasse!=2 && numeroclasse!=3 && numeroclasse!=4){
+            numeroclasse=demanderInt("Entrez le numéro de la classe:\n");
+        }
+        switch (numeroclasse){
             case 1:
-                classe= new Clerc();
                 break;
             case 2:
                 classe= new Guerrier();
@@ -78,9 +78,12 @@ public class Partie {
         afficherPhrase("3/ Halfelin:\n");
         afficherPhrase("4/ Nain:\n");
         Race race= new Humain();
-        switch (demanderInt("Entrez le numéro de la race:\n")){
+        int numerorace=0;
+        while (numerorace!=1 && numerorace!=2 && numerorace!=3 && numerorace!=4){
+            numerorace=demanderInt("Entrez le numéro de la classe:\n");
+        }
+        switch (numerorace){
             case 1:
-                race= new Humain();
                 break;
             case 2:
                 race= new Elfe();
@@ -97,9 +100,12 @@ public class Partie {
 
     public Donjon creerDonjon(){
         //taille de la map
-        int x=demanderInt("Entrez la longeur de votre donjon (entre 15 et 25):\n");
-        int y=demanderInt("Entrez la hauteur de votre donjon (entre 15 et 25):\n");
-
+        int x=0,y=0;
+        while ((x<15 || x>25) &&(y<15 || y>25)) {
+            x = demanderInt("Entrez la longeur de votre donjon (entre 15 et 25):\n");
+            y = demanderInt("Entrez la hauteur de votre donjon (entre 15 et 25):\n");
+        }
+        
         //Création des obstacles
         List<Obstacle> obstacle=creerObstacle(demanderInt("combien d'obstacle se trouveront sur la carte ?\n"));
 
@@ -116,7 +122,10 @@ public class Partie {
 
     public List<Monstre> creerListMonstres(){
         //On demande le nombre d'espèces de monstre
-        int nbEspece= demanderInt("Donnez le nombre d'espèce pour les monstres \n");
+        int nbEspece=0;
+        while(nbEspece<0) {
+            nbEspece = demanderInt("Donnez le nombre d'espèce pour les monstres \n");
+        }
 
         //On demande le nom des différentes espèces
         List<String> nomsEspece= new ArrayList<>();

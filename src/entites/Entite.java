@@ -1,5 +1,6 @@
 package entites;
 
+import java.util.List;
 import java.util.Map;
 import static partie.Affichage.afficherPhrase;
 import static partie.De.lancerDe;
@@ -40,6 +41,25 @@ public abstract class Entite {
             afficherPhrase(this.getNom()+" est mort !");
         }
     }
+    public void afficherInfoEntite(){
+        afficherPhrase(this.getNom()+ "à une armure de "+this.getArmure() +" de résistance et il inflige "+this.getDegat()+" et il se trouve en "+this.getPosition().getX()+changeEntierEnLettre(this.getPosition().getY()));
+        afficherPhrase("voici les differentes informations de l'entite : \nInitiative de "+this.getStatistiques().getInitiative()+"\nVitesse de "+this.getStatistiques().getVitesse()+" case/action");
+        afficherPhrase("Il lui reste "+this.getStatistiques().getPv()+"point de vie restants\nUne force de "+this.getStatistiques().getForce()+"\nUne dextérité de "+this.getStatistiques().getDexterite());
+    }
+    public static void afficherBandeauTour(int tour,int indiceJoueur,List<Entite> entites) {
+        afficherPhrase("Tour "+tour+"\n     ");
+        for(Entite entite : entites) {
+            if(entites.indexOf(entite)==indiceJoueur){
+                afficherPhrase("-->"+entite.infoBref());
+            }
+            else{
+                afficherPhrase(entite.infoBref());
+            }
+        }
+    }
+    public abstract void afficherAction();
+
+
     public boolean est_mort(){
         //verifie si l'entite qui vient d'etre attaquer a toujours des points de vie restant
         if(this.m_statistiques.getPv()<=0){
@@ -58,7 +78,7 @@ public abstract class Entite {
         return (char) ('A'+number);
     }
 
-
+    public abstract void choixEquipement();
     public void attaquer(Entite cible) {
         //verifier si la cible est l'assaillant ou plus ou moins d'une case de distance,
         // si c'est 1 case ou moins, on ajoute la force au resultat du lancer, si c'est plus c'est la dexterite
@@ -108,15 +128,17 @@ public abstract class Entite {
         }
     }
 
+
     public Position getPosition() {return m_position;}
     public Statistiques getStatistiques(){return m_statistiques;}
     public String getNom() {
         return m_nom;
     }
+
     public String getPseudo() {return m_pseudo;}
     public abstract int getArmure() ;
     public abstract int getPortee() ;
 
     public abstract String getDegat() ;
-    public abstract void afficherEntite();
+    public abstract void ramasser(Donjon donjon,Entite entite);
 }

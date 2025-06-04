@@ -1,8 +1,12 @@
 package equipements;
 
+import entites.Statistiques;
+
+import static partie.Affichage.afficherPhrase;
+
 public class ArmureLegere extends Armure {
     public ArmureLegere(String nom, String description, boolean actif) {
-        super(nom, description, actif, calculclasseArmure(nom));
+        super(nom, description, actif, calculclasseArmure(nom),new Statistiques(0,0,0));
     }
 
     private static int calculclasseArmure(String nom){
@@ -11,7 +15,7 @@ public class ArmureLegere extends Armure {
                 return 11 ;
             case "harnois":
                 return 12;
-                //vitesse -4
+
         }
         return 0;
     }
@@ -19,5 +23,8 @@ public class ArmureLegere extends Armure {
     @Override
     public String getPoid() {
         return "leger";
+    }
+    public void afficherInfo(){
+        afficherPhrase(this.getNom()+"\n -Classe d'armure :"+this.getClasseArmure()+"\n");
     }
 }
