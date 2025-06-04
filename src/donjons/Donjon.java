@@ -199,17 +199,17 @@ public class Donjon {
                        System.out.print(x + 1 + " ");
                    }
                    else {
-                       System.out.print(x + 1 + "  ");
+                       System.out.print(" "+x + 1 + " ");
                    }
                } else if (this.contientObstacle(x, y)) {
-                   System.out.print("♦  ");
+                   System.out.print(" ♦ ");
                } else if (this.contientEquipement(x, y)) {
-                   System.out.print("†  ");
+                   System.out.print(" † ");
                } else if (this.contientEntite(x, y)) {
-                   String petitnom = this.getNomEntite(x, y).substring(0, 2);
+                   String petitnom = this.getNomEntite(x, y).substring(0, 3);
                    System.out.print(petitnom);
                } else {
-                   System.out.print("∙  ");
+                   System.out.print(" ∙ ");
                }
            }
            System.out.println();

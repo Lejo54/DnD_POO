@@ -23,6 +23,9 @@ public class Partie {
         }
         for (int i = 0; i < nbJoueur; i++) {
             joueurs.add(creerJoueurs());
+            int x =demanderInt("quel est la position x de "+ joueurs.get(i).getNom() +" ?\n");
+            int y =demanderInt("quel est la position y de "+ joueurs.get(i).getNom() +" ?\n");
+            joueurs.get(i).getPosition().changeXY(x,y);
         }
         m_joueurs.addAll(joueurs);
     }
@@ -116,6 +119,7 @@ public class Partie {
         List<Entite> entites= new ArrayList<>();
         entites.addAll(getJoueurs());
         entites.addAll(creerListMonstres());
+        afficherPhrase("on arrive la ");
 
         return new Donjon(objetAuSol,entites,obstacle,x,y);
     }
@@ -143,7 +147,11 @@ public class Partie {
             for (int j = 0; j < nbParEspeces.get(i); j++) {
                 //On crée le monstre et on l'ajoute dans la liste des monstres
                 monstres.add(creerMonstre(j, nomsEspece.get(i)));
+                int x =demanderInt("quel est la position x de "+ monstres.get(i).getNom() +" ?\n");
+                int y =demanderInt("quel est la position y de "+ monstres.get(i).getNom() +" ?\n");
+                monstres.get(j).getPosition().changeXY(x,y);
             }
+            afficherPhrase("fin de boucle");
         }
 
         return monstres;
@@ -165,6 +173,7 @@ public class Partie {
         Statistiques stat= new Statistiques(pv,force,dexterite,vitesse);
 
         int classeArmure= demanderInt("Classe d'armure du monstre:\n");
+
         return new Monstre(espece,numero,portee,classeArmure,stat);
     }
 
