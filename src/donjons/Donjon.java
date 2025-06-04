@@ -199,7 +199,7 @@ public class Donjon {
                        System.out.print(x + 1 + " ");
                    }
                    else {
-                       System.out.print(" "+x + 1 + " ");
+                       System.out.print(" "+(x + 1) + " ");
                    }
                } else if (this.contientObstacle(x, y)) {
                    System.out.print(" ♦ ");
