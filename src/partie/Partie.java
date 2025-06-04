@@ -110,7 +110,7 @@ public class Partie {
         List<Obstacle> obstacle=creerObstacle(demanderInt("combien d'obstacle se trouveront sur la carte ?\n"),x,y);
 
         //Création des objets ramassables
-        List<Equipement> objetAuSol=creerEquipementAuSol(demanderInt("combien d'objet ramassable seront au sol pour les joueurs\n"));
+        List<Equipement> objetAuSol=creerEquipementAuSol(demanderInt("combien d'objet ramassable seront au sol pour les joueurs\n"),x,y,obstacle);
 
         //Création des monstres
         List<Entite> entites= new ArrayList<>();
@@ -123,7 +123,7 @@ public class Partie {
     public List<Monstre> creerListMonstres(){
         //On demande le nombre d'espèces de monstre
         int nbEspece=0;
-        while(nbEspece<0) {
+        while(nbEspece<=0) {
             nbEspece = demanderInt("Donnez le nombre d'espèce pour les monstres \n");
         }
 
@@ -182,14 +182,17 @@ public class Partie {
         return res;
     }
 
-    public List<Equipement> creerEquipementAuSol(int nbe) {
+    public List<Equipement> creerEquipementAuSol(int nbe,int xd , int yd , List<Obstacle> obj) {
         List<Equipement> res = new ArrayList<>();
+        List<Entite> entitevide=new ArrayList<>();
         String[] tabstuff = {
          "baton", "masse d'armes", "arc court", "arbalete legere", "fronde",
          "epee longue", "rapiere", "epee à deux mains","cotte de mailles", "harnois"
         };
         Equipement nouvelleArme=null;
         for (int i = 0; i < nbe; i++) {
+            Donjon temp=new Donjon(res,entitevide,obj,xd,yd);
+            temp.afficherDonjon();
             afficherPhrase("Quelle est le nom de l'arme parmi celles-ci ?\n");
             for (int j = 0; j < tabstuff.length; j++) {
                 afficherPhrase("arme " + j + " = " + tabstuff[j]+"\n");
@@ -237,6 +240,10 @@ public class Partie {
                             false);
                     break;
             }
+            int x=demanderInt("a quel position horizontal va ce trouver cette arme ?\n")-1;
+            int y=demanderInt("a quel position vertical va ce trouver cette arme ?\n");
+            nouvelleArme.getPosition().changeXY(x,y);
+
 
             res.add(nouvelleArme);
         }

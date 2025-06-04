@@ -121,7 +121,7 @@ un équipement contenant une rapière et un arc court
 
 
     public String infoBref(){
-        return this.getPseudo()+" "+this.getNom()+"("+this.getRace()+" "+this.getClasse()+","+ this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")";
+        return this.getPseudo()+" "+this.getNom()+"("+this.getRace().toString()+" "+this.getClasse().toString()+","+ this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")";
     }
     public String toString() {
         return "Personnage";

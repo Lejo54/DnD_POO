@@ -8,6 +8,6 @@ public abstract class Race {
   m_race = race;
   m_statistiques = statistiques;
  }
- public String getRace() {return m_race;}
+ public String toString() {return m_race;}
  public Statistiques getStatistiques() {return m_statistiques;}
 }
