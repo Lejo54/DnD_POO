@@ -118,12 +118,12 @@ public class Partie {
         //Création des monstres
         List<Entite> entites= new ArrayList<>();
         entites.addAll(getJoueurs());
-        entites.addAll(creerListMonstres());
+        entites.addAll(creerListMonstres(x,y,obstacle,objetAuSol));
 
         return new Donjon(objetAuSol,entites,obstacle,x,y);
     }
 
-    public List<Monstre> creerListMonstres(){
+    public List<Monstre> creerListMonstres(int xd , int yd , List<Obstacle> obs,List<Equipement> obj){
         //On demande le nombre d'espèces de monstre
         int nbEspece=0;
         while(nbEspece<=0) {
@@ -144,11 +144,16 @@ public class Partie {
         List<Monstre> monstres= new ArrayList<>();
         for (int i = 0; i < nbEspece; i++) {
             for (int j = 0; j < nbParEspeces.get(i); j++) {
+                List<Entite> entitetemp=new ArrayList<>();
+                entitetemp.addAll(monstres);
                 //On crée le monstre et on l'ajoute dans la liste des monstres
+                Donjon temp=new Donjon(obj,entitetemp,obs,xd,yd);
+                temp.afficherDonjon();
                 monstres.add(creerMonstre(j, nomsEspece.get(i)));
                 int x =demanderInt("quel est la position x de "+ monstres.get(i).getNom() +" ?\n");
                 int y =demanderInt("quel est la position y de "+ monstres.get(i).getNom() +" ?\n");
                 monstres.get(j).getPosition().changeXY(x,y);
+
             }
         }
 
