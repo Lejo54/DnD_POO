@@ -2,6 +2,7 @@ package entites;
 
 import donjons.Donjon;
 
+import static donjons.Position.deplacement;
 import static partie.Affichage.*;
 
 public class Monstre extends Entite {
@@ -32,13 +33,20 @@ public class Monstre extends Entite {
     public int getPortee(){return m_portee;}
     public int getNumero(){return m_numero;}
 
-    public String setPseudo(String nom){return nom+ getNumero();}
+    @Override
+    public String setPseudo(String nom){
+        String pseudo="";
+        pseudo+=nom.substring(0, 2).toLowerCase();
+        pseudo+=this.getNumero();
+        return pseudo;
+    }
 
     public String creerDegat(){
         String nbFace=String.valueOf(demanderInt("Entrez le nombre de face de votre dé de dégat:\n"));
         String nbLancer=String.valueOf(demanderInt("Entrez le numero de lancer de votre dé de dégat:\n"));
         return nbLancer+"d"+nbFace;
     }
+
 
     public void afficherAction(){
         afficherPhrase(this.getNom()+" , c'est à vous, que voulez vous faire ?\n");
@@ -47,6 +55,24 @@ public class Monstre extends Entite {
         afficherPhrase("chaque ligne correspond a une action (1 = action citez à la ligne 1 etc...\n");
     }
 
+    public void choixAction(Donjon donjon) {
+        this.afficherAction();
+        int indexAction= demanderInt("Quelle est votre action ?\n");
+        switch (indexAction){
+            case 1: this.attaquer(choixCible(donjon));
+                break;
+            case 2: deplacement(donjon,this);
+        }
+    }
+    public Entite choixCible(Donjon donjon){
+        afficherPhrase("Choisissez votre cible \n");
+        donjon.afficherEntites();
+        int indexCible= demanderInt("Donnez l'indice de la cible\n");
+        while (donjon.getEntites().get(indexCible).toString().equals("Monstre")){
+            indexCible=demanderInt("Indice mauvais: Donnez l'indice d'une cible (la cible doit être un personnage)\n");
+        }
+        return donjon.getEntites().get(indexCible);
+    }
     public void ramasser(Donjon donjon,Entite entite){}
     public void choixEquipement(){};
     public void afficherArme(){}

@@ -6,6 +6,7 @@ import java.util.List;
 import donjons.Donjon;
 import equipements.*;
 
+import static donjons.Position.deplacement;
 import static partie.Affichage.*;
 
 
@@ -76,6 +77,29 @@ un équipement contenant une rapière et un arc court
         afficherPhrase("4 - changer d'équipement actif\n");
         afficherPhrase("chaque ligne correspond a une action (1 = action citez à la ligne 1 etc...\n");
     }
+    public void choixAction(Donjon donjon) {
+        this.afficherAction();
+        int indexAction= demanderInt("Quelle est votre action ?\n");
+        switch (indexAction){
+            case 1: this.attaquer(choixCible(donjon));
+                break;
+            case 2: deplacement(donjon,this);
+                break;
+            case 3: this.ramasser(donjon,this);
+                break;
+            case 4: this.choixEquipement();
+                break;
+        }
+    }
+    public Entite choixCible(Donjon donjon){
+        afficherPhrase("Choisissez votre cible \n");
+        donjon.afficherEntites();
+        int indexCible= demanderInt("Donnez l'indice de la cible\n");
+        while (donjon.getEntites().get(indexCible).toString().equals("Personnage")){
+            indexCible=demanderInt("Indice mauvais: Donnez l'indice d'une cible (la cible doit être un monstre)\n");
+        }
+        return donjon.getEntites().get(indexCible);
+    }
     public void choixEquipement(){
         this.afficherEquipement();
         int indexEquipement=demanderInt("Entrez le numéro de l'arme à équiper");
@@ -87,6 +111,7 @@ un équipement contenant une rapière et un arc court
         for(Equipement e:this.getInventaire()){
             afficherPhrase("Equipement "+i+": ");
             e.afficherInfo();
+            i++;
         }
     }
     public String getDegat(){

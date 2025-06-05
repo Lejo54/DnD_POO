@@ -29,7 +29,7 @@ public class Statistiques {
   m_dexterite=dexterite;
   m_vitesse=vitesse;
  }
- //Constructeur pour les entités
+ //Constructeur pour les Personnages
  public Statistiques(){
  int stat;
  stat= lancerDe(4,4)+3;
@@ -41,6 +41,7 @@ public class Statistiques {
  stat= lancerDe(1,20);
  m_initiative=stat;
  }
+
  //Constructeur pour les classes
  public Statistiques(int pv) {
   m_pv=pv;
@@ -91,12 +92,11 @@ public class Statistiques {
  }
 
 
- public Statistiques fusionStat(Personnage perso) {
-  Statistiques stat=new Statistiques();
-  stat.setDexterite(stat.getDexterite()+perso.getRace().getStatistiques().getDexterite());
-  stat.setPV(perso.getClasse().getStatistiques().getPv());
-  stat.setForce(stat.getForce()+perso.getRace().getStatistiques().getForce());
-  stat.setVitesse(stat.getVitesse()+perso.getRace().getStatistiques().getVitesse());
-  return stat;
+ public static void setStat(Personnage perso) {
+  perso.getStatistiques().setDexterite(perso.getStatistiques().getDexterite()+perso.getRace().getStatistiques().getDexterite());
+  perso.getStatistiques().setPV(perso.getClasse().getStatistiques().getPv());
+  perso.getStatistiques().setForce(perso.getStatistiques().getForce()+perso.getRace().getStatistiques().getForce());
+  perso.getStatistiques().setVitesse(perso.getStatistiques().getVitesse()+perso.getRace().getStatistiques().getVitesse());
+
  }
 }

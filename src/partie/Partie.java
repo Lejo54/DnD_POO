@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static partie.Affichage.*;
-
+import static entites.Statistiques.setStat;
 
 public class Partie {
     private List<Personnage> m_joueurs= new ArrayList<>();
@@ -23,9 +23,7 @@ public class Partie {
         }
         for (int i = 0; i < nbJoueur; i++) {
             joueurs.add(creerJoueurs());
-            int x =demanderInt("quel est la position x de "+ joueurs.get(i).getNom() +" ?\n");
-            int y =demanderInt("quel est la position y de "+ joueurs.get(i).getNom() +" ?\n");
-            joueurs.get(i).getPosition().changeXY(x,y);
+            setStat(joueurs.get(i));
         }
         m_joueurs.addAll(joueurs);
     }
@@ -115,6 +113,10 @@ public class Partie {
         //Création des objets ramassables
         List<Equipement> objetAuSol=creerEquipementAuSol(demanderInt("combien d'objet ramassable seront au sol pour les joueurs\n"),x,y,obstacle);
 
+        //Position des joueurs
+        for(Personnage p: this.getJoueurs()){
+            p.setPosition();
+        }
         //Création des monstres
         List<Entite> entites= new ArrayList<>();
         entites.addAll(getJoueurs());
@@ -150,9 +152,7 @@ public class Partie {
                 Donjon temp=new Donjon(obj,entitetemp,obs,xd,yd);
                 temp.afficherDonjon();
                 monstres.add(creerMonstre(j, nomsEspece.get(i)));
-                int x =demanderInt("quel est la position x de "+ monstres.get(i).getNom() +" ?\n");
-                int y =demanderInt("quel est la position y de "+ monstres.get(i).getNom() +" ?\n");
-                monstres.get(j).getPosition().changeXY(x,y);
+                monstres.get(j).setPosition();
 
             }
         }

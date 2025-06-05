@@ -3,10 +3,11 @@ package entites;
 import java.util.List;
 import java.util.Map;
 import static partie.Affichage.afficherPhrase;
+import static partie.Affichage.demanderInt;
 import static partie.De.lancerDe;
 import donjons.Position;
 import donjons.Donjon;
-
+import static entites.Statistiques.setStat;
 
 public abstract class Entite {
     private Position m_position;
@@ -28,6 +29,7 @@ public abstract class Entite {
         m_nom=nom;
         m_statistiques=statistiques;
         m_position=new Position();
+        m_pseudo=setPseudo(nom);
     }
     public abstract String setPseudo(String nom);
     public abstract String toString();
@@ -47,10 +49,10 @@ public abstract class Entite {
         afficherPhrase("voici les differentes informations de l'entite : \nInitiative de "+this.getStatistiques().getInitiative()+"\nVitesse de "+this.getStatistiques().getVitesse()+" case/action");
         afficherPhrase("Il lui reste "+this.getStatistiques().getPv()+"point de vie restants\nUne force de "+this.getStatistiques().getForce()+"\nUne dextérité de "+this.getStatistiques().getDexterite());
     }
-    public static void afficherBandeauTour(int tour,int indiceJoueur,List<Entite> entites) {
+    public static void afficherBandeauTour(int tour,Entite e,List<Entite> entites) {
         afficherPhrase("Tour "+tour+"\n     ");
         for(Entite entite : entites) {
-            if(entites.indexOf(entite)==indiceJoueur){
+            if(entite.getNom().equals(e.getNom())) {
                 afficherPhrase("-->"+entite.infoBref());
             }
             else{
@@ -59,7 +61,8 @@ public abstract class Entite {
         }
     }
     public abstract void afficherAction();
-
+    public abstract void choixAction(Donjon donjon);
+    public abstract Entite choixCible(Donjon donjon);
 
     public boolean est_mort(){
         //verifie si l'entite qui vient d'etre attaquer a toujours des points de vie restant
@@ -74,6 +77,7 @@ public abstract class Entite {
         String phrase="je suis fatiguée... je vais me reposer...\n";
         afficherPhrase(phrase);
     }
+
     public static char changeEntierEnLettre(int number) {
 
         return (char) ('A'+number);
@@ -142,4 +146,9 @@ public abstract class Entite {
 
     public abstract String getDegat() ;
     public abstract void ramasser(Donjon donjon,Entite entite);
+    public void setPosition(){
+        int x=demanderInt("Position x de "+this.getNom()+":\n");
+        int y=demanderInt("Position y de "+this.getNom()+":\n");
+        this.getPosition().changeXY(x,y);
+    }
 }

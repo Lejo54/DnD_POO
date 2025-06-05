@@ -52,11 +52,12 @@ public class Donjon {
                  }
             }
             tour++;
-            for (int i=0;i<this.getEntites().size();i++) {
+            for (Entite e:this.getEntites()) {
                 for (int x = 3; x < 0; x--) {
-                    afficherPhrase("vous avez "+x+" action restantes pour ce tour\n");
-                    afficherBandeauTour(tour,i,this.getEntites());
+                    afficherBandeauTour(tour,e,this.getEntites());
                     afficherDonjon();
+                    afficherPhrase("vous avez "+x+" action restantes pour ce tour\n");
+                    e.choixAction(this);
                     if (finPartie()){return;}
                 }
             }
@@ -71,35 +72,15 @@ public class Donjon {
             //test d'abord si la création de joueurs fonctionne avant tt
         }
     }
-    public void choixAction(Entite e) {
-        e.afficherAction();
-        int indexAction= demanderInt("Quelle est votre action ?\n");
-        switch (indexAction){
-            case 1: e.attaquer(choixCible());
-                    break;
-            case 2: deplacement(this,e);
-                    break;
-            case 3: e.ramasser(this,e);
-                    break;
-            case 4: e.choixEquipement();
-                    break;
-        }
-    }
-    public Entite choixCible(){
-        afficherPhrase("Choisissez votre cible ");
-        this.afficherEntites();
-        int indexCible= demanderInt("Donnez l'indice de la cible");
-        return this.getEntites().get(indexCible);
-    }
     public void afficherEntites() {
         String info="";
         for(int i=0;i<this.getEntites().size();i++){
-            info+=(i+1)+". "+this.getEntites().get(i).infoBref();
+            info+=(i+1)+". "+this.getEntites().get(i).infoBref()+"\n";
         }
         afficherPhrase(info+"\n");
     }
     public boolean finPartie(){
-        if(!monstresVivant(getEntites())){
+        if(!monstresVivant(getEntites()) && persosVivant(getEntites())){
             afficherPhrase("Victoire aventuriers, vous avez vaincu tout les monstres de ce donjon !\n");
             return true;
         }
@@ -117,7 +98,7 @@ public class Donjon {
             info+="*";
         }
         info+="\n\n";
-        String d="Donjon numéro "+n+"\n";
+        String d="Donjon numéro "+(n+1)+"\n";
         int espacement=(80+d.length())/2;
         for(int i=0;i<espacement;i++){
             info+=" ";
@@ -127,7 +108,7 @@ public class Donjon {
 
         info+="\n" +
          "Nombre de Monstres: "+this.compteurMonstre()+"\n"
-        +"Nombre de Joueurs"+this.compteurJoueur()+"\n";
+        +"Nombre de Joueurs: "+this.compteurJoueur()+"\n";
         afficherPhrase(info);
         this.afficherDonjon();
     }
