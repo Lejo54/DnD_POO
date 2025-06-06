@@ -199,7 +199,7 @@ public class Partie {
         List<Entite> entitevide=new ArrayList<>();
         String[] tabstuff = {
          "baton", "masse d'armes", "arc court", "arbalete legere", "fronde",
-         "epee longue", "rapiere", "epee à deux mains","cotte de mailles", "harnois"
+         "epee longue", "rapiere", "epee à deux mains","armure d ecaille","demi plate","cotte de mailles", "harnois"
         };
         Equipement nouvelleArme=null;
         for (int i = 0; i < nbe; i++) {
@@ -207,46 +207,39 @@ public class Partie {
             temp.afficherDonjon();
             afficherPhrase("Quelle est le nom de l'arme parmi celles-ci ?\n");
             for (int j = 0; j < tabstuff.length; j++) {
-                afficherPhrase("arme " + j + " = " + tabstuff[j]+"\n");
+                afficherPhrase("arme " + (j+1) + " = " + tabstuff[j]+"\n");
             }
-
-            int numero=-1;
-            while (numero < 0 || numero >= tabstuff.length){
+            int numero=0;
+            while (numero <= 0 || numero >= tabstuff.length){
                 numero = demanderInt("Veuillez entrer un numéro entre 0 et " + (tabstuff.length - 1));
+                afficherPhrase(numero+"\n");
             }
             switch (numero) {
-                case 1:
-                case 2:
+                case 1,2:
                     nouvelleArme = new ArmeCourante(tabstuff[numero],
                             demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
                             false);
                     break;
 
-                case 3:
-                case 4:
-                case 5:
+                case 3,4,5:
                     nouvelleArme = new ArmeDistante(tabstuff[numero],
                             demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
                             false);
                     break;
 
-                case 6:
-                case 7:
-                case 8:
+                case 6,7,8:
                     nouvelleArme = new ArmeGuerre(tabstuff[numero],
                             demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
                             false);
                     break;
 
-                case 9:
-                case 10:
+                case 9,10:
                     nouvelleArme = new ArmureLegere(tabstuff[numero],
                             demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
                             false);
                     break;
 
-                case 11:
-                case 12:
+                case 11,12:
                     nouvelleArme = new ArmureLourde(tabstuff[numero],
                             demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
                             false);

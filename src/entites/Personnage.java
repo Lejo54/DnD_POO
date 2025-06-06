@@ -45,9 +45,9 @@ public class Personnage extends Entite{
         List<Equipement> equipements= new ArrayList<>();
         switch(classe.toString()){
             case "Clerc":
-                equipements.add(new ArmeCourante("masse d'arme","",false));
+                equipements.add(new ArmeCourante("masse d arme","",false));
                 equipements.add(new ArmeDistante("arbalete legere","",false));
-                equipements.add(new ArmureLourde("armure d'ecaille","",false));
+                equipements.add(new ArmureLourde("armure d ecaille","",false));
                 break;
             case "Magicien":
                 equipements.add(new ArmeDistante("fronde","",false));
@@ -94,17 +94,16 @@ un équipement contenant une rapière et un arc court
     public Entite choixCible(Donjon donjon){
         afficherPhrase("Choisissez votre cible \n");
         donjon.afficherEntites();
-        int indexCible= demanderInt("Donnez l'indice de la cible\n");
-        while (donjon.getEntites().get(indexCible).toString().equals("Personnage")){
-            indexCible=demanderInt("Indice mauvais: Donnez l'indice d'une cible (la cible doit être un monstre)\n");
+        int indexCible= demanderInt("Donnez l'indice de la cible\n")-1;
+        while (donjon.getEntites().get(indexCible).toString().equals("Personnage")){ //FAIRE GETENTITES(i)
+            indexCible=demanderInt("Indice mauvais: Donnez l'indice d'une cible (la cible doit être un monstre)\n")-1;
         }
         return donjon.getEntites().get(indexCible);
     }
     public void choixEquipement(){
         this.afficherEquipement();
-        int indexEquipement=demanderInt("Entrez le numéro de l'arme à équiper");
+        int indexEquipement=demanderInt("Entrez le numéro de l'arme à équiper: \n")-1;
         this.getInventaire().get(indexEquipement).equipe();
-
     }
     public void afficherEquipement(){
         int i=1;
@@ -115,7 +114,7 @@ un équipement contenant une rapière et un arc court
         }
     }
     public String getDegat(){
-        for(Equipement e:m_inventaire){
+        for(Equipement e:this.getInventaire()){
             if (e.toString().equals("arme")){
                 if (e.estEquipe()) {
                     return ((Arme) e).getDegat();
@@ -146,7 +145,7 @@ un équipement contenant une rapière et un arc court
 
 
     public String infoBref(){
-        return this.getPseudo()+" "+this.getNom()+"("+this.getRace().toString()+" "+this.getClasse().toString()+","+ this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")";
+        return this.getPseudo()+" "+this.getNom()+"("+this.getRace().toString()+" "+this.getClasse().toString()+","+ this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")\n";
     }
     public String toString() {
         return "Personnage";

@@ -19,7 +19,7 @@ public class Monstre extends Entite {
         m_degat = creerDegat();
     }
     public String infoBref(){
-       return this.getPseudo()+" "+this.getNom()+"("+this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")";
+       return this.getPseudo()+" "+this.getNom()+"("+this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")\n";
     }
     public int getArmure(){
         return m_class_armure;

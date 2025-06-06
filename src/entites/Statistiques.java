@@ -69,7 +69,7 @@ public class Statistiques {
  //Méthodes
  public void retirerPv(int pv){m_pv-=pv;}
  public boolean estVivant(){
-  if(getPv()==0){
+  if(getPv()<=0){
    return false;
   }
   return true;
@@ -81,6 +81,9 @@ public class Statistiques {
    }
   }
   return true;
+ }
+ public void healMax(){
+  m_pv=getPvMax();
  }
  public static boolean monstresVivant(List<Entite> entites) {
   for (Entite monstre: entites){

@@ -2,7 +2,8 @@ package donjons;
 import static entites.Entite.changeEntierEnLettre;
 import entites.Entite;
 import static partie.Affichage.afficherPhrase;
-
+import static partie.Affichage.demanderString;
+import static partie.Affichage.demanderChar;
 public class Position {
     private int m_x;
     private int m_y;
@@ -26,16 +27,16 @@ public class Position {
         int deplacementsRestants = entite.getStatistiques().getVitesse() / 3;
         int initY= entite.getPosition().getY();
         int initX= entite.getPosition().getX();
-        afficherPhrase("Entrez une direction (z = haut, q = gauche, s = bas, d = droite, o= retour à l'origine) :");
+        afficherPhrase("Entrez une direction (z = haut, q = gauche, s = bas, d = droite, o= retour à l'origine) :\n");
         java.util.Scanner scanner = new java.util.Scanner(System.in);
 
         // Boucle permettant les déplacements
         for (int i = 0; i < deplacementsRestants; i++) {
-            System.out.print("Déplacement " + (i + 1) + "/" + deplacementsRestants + " : ");
-            char direction = scanner.next().charAt(0);
+            System.out.print("Déplacement " + (i + 1) + "/" + deplacementsRestants + " : \n");
+            char direction = demanderChar("Entrez une direction (z,q,s,d, o pour l'origine, r pour rester sur place)\n");
             int oldY= entite.getPosition().getY();
             int oldX= entite.getPosition().getX();
-            String erreur= "entite sur le chemin ou passage hors de la carte ";
+            String erreur= "entite sur le chemin ou passage hors de la carte \n";
             switch (direction) {
                 case 'z':
                     if(deplacementEstPossible(entite.getPosition().getX(),entite.getPosition().getY()-1, donjon)){
@@ -54,6 +55,7 @@ public class Position {
                         i--;
                         afficherPhrase(erreur);
                     }
+                    break;
                 case 'q':
                     if(deplacementEstPossible(entite.getPosition().getX()-1,entite.getPosition().getY(), donjon)){
                         entite.getPosition().changeX(entite.getPosition().getX() - 1);
@@ -62,7 +64,7 @@ public class Position {
                         i--;
                         afficherPhrase(erreur);
                     }
-
+                    break;
                 case 'd':
                     if(deplacementEstPossible(entite.getPosition().getX() + 1,entite.getPosition().getY(), donjon)){
                         entite.getPosition().changeX(entite.getPosition().getX() + 1);
@@ -71,15 +73,23 @@ public class Position {
                         i--;
                         afficherPhrase(erreur);
                     }
+                    break;
                 case 'o':
                     entite.getPosition().changeXY(initX,initY);
+                    i=0;
+
+                    break;
+                case 'r':
+                    break;
                 default:
-                    afficherPhrase("Direction invalide ! Entrez z, q, s ,d ou o uniquement.");
+                    afficherPhrase("Direction invalide ! Entrez z, q, s ,d ou o uniquement.\n");
                     i--; // Annule cette itération, car le déplacement n'a pas eu lieu
+                    break;
             }
 
+            donjon.afficherDonjon();
             //on transforme la position numérique en alphabétique avec 0=A et 26=Z
-            afficherPhrase("Nouvelle position : (" + changeEntierEnLettre(entite.getPosition().getX()) + ", " + entite.getPosition().getY() + ")");
+            afficherPhrase("Nouvelle position : (" + changeEntierEnLettre(entite.getPosition().getX()) + ", " + entite.getPosition().getY() + ")\n");
         }
     }
 

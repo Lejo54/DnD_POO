@@ -14,7 +14,7 @@ public class ArmeGuerre extends Arme {
                 return 1;
             case "rapiere":
                 return  1;
-            case "epee_à_deux_mains" :
+            case "epee a deux mains" :
                 return 1;
                 //vitesse du personnage -2 force +4
         }
@@ -26,7 +26,7 @@ public class ArmeGuerre extends Arme {
                 return "1d8";
             case "rapiere":
                 return  "1d8";
-            case "epee_à_deux_mains" :
+            case "epee a deux mains" :
                 return "2d6";
             //vitesse du personnage -2 force +4
         }

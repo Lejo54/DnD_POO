@@ -64,19 +64,6 @@ public abstract class Entite {
     public abstract void choixAction(Donjon donjon);
     public abstract Entite choixCible(Donjon donjon);
 
-    public boolean est_mort(){
-        //verifie si l'entite qui vient d'etre attaquer a toujours des points de vie restant
-        if(this.m_statistiques.getPv()<=0){
-            //Sortir l'entite de la liste
-            return true;
-        }
-        return false;
-    }
-    public void Passer_Le_Tour(){
-        //Lorsque l'entite veut mettre fin a son tour elle peut utiliser dormir
-        String phrase="je suis fatiguée... je vais me reposer...\n";
-        afficherPhrase(phrase);
-    }
 
     public static char changeEntierEnLettre(int number) {
 
@@ -92,28 +79,33 @@ public abstract class Entite {
         int petitx=0;
         int grandy=0;
         int petity=0;
-        if (cible.getPosition().getX()>getPosition().getX()){
+        if (cible.getPosition().getX()>this.getPosition().getX()){
             grandx=cible.getPosition().getX();
-            petitx=getPosition().getX();
+            petitx=this.getPosition().getX();
         }
         else {
             grandx=cible.getPosition().getX();
-            petitx=getPosition().getX();
+            petitx=this.getPosition().getX();
         }
-        if (cible.getPosition().getY()>getPosition().getY()){
+        if (cible.getPosition().getY()>this.getPosition().getY()){
             grandy=cible.getPosition().getY();
-            petity=getPosition().getY();
+            petity=this.getPosition().getY();
         }
         else {
             grandy=cible.getPosition().getY();
-            petity=getPosition().getY();
+            petity=this.getPosition().getY();
         }
         String[] decomposeDe = getDegat().split("d"); // ["3", "4"]
         int nombreLancers = Integer.parseInt(decomposeDe[0]);
         int typeDe = Integer.parseInt(decomposeDe[1]);
         degattotaux=lancerDe(typeDe,nombreLancers);
         if ((grandx - petitx < 2) && (grandy - petity < 2)) {
-            if (getPortee()==1) {
+            afficherPhrase(grandx+"\n");
+            afficherPhrase(petitx+"\n");
+            afficherPhrase(grandy+"\n");
+            afficherPhrase(this.getPortee()+" la portee\n");
+            if (this.getPortee()==1) {
+                afficherPhrase("ca marche ici1");
                 if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getForce())) {
                     cible.perdrePv(degattotaux);
                 }
@@ -121,7 +113,8 @@ public abstract class Entite {
                     afficherPhrase("la cible résiste a l'attaque\n");
                 }
             }
-            if((getPortee()<grandx-petitx)||(getPortee()<grandy-petity)) {
+            else if((this.getPortee()>=grandx-petitx)||(this.getPortee()>=grandy-petity)) {
+                afficherPhrase("ca marche ici2");
                 if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getDexterite())) {
                     cible.perdrePv(degattotaux);
                 }

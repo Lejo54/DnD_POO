@@ -10,9 +10,9 @@ public class ArmureLourde extends Armure {
     }
     private static int calculclasseArmure(String nom){
         switch (nom.toLowerCase()) {
-            case "armure d'ecailles":
+            case "armure d ecailles":
                 return 9 ;
-            case "demi-plate":
+            case "demi plate":
                 return  10;
         }
         return 0;
