@@ -44,11 +44,8 @@ public abstract class Entite {
             afficherPhrase(this.getNom()+" est mort !");
         }
     }
-    public void afficherInfoEntite(){
-        afficherPhrase(this.getNom()+ "à une armure de "+this.getArmure() +" de résistance et il inflige "+this.getDegat()+" et il se trouve en "+this.getPosition().getX()+changeEntierEnLettre(this.getPosition().getY()));
-        afficherPhrase("voici les differentes informations de l'entite : \nInitiative de "+this.getStatistiques().getInitiative()+"\nVitesse de "+this.getStatistiques().getVitesse()+" case/action");
-        afficherPhrase("Il lui reste "+this.getStatistiques().getPv()+"point de vie restants\nUne force de "+this.getStatistiques().getForce()+"\nUne dextérité de "+this.getStatistiques().getDexterite());
-    }
+    public abstract void afficherInfoEntite();
+
     public static void afficherBandeauTour(int tour,Entite e,List<Entite> entites) {
         afficherPhrase("Tour "+tour+"\n     ");
         for(Entite entite : entites) {
@@ -60,6 +57,7 @@ public abstract class Entite {
             }
         }
     }
+    public abstract void desequiperTout();
     public abstract void afficherAction();
     public abstract void choixAction(Donjon donjon);
     public abstract Entite choixCible(Donjon donjon);
@@ -100,30 +98,24 @@ public abstract class Entite {
         int typeDe = Integer.parseInt(decomposeDe[1]);
         degattotaux=lancerDe(typeDe,nombreLancers);
         if ((grandx - petitx < 2) && (grandy - petity < 2)) {
-            afficherPhrase(grandx+"\n");
-            afficherPhrase(petitx+"\n");
-            afficherPhrase(grandy+"\n");
-            afficherPhrase(this.getPortee()+" la portee\n");
-            if (this.getPortee()==1) {
-                afficherPhrase("ca marche ici1");
+            if (this.getPortee() >= 1) {
                 if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getForce())) {
                     cible.perdrePv(degattotaux);
-                }
-                else{
+                } else {
                     afficherPhrase("la cible résiste a l'attaque\n");
                 }
             }
-            else if((this.getPortee()>=grandx-petitx)||(this.getPortee()>=grandy-petity)) {
-                afficherPhrase("ca marche ici2");
-                if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getDexterite())) {
-                    cible.perdrePv(degattotaux);
-                }
-                else{
-                    afficherPhrase("la cible résiste a l'attaque\n");
-                }
-            }
-            else {afficherPhrase("hors de portée\n");}
         }
+        else if((this.getPortee()>=grandx-petitx)||(this.getPortee()>=grandy-petity)) {
+            if (cible.getArmure() < (lancerDe(1, 20) + this.getStatistiques().getDexterite())) {
+                cible.perdrePv(degattotaux);
+            }
+            else{
+                afficherPhrase("la cible résiste a l'attaque\n");
+            }
+        }
+        else {afficherPhrase("hors de portée\n");}
+
     }
 
 
@@ -140,7 +132,7 @@ public abstract class Entite {
     public abstract String getDegat() ;
     public abstract void ramasser(Donjon donjon,Entite entite);
     public void setPosition(){
-        int x=demanderInt("Position x de "+this.getNom()+":\n");
+        int x=demanderInt("Position x de "+this.getNom()+":\n")-1;
         int y=demanderInt("Position y de "+this.getNom()+":\n");
         this.getPosition().changeXY(x,y);
     }

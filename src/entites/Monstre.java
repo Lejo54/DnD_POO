@@ -21,6 +21,9 @@ public class Monstre extends Entite {
     public String infoBref(){
        return this.getPseudo()+" "+this.getNom()+"("+this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")\n";
     }
+    public void afficherInfoEntite(){
+        afficherPhrase(this.getNom()+" \n"+"Vie:"+this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+"\n"+"Degats:"+this.getDegat()+" \n"+"Portee:"+this.getPortee()+"\n"+"Initiative:"+this.getStatistiques().getInitiative()+"\n");
+    }
     public int getArmure(){
         return m_class_armure;
     }
@@ -67,15 +70,16 @@ public class Monstre extends Entite {
     public Entite choixCible(Donjon donjon){
         afficherPhrase("Choisissez votre cible \n");
         donjon.afficherEntites();
-        int indexCible= demanderInt("Donnez l'indice de la cible\n");
-        while (donjon.getEntites().get(indexCible).toString().equals("Monstre")){
+        int indexCible= demanderInt("Donnez l'indice de la cible\n")-1;
+        while (donjon.getEntites().get(indexCible).toString().equals("Monstre") && donjon.getEntites().get(indexCible)==this){
             indexCible=demanderInt("Indice mauvais: Donnez l'indice d'une cible (la cible doit être un personnage)\n");
         }
         return donjon.getEntites().get(indexCible);
     }
     public void ramasser(Donjon donjon,Entite entite){}
-    public void choixEquipement(){};
+    public void choixEquipement(){}
     public void afficherArme(){}
+    public void desequiperTout(){}
     public void afficherArmure(){}
     public void afficherEntite(){
         //On affiche les informations du monstre

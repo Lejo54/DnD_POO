@@ -29,12 +29,15 @@ public class Partie {
     }
     public void lancerPartie(){
         //Déroulement de la partie
-
+        boolean finPartie=false;
         for(int donjon=0;donjon<3;donjon++){
             //création et ajout du ie donjon
             m_donjons.add(creerDonjon());
             getDonjons().get(donjon).afficherInfoDonjon(donjon);
-            getDonjons().get(donjon).lancerTours();
+            finPartie=getDonjons().get(donjon).lancerTours(donjon+1);
+            if(finPartie){
+                return;
+            }
         }
     }
     // Getters
@@ -122,7 +125,7 @@ public class Partie {
         entites.addAll(getJoueurs());
         entites.addAll(creerListMonstres(x,y,obstacle,objetAuSol));
 
-        return new Donjon(objetAuSol,entites,obstacle,x,y);
+        return new Donjon(objetAuSol,trierParInitiative(entites),obstacle,x,y);
     }
 
     public List<Monstre> creerListMonstres(int xd , int yd , List<Obstacle> obs,List<Equipement> obj){
@@ -173,7 +176,8 @@ public class Partie {
         else {
             dexterite=demanderInt("Dextérité du monstre :\n");
         }
-        Statistiques stat= new Statistiques(pv,force,dexterite,vitesse);
+        int initiative= demanderInt("Initiative du monstre :\n");
+        Statistiques stat= new Statistiques(pv,force,initiative,vitesse,dexterite);
 
         int classeArmure= demanderInt("Classe d'armure du monstre:\n");
 
@@ -211,13 +215,12 @@ public class Partie {
             }
             int numero=0;
             while (numero <= 0 || numero >= tabstuff.length){
-                numero = demanderInt("Veuillez entrer un numéro entre 0 et " + (tabstuff.length - 1));
-                afficherPhrase(numero+"\n");
+                numero = demanderInt("Veuillez entrer un numéro entre 1 et " + (tabstuff.length)+"\n");
             }
             switch (numero) {
                 case 1,2:
                     nouvelleArme = new ArmeCourante(tabstuff[numero],
-                            demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
+                            demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)\n"),
                             false);
                     break;
 
@@ -253,5 +256,26 @@ public class Partie {
             res.add(nouvelleArme);
         }
         return res;
+    }
+    public List<Entite> trierParInitiative(List<Entite> entites) {
+        //On crée une nouvelle liste qui va être trié par ordre d'initiative
+        List<Entite> entitesTriees = new ArrayList<>(entites);
+
+        // Tri par sélection
+        int n = entitesTriees.size();
+        for (int i = 0; i < n - 1; i++) {
+            int maxIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (entitesTriees.get(j).getStatistiques().getInitiative() > entitesTriees.get(maxIndex).getStatistiques().getInitiative()) {
+                    maxIndex = j;
+                }
+            }
+            // Échange des entités
+            Entite temp = entitesTriees.get(i);
+            entitesTriees.set(i, entitesTriees.get(maxIndex));
+            entitesTriees.set(maxIndex, temp);
+        }
+        afficherPhrase(entitesTriees.get(0).getNom());
+        return entitesTriees;
     }
 }

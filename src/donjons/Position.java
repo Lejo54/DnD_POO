@@ -74,6 +74,42 @@ public class Position {
                         afficherPhrase(erreur);
                     }
                     break;
+                case 'a':
+                    if(deplacementEstPossible(entite.getPosition().getX() - 1,entite.getPosition().getY() - 1, donjon)){
+                        entite.getPosition().changeXY(entite.getPosition().getX() - 1, entite.getPosition().getY() - 1);
+                    }
+                    else{
+                        i--;
+                        afficherPhrase(erreur);
+                    }
+                    break;
+                case 'e':
+                    if(deplacementEstPossible(entite.getPosition().getX() + 1,entite.getPosition().getY() - 1, donjon)){
+                        entite.getPosition().changeXY(entite.getPosition().getX() + 1,entite.getPosition().getY() - 1);
+                    }
+                    else{
+                        i--;
+                        afficherPhrase(erreur);
+                    }
+                    break;
+                case 'w':
+                    if(deplacementEstPossible(entite.getPosition().getX() - 1,entite.getPosition().getY() + 1, donjon)){
+                        entite.getPosition().changeXY(entite.getPosition().getX() - 1,entite.getPosition().getY() + 1);
+                    }
+                    else{
+                        i--;
+                        afficherPhrase(erreur);
+                    }
+                    break;
+                case 'x':
+                    if(deplacementEstPossible(entite.getPosition().getX() + 1,entite.getPosition().getY() + 1, donjon)){
+                        entite.getPosition().changeXY(entite.getPosition().getX() + 1,entite.getPosition().getY() + 1);
+                    }
+                    else{
+                        i--;
+                        afficherPhrase(erreur);
+                    }
+                    break;
                 case 'o':
                     entite.getPosition().changeXY(initX,initY);
                     i=0;

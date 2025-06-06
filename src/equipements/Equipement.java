@@ -28,6 +28,9 @@ public abstract class Equipement {
     public void equipe(){
         this.m_actif=true;
     }
+    public void desequipe(){
+        this.m_actif=false;
+    }
 
 }
 

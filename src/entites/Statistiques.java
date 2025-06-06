@@ -3,6 +3,7 @@ package entites;
 import java.util.List;
 
 import static partie.De.lancerDe;
+import static partie.Affichage.afficherPhrase;
 
 public class Statistiques {
  private int m_pv=0;
@@ -12,7 +13,7 @@ public class Statistiques {
  private int m_vitesse=0;
  private int m_dexterite=0;
 
- //Constructeur pour les armes/armures
+ //Constructeur pour les armes/armures et monstre
  public Statistiques(int pv, int force, int initiative, int vitesse, int dexterite) {
   m_pv=pv;
   m_pvMax=pv;
@@ -21,14 +22,7 @@ public class Statistiques {
   m_vitesse=vitesse;
   m_dexterite=dexterite;
  }
- //Constructeur pour les monstres
- public Statistiques(int pv, int force, int dexterite, int vitesse) {
-  m_pv=pv;
-  m_pvMax=pv;
-  m_force=force;
-  m_dexterite=dexterite;
-  m_vitesse=vitesse;
- }
+
  //Constructeur pour les Personnages
  public Statistiques(){
  int stat;
@@ -56,6 +50,7 @@ public class Statistiques {
  //Getters
  public int getPv() {return m_pv;}
  public int getPvMax() {return m_pvMax;}
+ public void setPvMax(int pv) {m_pvMax=pv;}
  public void setPV(int pv){m_pv=pv;}
  public int getForce() {return m_force;}
  public void setForce(int force){m_force=force;}
@@ -85,21 +80,31 @@ public class Statistiques {
  public void healMax(){
   m_pv=getPvMax();
  }
- public static boolean monstresVivant(List<Entite> entites) {
+ public static boolean monstresVivant(List<Entite> entites, int nbMonstre) {
+  int nbMort=0;
   for (Entite monstre: entites){
    if(!monstre.getStatistiques().estVivant() && monstre.toString().equals("Monstre")){
-    return false;
+    nbMort++;
    }
   }
-  return true;
+  return nbMort != nbMonstre;
  }
-
+public void afficherStat(){
+  afficherPhrase(
+   "Vie:"+this.getPv()+"/"+this.getPvMax()+"\n"
+   +"Force:"+this.getForce()+"\n"
+   +"Initiative:"+this.getInitiative()+"\n"
+   +"Vitesse:"+this.getVitesse()+"\n"
+   +"Dexterite:"+this.getDexterite()+"\n"
+  );
+}
 
  public static void setStat(Personnage perso) {
   perso.getStatistiques().setDexterite(perso.getStatistiques().getDexterite()+perso.getRace().getStatistiques().getDexterite());
   perso.getStatistiques().setPV(perso.getClasse().getStatistiques().getPv());
   perso.getStatistiques().setForce(perso.getStatistiques().getForce()+perso.getRace().getStatistiques().getForce());
   perso.getStatistiques().setVitesse(perso.getStatistiques().getVitesse()+perso.getRace().getStatistiques().getVitesse());
+  perso.getStatistiques().setPvMax(perso.getClasse().getStatistiques().getPvMax());
 
  }
 }

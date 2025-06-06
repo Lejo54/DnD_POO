@@ -10,9 +10,7 @@ public class ArmeDistante extends Arme{
     }
     private static int calculportee(String nom){
         switch (nom.toLowerCase()) {
-            case "arc court":
-                return 16;
-            case "arbalete legere":
+            case "arc court","arbalete legere":
                 return 16;
             case "fronde":
                 return 6;

@@ -23,7 +23,6 @@ public class Personnage extends Entite{
 
         //Faire un inventaire en fonction de la classe
         m_inventaire.addAll(baseStuff(classe));
-
     }
 
 
@@ -87,25 +86,49 @@ un équipement contenant une rapière et un arc court
                 break;
             case 3: this.ramasser(donjon,this);
                 break;
-            case 4: this.choixEquipement();
+            case 4: this.changementEquipement();
                 break;
+        }
+    }
+    public void desequiperTout(){
+        for(Equipement e:m_inventaire){
+            if(e.estEquipe()){
+                e.desequipe();
+            }
         }
     }
     public Entite choixCible(Donjon donjon){
         afficherPhrase("Choisissez votre cible \n");
         donjon.afficherEntites();
         int indexCible= demanderInt("Donnez l'indice de la cible\n")-1;
-        while (donjon.getEntites().get(indexCible).toString().equals("Personnage")){ //FAIRE GETENTITES(i)
+        while (donjon.getEntites().get(indexCible).toString().equals("Personnage") && donjon.getEntites().get(indexCible)==this){ //FAIRE GETENTITES(i)
             indexCible=demanderInt("Indice mauvais: Donnez l'indice d'une cible (la cible doit être un monstre)\n")-1;
         }
         return donjon.getEntites().get(indexCible);
     }
     public void choixEquipement(){
-        this.afficherEquipement();
-        int indexEquipement=demanderInt("Entrez le numéro de l'arme à équiper: \n")-1;
-        this.getInventaire().get(indexEquipement).equipe();
+        afficherPhrase(this.getNom()+"\n");
+        for(int i=0;i<2;i++) {
+            this.afficherEquipements();
+            int indexEquipement = demanderInt("Entrez le numéro de l'arme à équiper: \n") - 1;
+            this.getInventaire().get(indexEquipement).equipe();
+        }
     }
-    public void afficherEquipement(){
+    public void changementEquipement(){
+        afficherPhrase(this.getNom()+"\n");
+        for(int i=0;i<2;i++) {
+            this.afficherEquipements();
+            int indexEquipement = demanderInt("Entrez le numéro de l'arme à équiper: \n") - 1;
+            if(this.getInventaire().get(indexEquipement).toString().equals("arme")){
+                this.getArmeEquipee().desequipe();
+            }
+            else {
+                this.getArmureEquipee().desequipe();
+            }
+            this.getInventaire().get(indexEquipement).equipe();
+        }
+    }
+    public void afficherEquipements(){
         int i=1;
         for(Equipement e:this.getInventaire()){
             afficherPhrase("Equipement "+i+": ");
@@ -143,10 +166,49 @@ un équipement contenant une rapière et un arc court
         }
     }
 
+    public void afficherInfoEntite(){
+        afficherPhrase(this.getNom()+" \n"
+         +"Armure:");
+        this.afficheArmureEquipee();
+        afficherPhrase("Arme:");
+        this.afficheArmeEquipee();
+        this.getStatistiques().afficherStat();
+    }
 
     public String infoBref(){
         return this.getPseudo()+" "+this.getNom()+"("+this.getRace().toString()+" "+this.getClasse().toString()+","+ this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")\n";
     }
+    public void afficheArmureEquipee(){
+        for(Equipement e:this.getInventaire()){
+            if (e.toString().equals("armure") && e.estEquipe()){
+                e.afficherInfo();
+            }
+        }
+    }
+    public void afficheArmeEquipee(){
+        for(Equipement e:this.getInventaire()){
+            if (e.toString().equals("arme") && e.estEquipe()){
+                e.afficherInfo();
+            }
+        }
+    }
+    public Arme getArmeEquipee(){
+        for(Equipement e:this.getInventaire()){
+            if (e.toString().equals("arme") && e.estEquipe()){
+                return (Arme) e;
+            }
+        }
+        return null;
+    }
+    public Armure getArmureEquipee(){
+        for(Equipement e:this.getInventaire()){
+            if (e.toString().equals("armure") && e.estEquipe()){
+                return (Armure) e;
+            }
+        }
+        return null;
+    }
+
     public String toString() {
         return "Personnage";
     }

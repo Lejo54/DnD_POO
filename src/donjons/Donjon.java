@@ -23,7 +23,7 @@ public class Donjon {
 
     public Donjon(List<Equipement> objetAuSol, List<Entite> entites,List<Obstacle> obstacles,int x, int y) {
         this.m_objetAuSol = objetAuSol;
-        this.m_entites = trierParInitiative(entites);
+        this.m_entites = entites;
         this.m_obstacles = obstacles;
         this.m_taille=new Position(x,y);
     }
@@ -41,9 +41,9 @@ public class Donjon {
         return m_entites;
     }
 
-    public void lancerTours(){
+    public boolean lancerTours(int nbDonjon){
         int tour=0;
-        while(!finPartie()){
+        do{
             if (tour==0){
                  for(Entite entite: this.getEntites()){
                      if(entite.toString().equals("Personnage")){
@@ -53,29 +53,36 @@ public class Donjon {
             }
             tour++;
             for (Entite e:this.getEntites()) {
+                //choix des actions
                 for (int x = 3; x > 0; x--) {
+                    if(!persosVivant(this.getEntites())){
+                        afficherPhrase("Défaite, tout les personnages sont morts\n");
+                        return true;
+                    }
                     afficherBandeauTour(tour,e,this.getEntites());
                     afficherDonjon();
+                    e.afficherInfoEntite();
                     afficherPhrase("vous avez "+x+" action restantes pour ce tour\n");
                     e.choixAction(this);
-                    if (finPartie()){
+                    if (this.victoireDonjon()){
+                        if(this.victoirePartie(nbDonjon)){
+                            afficherPhrase("Victoire, tout les donjons ont été vaincus\n");
+                            return true;
+                        }
+                        afficherPhrase("Tout les monstres du donjon on été vaincus, passage au donjon suivant\n");
                         for (Entite entite : this.getEntites()) {
                             entite.getStatistiques().healMax();
+                            if(entite.toString().equals("Personnage")){
+                                entite.desequiperTout();
+                            }
                         }
-                        return;
+                        return false;
                     }
                 }
             }
-            //afficher le bandeau du tour
-            //afficher la map
-            //afficher les actions en fonction du mob je crois
-            //en fonction de l'action choisit faire l'action
-            //et en vrai je crois que c'est la fin après
-            //faire en sorte qu'au début du jeu les gens peuvent choisir les armes à équiper
-            //et les armures aussi
-            //en vrai ca peut le faire demain matin je pense et après gros débug
-            //test d'abord si la création de joueurs fonctionne avant tt
-        }
+        } while (!this.victoirePartie(nbDonjon));
+        afficherPhrase("pas censé être ici");
+        return false;
     }
     public void afficherEntites() {
         String info="";
@@ -84,14 +91,16 @@ public class Donjon {
         }
         afficherPhrase(info+"\n");
     }
-    public boolean finPartie(){
-        if(!monstresVivant(getEntites()) && persosVivant(getEntites())){
-            afficherPhrase("Victoire aventuriers, vous avez vaincu tout les monstres de ce donjon !\n");
-            return true;
-        }
-        else if(!persosVivant(getEntites())){
-            afficherPhrase("Défaite, toute l'équipe s'est faite éliminé !\n");
-            return true;
+
+    public boolean victoirePartie(int nbDonjon){
+     return nbDonjon == 3 && persosVivant(this.getEntites());
+    }
+    public boolean victoireDonjon(){
+        if(persosVivant(this.getEntites())){
+            if(!monstresVivant(this.getEntites(),this.compteurMonstre())){
+                return true;
+            }
+
         }
         return false;
     }
@@ -104,7 +113,7 @@ public class Donjon {
         }
         info+="\n\n";
         String d="Donjon numéro "+(n+1)+"\n";
-        int espacement=(80+d.length())/2;
+        int espacement=(80+d.length())/4;
         for(int i=0;i<espacement;i++){
             info+=" ";
         }
@@ -201,26 +210,6 @@ public class Donjon {
            }
            afficherPhrase("\n");
        }
-   }
-   public List<Entite> trierParInitiative(List<Entite> entites) {
-       //On crée une nouvelle liste qui va être trié par ordre d'initiative
-       List<Entite> entitesTriees = new ArrayList<>(entites);
-
-       // Tri par sélection
-       int n = entitesTriees.size();
-       for (int i = 0; i < n - 1; i++) {
-           int maxIndex = i;
-           for (int j = i + 1; j < n; j++) {
-               if (entitesTriees.get(j).getStatistiques().getInitiative() > entitesTriees.get(maxIndex).getStatistiques().getInitiative()) {
-                   maxIndex = j;
-               }
-           }
-           // Échange des entités
-           Entite temp = entitesTriees.get(i);
-           entitesTriees.set(i, entitesTriees.get(maxIndex));
-           entitesTriees.set(maxIndex, temp);
-       }
-       return entitesTriees;
    }
 
 
