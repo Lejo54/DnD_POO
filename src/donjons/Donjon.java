@@ -20,12 +20,27 @@ public class Donjon {
     List<Obstacle> m_obstacles=new ArrayList<>();
     Position m_taille;
 
+    /**
+     * Constructeur entier de la classe Donjon
+     * @param objetAuSol liste des objets ramassables au sol
+     * @param entites liste des entités jouables (joueurs et monstres)
+     * @param obstacles liste des obstacles présents dans le donjon
+     * @param x largeur du donjon (entre 15 et 25)
+     * @param y hauteur du donjon (entre 15 et 25)
+     **/
     public Donjon(List<Equipement> objetAuSol, List<EntiteJouable> entites,List<Obstacle> obstacles,int x, int y) {
         this.m_objetAuSol = objetAuSol;
         this.m_entites = entites;
         this.m_obstacles = obstacles;
         this.m_taille=new Position(x,y);
     }
+
+    /**
+     * Constructeur de la classe Donjon
+     * Initialise les entités, les obstacles et les objets ramassables
+     * @param x largeur du donjon (entre 15 et 25)
+     * @param y hauteur du donjon (entre 15 et 25)
+     **/
     public Donjon(int x, int y) {
         this.m_entites = new ArrayList<>();
         setTaille(x,y);
@@ -40,6 +55,12 @@ public class Donjon {
 
 
     }
+
+    /**
+     * Méthode pour créer des équipements au sol du donjon
+     * @param nbe nombre d'équipements à créer au sol
+     * @return une liste d'équipement créée
+     **/
     public List<Equipement> creerEquipementAuSol(int nbe) {
         List<Equipement> res = new ArrayList<>();
         String[] tabstuff = {
@@ -100,6 +121,11 @@ public class Donjon {
         }
         return res;
     }
+
+    /**
+     * Méthode pour créer des obstacles au sol du donjon
+     * @param nbo nombre d'obstacles à créer au sol
+     **/
     public void creerObstacles(int nbo){
         List<Obstacle> res=new ArrayList<>();
         int xd=this.getTailleX();
@@ -117,6 +143,12 @@ public class Donjon {
         res.addAll(this.getAllObstacles());
         this.setObstacles(res);
     }
+
+    /**
+     * Méthode pour créer une liste de monstres dans le donjon
+     * Crée une liste de monstres en demandant le nombre d'espèces et le nombre de spécimens par espèce
+     * @return une liste de monstres créée
+     **/
     public List<Monstre> creerListMonstres(){
         //On demande le nombre d'espèces de monstre
         int nbEspece=0;
@@ -150,6 +182,13 @@ public class Donjon {
 
         return monstres;
     }
+
+    /**
+     * Méthode pour créer un monstre
+     * @param numero nombre du spécimen de l'espèce
+     * @param espece nom de l'espèce du monstre
+     * @return une liste d'équipement créée
+     **/
     public Monstre creerMonstre(int numero,String espece){
         int portee= demanderInt("Entrez la portée de l'attaque du monstre (1 pour une attaque au corps à corps):\n");
 
@@ -171,9 +210,20 @@ public class Donjon {
 
         return new Monstre(espece,numero,portee,classeArmure,stat);
     }
+
+    /**
+     * Méthode pour définir les objets ramassables au sol du donjon
+     * @param objetAuSol liste des objets ramassables au sol
+     **/
     public void setobjetAuSol(List<Equipement> objetAuSol) {
         this.m_objetAuSol = objetAuSol;
     }
+
+    /**
+     * Méthode pour définir les entités du donjon
+     * Fusionne les joueurs et les monstres dans une liste d'entités
+     * @param joueurs liste des joueurs présents dans le donjon
+     **/
     public void setEntites(List<Personnage> joueurs) {
         //Création des monstres
         List<EntiteJouable> entites= new ArrayList<>();
@@ -182,12 +232,29 @@ public class Donjon {
         entites.addAll(creerListMonstres());
         this.m_entites = this.trierParInitiative(entites);
     }
+
+    /**
+     * Méthode pour définir les obstacles du donjon
+     * @param obstacles liste des obstacles présents dans le donjon
+     **/
     public void setObstacles(List<Obstacle> obstacles) {
         this.m_obstacles = obstacles;
     }
+
+    /**
+     * Méthode pour définir la taille du donjon
+     * @param x largeur du donjon (entre 15 et 25)
+     * @param y hauteur du donjon (entre 15 et 25)
+     **/
     public void setTaille(int x, int y) {
         this.m_taille = new Position(x, y);
     }
+
+    /**
+     * Méthode pour trier les entités par ordre d'initiative
+     * @param entites liste des entités jouables (joueurs et monstres)
+     * @return une liste d'entités triées par ordre d'initiative
+     **/
     public List<EntiteJouable> trierParInitiative(List<EntiteJouable> entites) {
         //On crée une nouvelle liste qui va être trié par ordre d'initiative
         List<EntiteJouable> entitesTriees = new ArrayList<>(entites);
@@ -208,32 +275,86 @@ public class Donjon {
         }
         return entitesTriees;
     }
-    public Position getTaille() {return m_taille;}
+
+    /**
+     * Retourne la taille du donjon
+     * @return taille du donjon sous forme d'objet Position
+     **/
+    public Position getTaille() {
+        return m_taille;
+    }
+
+    /**
+     * Retourne la longueur du donjon
+     * @return longueur du donjon
+     **/
     public int getTailleX() {
         return m_taille.getX();
     }
+
+    /**
+     * Retourne la hauteur du donjon
+     * @return hauteur du donjon
+     **/
     public int getTailleY() {
         return m_taille.getY();
     }
+
+    /**
+     * Retourne la liste des obstacles du donjon
+     * @return liste des obstacles
+     **/
     public List<Obstacle> getAllObstacles() {
         return m_obstacles;
     }
+
+    /**
+     * Retourne un obstacle spécifique du donjon
+     * @return un obstacle à l'index spécifié
+     **/
     public Obstacle getObstacle(int index){return m_obstacles.get(index);}
+
+    /**
+     * Retourne la liste des objets ramassables au sol du donjon
+     * @return liste des objets ramassables
+     **/
     public List<Equipement> getAllObjets()
     {
         return m_objetAuSol;
     }
+
+    /**
+     * Retourne un objet ramassable spécifique du donjon
+     * @return un objet à l'index spécifié
+     **/
     public Equipement getObjet(int i)
     {
         return m_objetAuSol.get(i);
     }
+
+    /**
+     * Retourne une entité spécifique du donjon
+     * @return une entité à l'index spécifié
+     **/
     public EntiteJouable getEntite(int i)
     {
         return m_entites.get(i);
     }
+
+    /**
+     * Retourne la liste de toutes les entités du donjon
+     * @return liste de toutes les entités
+     **/
     public List<EntiteJouable> getAllEntites() {
         return m_entites;
     }
+
+    /**
+     * Méthode pour lancer les tours de jeu dans le donjon
+     * @param nbDonjon numéro du donjon actuel
+     * @param mj entité maître du jeu (MJ) qui peut agir à chauque action
+     * @return true si la partie est terminée, false sinon
+     **/
     public boolean lancerTours(int nbDonjon,Entite mj){
         int tour=0;
         do{
@@ -279,6 +400,10 @@ public class Donjon {
         afficherPhrase("pas censé être ici");
         return false;
     }
+
+    /**
+     * Méthode pour afficher les entités du donjon
+     **/
     public void afficherEntites() {
         String info="";
         for(int i = 0; i<this.getAllEntites().size(); i++){
@@ -286,6 +411,11 @@ public class Donjon {
         }
         afficherPhrase(info+"\n");
     }
+
+    /**
+     * Méthode pour afficher les informations de la case où se trouve l'entité
+     * @param entite l'entité dont on veut afficher les informations de la case
+     **/
     public void afficherInfoCase(EntiteJouable entite){
         for(Equipement e: this.getAllObjets()){
             if(e.getPosition().getX()==entite.getPosition().getX() && e.getPosition().getY()==entite.getPosition().getY()){
@@ -295,9 +425,21 @@ public class Donjon {
         }
         afficherPhrase("Il n'y a rien là oû vous êtes\n");
     }
+
+    /**
+     * Méthode pour vérifier si la partie est gagnée
+     * Une partie est gagnée si tous les donjons sont gagnés et que tous les personnages sont vivants
+     * @return true si la partie est gagnée, false sinon
+     **/
     public boolean victoirePartie(int nbDonjon){
      return nbDonjon == 3 && persosVivant(this.getAllEntites());
     }
+
+    /**
+     * Méthode pour vérifier si le donjon est gagné
+     * Un donjon est gagné si tous les monstres sont morts
+     * @return true si le donjon est gagné, false sinon
+     **/
     public boolean victoireDonjon(){
         if(persosVivant(this.getAllEntites())){
             if(!monstresVivant(this.getAllEntites(),this.compteurMonstre())){
@@ -307,7 +449,10 @@ public class Donjon {
         return false;
     }
 
-
+    /**
+     * Méthode pour afficher les informations du donjon
+     * @param n numéro du donjon (pour l'affichage)
+     **/
     public void afficherInfoDonjon(int n){
         String info="";
         for(int i=0;i<80;i++){
@@ -334,6 +479,10 @@ public class Donjon {
         this.afficherDonjon();
     }
 
+    /**
+     * Méthode pour compter le nombre de joueurs dans le donjon
+     * @return le nombre de joueurs dans le donjon
+     **/
     public int compteurJoueur(){
         int nbJoueur=0;
         for(EntiteJouable entite : this.getAllEntites()){
@@ -343,6 +492,11 @@ public class Donjon {
         }
         return nbJoueur;
     }
+
+    /**
+     * Méthode pour compter le nombre de monstres dans le donjon
+     * @return le nombre de monstres dans le donjon
+     **/
     public int compteurMonstre(){
         int nbMonstre=0;
         for(EntiteJouable entite : this.getAllEntites()){
@@ -353,6 +507,12 @@ public class Donjon {
         return nbMonstre;
     }
 
+    /**
+     * Méthode pour vérifier si une case contient un obstacle
+     * @param x position horizontale de la case
+     * @param y position verticale de la case
+     * @return true si la case contient un obstacle, false sinon
+     **/
     public boolean contientObstacle(int x, int y) {
         for (Obstacle obstacle : this.getAllObstacles()) {
             if (obstacle.getPosition().getX() == x && obstacle.getPosition().getY() == y) {
@@ -361,6 +521,13 @@ public class Donjon {
         }
         return false;
     }
+
+    /**
+     * Méthode pour vérifier si une case contient une entité jouable (joueur ou monstre)
+     * @param x position horizontale de la case
+     * @param y position verticale de la case
+     * @return true si la case contient une entité jouable, false sinon
+     **/
     public boolean contientEntite(int x, int y) {
         for (EntiteJouable entite : this.getAllEntites()) {
             if (entite.getPosition().getX() == x && entite.getPosition().getY() == y) {
@@ -369,6 +536,13 @@ public class Donjon {
         }
         return false;
     }
+
+    /**
+     * Méthode pour vérifier si une case contient un équipement
+     * @param x position horizontale de la case
+     * @param y position verticale de la case
+     * @return true si la case contient un équipement, false sinon
+     **/
     public boolean contientEquipement(int x, int y) {
         for (Equipement equipement : this.getAllObjets()) {
             if (equipement.getPosition().getX() == x && equipement.getPosition().getY() == y) {
@@ -377,16 +551,27 @@ public class Donjon {
         }
         return false;
     }
+
+    /**
+     * Méthode pour obtenir le nom de l'entité à une position donnée
+     * @param x position horizontale de la case
+     * @param y position verticale de la case
+     * @return le nom de l'entité à cette position, ou une chaîne vide si aucune entité n'est présente
+     **/
     public String getNomEntite(int x , int y){
         for(EntiteJouable e:this.getAllEntites()){
             if(e.getPosition().getX()==x && e.getPosition().getY()==y){
-                //que les 3 premiers caractere de nom
+                //que le pseudo de l'entité
                 return e.getPseudo();
             }
         }
         return "";
     }
 
+    /**
+     * Méthode pour afficher le donjon
+     * Affiche les entités, les obstacles et les objets ramassables dans le donjon
+     **/
     public void afficherDonjon() {
         // Affichage de l'entête des colonnes
         afficherPhrase("    ");
