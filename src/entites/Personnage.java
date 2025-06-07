@@ -10,7 +10,7 @@ import static donjons.Position.deplacement;
 import static partie.Affichage.*;
 
 
-public class Personnage extends Entite{
+public class Personnage extends EntiteJouable{
     private Race m_race;
     private String m_nom;
     private CharClasse m_classe;
@@ -74,13 +74,14 @@ un équipement contenant une rapière et un arc court
         afficherPhrase("2 - se deplacer dans le donjon\n");
         afficherPhrase("3 - ramasser un équipement\n");
         afficherPhrase("4 - changer d'équipement actif\n");
+        afficherPhrase("5 - Ne rien faire\n");
         afficherPhrase("chaque ligne correspond a une action (1 = action citez à la ligne 1 etc...\n");
     }
     public void choixAction(Donjon donjon) {
         this.afficherAction();
         int indexAction= demanderInt("Quelle est votre action ?\n");
         switch (indexAction){
-            case 1: this.attaquer(choixCible(donjon));
+            case 1: this.attaquer(choixCible(donjon),this.getDegat());
                 break;
             case 2: deplacement(donjon,this);
                 break;
@@ -88,6 +89,7 @@ un équipement contenant une rapière et un arc court
                 break;
             case 4: this.changementEquipement();
                 break;
+            case 5: break;
         }
     }
     public void desequiperTout(){
@@ -97,14 +99,14 @@ un équipement contenant une rapière et un arc court
             }
         }
     }
-    public Entite choixCible(Donjon donjon){
+    public EntiteJouable choixCible(Donjon donjon){
         afficherPhrase("Choisissez votre cible \n");
         donjon.afficherEntites();
         int indexCible= demanderInt("Donnez l'indice de la cible\n")-1;
-        while (donjon.getEntites().get(indexCible).toString().equals("Personnage") && donjon.getEntites().get(indexCible)==this){ //FAIRE GETENTITES(i)
+        while (donjon.getAllEntites().get(indexCible).toString().equals("Personnage") && donjon.getAllEntites().get(indexCible)==this){ //FAIRE GETENTITES(i)
             indexCible=demanderInt("Indice mauvais: Donnez l'indice d'une cible (la cible doit être un monstre)\n")-1;
         }
-        return donjon.getEntites().get(indexCible);
+        return donjon.getAllEntites().get(indexCible);
     }
     public void choixEquipement(){
         afficherPhrase(this.getNom()+"\n");
@@ -157,13 +159,15 @@ un équipement contenant une rapière et un arc court
         return 0;}
 
     public void ramasser(Donjon donjon, Entite entite){
-        for (int i=0;i<donjon.getObjets().size();i++) {
-            if (this.getPosition().getX() == donjon.getObjets().get(i).getPosition().getX() && this.getPosition().getY()==donjon.getObjets().get(i).getPosition().getY()) {
-                donjon.getObjets().get(i).getPosition().changeXY(-1,-1);
-                this.getInventaire().add(donjon.getObjets().get(i));
-                donjon.getObjets().remove(i);
+        for (int i=0;i<donjon.getAllObjets().size();i++) {
+            if (this.getPosition().getX() == donjon.getObjet(i).getPosition().getX() && this.getPosition().getY()==donjon.getObjet(i).getPosition().getY()) {
+                donjon.getObjet(i).getPosition().changeXY(-1,-1);
+                this.getInventaire().add(donjon.getObjet(i));
+                donjon.getAllObjets().remove(i);
+                return;
             }
         }
+        afficherPhrase("Aucun objet à ramasser ici\n");
     }
 
     public void afficherInfoEntite(){

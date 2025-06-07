@@ -5,7 +5,7 @@ import donjons.Donjon;
 import static donjons.Position.deplacement;
 import static partie.Affichage.*;
 
-public class Monstre extends Entite {
+public class Monstre extends EntiteJouable {
     int m_numero;
     int m_portee;
     String m_degat;
@@ -55,6 +55,7 @@ public class Monstre extends Entite {
         afficherPhrase(this.getNom()+" , c'est à vous, que voulez vous faire ?\n");
         afficherPhrase("1 - attaquer un ennemi\n");
         afficherPhrase("2 - se deplacer dans le donjon\n");
+        afficherPhrase("5 - Ne rien faire\n");
         afficherPhrase("chaque ligne correspond a une action (1 = action citez à la ligne 1 etc...\n");
     }
 
@@ -62,19 +63,21 @@ public class Monstre extends Entite {
         this.afficherAction();
         int indexAction= demanderInt("Quelle est votre action ?\n");
         switch (indexAction){
-            case 1: this.attaquer(choixCible(donjon));
+            case 1: this.attaquer(choixCible(donjon),this.getDegat());
                 break;
             case 2: deplacement(donjon,this);
+                break;
+            case 3:break;
         }
     }
-    public Entite choixCible(Donjon donjon){
+    public EntiteJouable choixCible(Donjon donjon){
         afficherPhrase("Choisissez votre cible \n");
         donjon.afficherEntites();
         int indexCible= demanderInt("Donnez l'indice de la cible\n")-1;
-        while (donjon.getEntites().get(indexCible).toString().equals("Monstre") && donjon.getEntites().get(indexCible)==this){
+        while (donjon.getAllEntites().get(indexCible).toString().equals("Monstre") && donjon.getAllEntites().get(indexCible)==this){
             indexCible=demanderInt("Indice mauvais: Donnez l'indice d'une cible (la cible doit être un personnage)\n");
         }
-        return donjon.getEntites().get(indexCible);
+        return donjon.getAllEntites().get(indexCible);
     }
     public void ramasser(Donjon donjon,Entite entite){}
     public void choixEquipement(){}

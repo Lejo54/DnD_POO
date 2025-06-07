@@ -1,8 +1,6 @@
 package donjons;
-import static entites.Entite.changeEntierEnLettre;
-import entites.Entite;
+import entites.EntiteJouable;
 import static partie.Affichage.afficherPhrase;
-import static partie.Affichage.demanderString;
 import static partie.Affichage.demanderChar;
 public class Position {
     private int m_x;
@@ -19,7 +17,7 @@ public class Position {
     }
 
 
-    public static void deplacement(Donjon donjon,Entite entite) {
+    public static void deplacement(Donjon donjon,EntiteJouable entite) {
         // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
 
         // Sauvegarde des positions initiales pour les restaurer en cas d'annulation
@@ -125,26 +123,21 @@ public class Position {
 
             donjon.afficherDonjon();
             //on transforme la position numérique en alphabétique avec 0=A et 26=Z
-            afficherPhrase("Nouvelle position : (" + changeEntierEnLettre(entite.getPosition().getX()) + ", " + entite.getPosition().getY() + ")\n");
+            afficherPhrase("Nouvelle position : (" + entite.getPosition().toString() + ")\n");
         }
     }
 
     public static boolean deplacementEstPossible(int x, int y, Donjon donjon){
 
-        return !((donjon.contientObstacle(x,y)) && (donjon.contientEntite(x,y)) && (x<=0) && (y<=0));
+        return !((donjon.contientObstacle(x,y)) || (donjon.contientEntite(x,y)) || (x<=0) || (y<=0) || (x>donjon.getTailleX()) || (y>donjon.getTailleY()));
     }
     public int getX() {
         return m_x;
     }
-
     public void changeX(int newX) {
         this.m_x = newX;
     }
-
-    public int getY() {
-        return m_y;
-    }
-
+    public int getY() {return m_y;}
     public void changeY(int newY) {
         this.m_y = newY;
     }
@@ -152,12 +145,8 @@ public class Position {
         this.m_x = newX;
         this.m_y = newY;
     }
-
     @Override
     public String toString() {
-        return "Position{" +
-            "x=" + m_x +
-            ", y=" + m_y +
-            '}';
+        return "(" + this.getX() +","+ this.getY() + ')';
         }
     }

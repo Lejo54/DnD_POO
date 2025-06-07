@@ -26,13 +26,14 @@ public class Statistiques {
  //Constructeur pour les Personnages
  public Statistiques(){
  int stat;
- stat= lancerDe(4,4)+3;
+ String de="4d4";
+ stat= lancerDe(de)+3;
  m_force=stat;
- stat= lancerDe(4,4)+3;
+ stat= lancerDe(de)+3;
  m_vitesse=stat;
- stat= lancerDe(4,4)+3;
+ stat= lancerDe(de)+3;
  m_dexterite=stat;
- stat= lancerDe(1,20);
+ stat= lancerDe("1d20");
  m_initiative=stat;
  }
 
@@ -69,8 +70,8 @@ public class Statistiques {
   }
   return true;
  }
- public static boolean persosVivant(List<Entite> entites) {
-  for (Entite perso: entites){
+ public static boolean persosVivant(List<EntiteJouable> entites) {
+  for (EntiteJouable perso: entites){
    if(!perso.getStatistiques().estVivant() && perso.toString().equals("Personnage")){
     return false;
    }
@@ -80,9 +81,9 @@ public class Statistiques {
  public void healMax(){
   m_pv=getPvMax();
  }
- public static boolean monstresVivant(List<Entite> entites, int nbMonstre) {
+ public static boolean monstresVivant(List<EntiteJouable> entites, int nbMonstre) {
   int nbMort=0;
-  for (Entite monstre: entites){
+  for (EntiteJouable monstre: entites){
    if(!monstre.getStatistiques().estVivant() && monstre.toString().equals("Monstre")){
     nbMort++;
    }
