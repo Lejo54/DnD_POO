@@ -14,6 +14,10 @@ import java.util.List;
 import static partie.Affichage.*;
 
 
+/**
+ * Classe représentant un donjon
+ * Un donjon contient des entités jouables (joueurs et monstres), des obstacles et des objets ramassables
+ **/
 public class Donjon {
     List<Equipement> m_objetAuSol=new ArrayList<>();
     List<EntiteJouable> m_entites=new ArrayList<>();
