@@ -13,7 +13,7 @@ public class ArmeCourante extends Arme {
         switch (nom.toLowerCase()) {
             case "baton":
                 return 1;
-            case "masse d'armes":
+            case "masse d arme":
                 return 1;
         }
         return 0;
@@ -22,7 +22,7 @@ public class ArmeCourante extends Arme {
         switch (nom.toLowerCase()) {
             case "baton":
                 return "1d6";
-            case "masse d'armes":
+            case "masse d arme":
                 return  "1d6";
         }
         return "";

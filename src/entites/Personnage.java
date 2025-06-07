@@ -6,10 +6,11 @@ import java.util.List;
 import donjons.Donjon;
 import equipements.*;
 
+import static donjons.Position.deplacement;
 import static partie.Affichage.*;
 
 
-public class Personnage extends Entite{
+public class Personnage extends EntiteJouable{
     private Race m_race;
     private String m_nom;
     private CharClasse m_classe;
@@ -22,7 +23,6 @@ public class Personnage extends Entite{
 
         //Faire un inventaire en fonction de la classe
         m_inventaire.addAll(baseStuff(classe));
-
     }
 
 
@@ -44,9 +44,9 @@ public class Personnage extends Entite{
         List<Equipement> equipements= new ArrayList<>();
         switch(classe.toString()){
             case "Clerc":
-                equipements.add(new ArmeCourante("masse d'arme","",false));
+                equipements.add(new ArmeCourante("masse d arme","",false));
                 equipements.add(new ArmeDistante("arbalete legere","",false));
-                equipements.add(new ArmureLourde("armure d'ecaille","",false));
+                equipements.add(new ArmureLourde("armure d ecaille","",false));
                 break;
             case "Magicien":
                 equipements.add(new ArmeDistante("fronde","",false));
@@ -74,23 +74,72 @@ un équipement contenant une rapière et un arc court
         afficherPhrase("2 - se deplacer dans le donjon\n");
         afficherPhrase("3 - ramasser un équipement\n");
         afficherPhrase("4 - changer d'équipement actif\n");
+        afficherPhrase("5 - Ne rien faire\n");
         afficherPhrase("chaque ligne correspond a une action (1 = action citez à la ligne 1 etc...\n");
     }
-    public void choixEquipement(){
-        this.afficherEquipement();
-        int indexEquipement=demanderInt("Entrez le numéro de l'arme à équiper");
-        this.getInventaire().get(indexEquipement).equipe();
-
+    public void choixAction(Donjon donjon) {
+        this.afficherAction();
+        int indexAction= demanderInt("Quelle est votre action ?\n");
+        switch (indexAction){
+            case 1: this.attaquer(choixCible(donjon),this.getDegat());
+                break;
+            case 2: deplacement(donjon,this);
+                break;
+            case 3: this.ramasser(donjon,this);
+                break;
+            case 4: this.changementEquipement();
+                break;
+            case 5: break;
+        }
     }
-    public void afficherEquipement(){
+    public void desequiperTout(){
+        for(Equipement e:m_inventaire){
+            if(e.estEquipe()){
+                e.desequipe();
+            }
+        }
+    }
+    public EntiteJouable choixCible(Donjon donjon){
+        afficherPhrase("Choisissez votre cible \n");
+        donjon.afficherEntites();
+        int indexCible= demanderInt("Donnez l'indice de la cible\n")-1;
+        while (donjon.getAllEntites().get(indexCible).toString().equals("Personnage") && donjon.getAllEntites().get(indexCible)==this){ //FAIRE GETENTITES(i)
+            indexCible=demanderInt("Indice mauvais: Donnez l'indice d'une cible (la cible doit être un monstre)\n")-1;
+        }
+        return donjon.getAllEntites().get(indexCible);
+    }
+    public void choixEquipement(){
+        afficherPhrase(this.getNom()+"\n");
+        for(int i=0;i<2;i++) {
+            this.afficherEquipements();
+            int indexEquipement = demanderInt("Entrez le numéro de l'arme à équiper: \n") - 1;
+            this.getInventaire().get(indexEquipement).equipe();
+        }
+    }
+    public void changementEquipement(){
+        afficherPhrase(this.getNom()+"\n");
+        for(int i=0;i<2;i++) {
+            this.afficherEquipements();
+            int indexEquipement = demanderInt("Entrez le numéro de l'arme à équiper: \n") - 1;
+            if(this.getInventaire().get(indexEquipement).toString().equals("arme")){
+                this.getArmeEquipee().desequipe();
+            }
+            else {
+                this.getArmureEquipee().desequipe();
+            }
+            this.getInventaire().get(indexEquipement).equipe();
+        }
+    }
+    public void afficherEquipements(){
         int i=1;
         for(Equipement e:this.getInventaire()){
             afficherPhrase("Equipement "+i+": ");
             e.afficherInfo();
+            i++;
         }
     }
     public String getDegat(){
-        for(Equipement e:m_inventaire){
+        for(Equipement e:this.getInventaire()){
             if (e.toString().equals("arme")){
                 if (e.estEquipe()) {
                     return ((Arme) e).getDegat();
@@ -110,19 +159,60 @@ un équipement contenant une rapière et un arc court
         return 0;}
 
     public void ramasser(Donjon donjon, Entite entite){
-        for (int i=0;i<donjon.getObjets().size();i++) {
-            if (this.getPosition().getX() == donjon.getObjets().get(i).getPosition().getX() && this.getPosition().getY()==donjon.getObjets().get(i).getPosition().getY()) {
-                donjon.getObjets().get(i).getPosition().changeXY(-1,-1);
-                this.getInventaire().add(donjon.getObjets().get(i));
-                donjon.getObjets().remove(i);
+        for (int i=0;i<donjon.getAllObjets().size();i++) {
+            if (this.getPosition().getX() == donjon.getObjet(i).getPosition().getX() && this.getPosition().getY()==donjon.getObjet(i).getPosition().getY()) {
+                donjon.getObjet(i).getPosition().changeXY(-1,-1);
+                this.getInventaire().add(donjon.getObjet(i));
+                donjon.getAllObjets().remove(i);
+                return;
+            }
+        }
+        afficherPhrase("Aucun objet à ramasser ici\n");
+    }
+
+    public void afficherInfoEntite(){
+        afficherPhrase(this.getNom()+" \n"
+         +"Armure:");
+        this.afficheArmureEquipee();
+        afficherPhrase("Arme:");
+        this.afficheArmeEquipee();
+        this.getStatistiques().afficherStat();
+    }
+
+    public String infoBref(){
+        return this.getPseudo()+" "+this.getNom()+"("+this.getRace().toString()+" "+this.getClasse().toString()+","+ this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")\n";
+    }
+    public void afficheArmureEquipee(){
+        for(Equipement e:this.getInventaire()){
+            if (e.toString().equals("armure") && e.estEquipe()){
+                e.afficherInfo();
             }
         }
     }
-
-
-    public String infoBref(){
-        return this.getPseudo()+" "+this.getNom()+"("+this.getRace().toString()+" "+this.getClasse().toString()+","+ this.getStatistiques().getPv()+"/"+this.getStatistiques().getPvMax()+")";
+    public void afficheArmeEquipee(){
+        for(Equipement e:this.getInventaire()){
+            if (e.toString().equals("arme") && e.estEquipe()){
+                e.afficherInfo();
+            }
+        }
     }
+    public Arme getArmeEquipee(){
+        for(Equipement e:this.getInventaire()){
+            if (e.toString().equals("arme") && e.estEquipe()){
+                return (Arme) e;
+            }
+        }
+        return null;
+    }
+    public Armure getArmureEquipee(){
+        for(Equipement e:this.getInventaire()){
+            if (e.toString().equals("armure") && e.estEquipe()){
+                return (Armure) e;
+            }
+        }
+        return null;
+    }
+
     public String toString() {
         return "Personnage";
     }
