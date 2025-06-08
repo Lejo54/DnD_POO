@@ -1,4 +1,6 @@
-package entites;
+package entites.classe;
+
+import entites.Statistiques;
 
 public abstract class CharClasse {
  private String m_classe;

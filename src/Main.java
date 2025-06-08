@@ -1,5 +1,5 @@
 import static partie.Affichage.afficherPhrase;
-import partie.Mj;
+import entites.Mj;
 public class Main {
     public static void main(String args[]) {
 

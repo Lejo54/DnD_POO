@@ -1,16 +1,26 @@
-package entites;
+package entites.jouable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import donjons.Donjon;
+import entites.Entite;
+import entites.classe.CharClasse;
+import entites.race.Race;
 import equipements.*;
+import equipements.arme.Arme;
+import equipements.arme.ArmeCourante;
+import equipements.arme.ArmeDistante;
+import equipements.arme.ArmeGuerre;
+import equipements.armure.Armure;
+import equipements.armure.ArmureLegere;
+import equipements.armure.ArmureLourde;
 
 import static donjons.Position.deplacement;
 import static partie.Affichage.*;
 
 
-public class Personnage extends EntiteJouable{
+public class Personnage extends EntiteJouable {
     private Race m_race;
     private String m_nom;
     private CharClasse m_classe;
@@ -64,10 +74,7 @@ public class Personnage extends EntiteJouable{
         }
         return equipements;
     }
-    /*
-les Roublards possèdent à leur création:
-un équipement contenant une rapière et un arc court
-*/
+
     public void afficherAction(){
         afficherPhrase(this.getNom()+" , c'est à vous, que voulez vous faire ?\n");
         afficherPhrase("1 - attaquer un ennemi\n");
@@ -95,7 +102,7 @@ un équipement contenant une rapière et un arc court
     public void desequiperTout(){
         for(Equipement e:m_inventaire){
             if(e.estEquipe()){
-                e.desequipe();
+                e.desequipe(this);
             }
         }
     }
@@ -103,7 +110,7 @@ un équipement contenant une rapière et un arc court
         afficherPhrase("Choisissez votre cible \n");
         donjon.afficherEntites();
         int indexCible= demanderInt("Donnez l'indice de la cible\n")-1;
-        while (donjon.getAllEntites().get(indexCible).toString().equals("Personnage") && donjon.getAllEntites().get(indexCible)==this){ //FAIRE GETENTITES(i)
+        while (donjon.getAllEntites().get(indexCible).toString().equals("Personnage") && donjon.getAllEntites().get(indexCible)==this){
             indexCible=demanderInt("Indice mauvais: Donnez l'indice d'une cible (la cible doit être un monstre)\n")-1;
         }
         return donjon.getAllEntites().get(indexCible);
@@ -113,7 +120,7 @@ un équipement contenant une rapière et un arc court
         for(int i=0;i<2;i++) {
             this.afficherEquipements();
             int indexEquipement = demanderInt("Entrez le numéro de l'arme à équiper: \n") - 1;
-            this.getInventaire().get(indexEquipement).equipe();
+            this.getInventaire().get(indexEquipement).equipe(this);
         }
     }
     public void changementEquipement(){
@@ -122,12 +129,12 @@ un équipement contenant une rapière et un arc court
             this.afficherEquipements();
             int indexEquipement = demanderInt("Entrez le numéro de l'arme à équiper: \n") - 1;
             if(this.getInventaire().get(indexEquipement).toString().equals("arme")){
-                this.getArmeEquipee().desequipe();
+                this.getArmeEquipee().desequipe(this);
             }
             else {
-                this.getArmureEquipee().desequipe();
+                this.getArmureEquipee().desequipe(this);
             }
-            this.getInventaire().get(indexEquipement).equipe();
+            this.getInventaire().get(indexEquipement).equipe(this);
         }
     }
     public void afficherEquipements(){

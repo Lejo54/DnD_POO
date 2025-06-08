@@ -1,4 +1,6 @@
-package entites;
+package entites.classe;
+
+import entites.Statistiques;
 
 public class Guerrier extends CharClasse {
 

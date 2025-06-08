@@ -1,14 +1,11 @@
 package entites;
 
-import java.util.List;
-import java.util.Map;
-
-import static entites.EntiteJouable.*;
+import static entites.jouable.EntiteJouable.*;
 import static partie.Affichage.*;
 import static partie.De.lancerDe;
 import donjons.Position;
 import donjons.Donjon;
-import static entites.Statistiques.setStat;
+import entites.jouable.EntiteJouable;
 
 public abstract class Entite {
     private final String m_nom;

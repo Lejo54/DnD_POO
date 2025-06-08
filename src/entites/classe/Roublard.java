@@ -1,6 +1,8 @@
-package entites;
+package entites.classe;
 
-public class Roublard extends CharClasse{
+import entites.Statistiques;
+
+public class Roublard extends CharClasse {
 
  public Roublard() {
   super("Roublard",new Statistiques(16));
