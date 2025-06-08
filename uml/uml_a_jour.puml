@@ -12,39 +12,89 @@ class Main
 Main .-> partie.MJ : <<Instantiate>> >
 package entites #Orange{
     package race{
-        abstract class Entite <<abstract>>{
-          -m_nom : String
-          -m_pseudo : String
-          -m_stat : statistiques
-          -m_position : position
-
-          + abstract void choixAction(donjon : Donjon)
-          + abstract void choixCible(donjon : Donjon)
-          + void attaquer(cible : EntiteJouable , degats : String)
+        abstract class Race <<abstract>>{
+            +<<create>> Race(race : String, statistiques : Statistiques)
+            +String toString()
+            +Statistiques getStatistiques()
+        }
+        class Nain extends Race{
+            +<<create>> Race(race : String ,Statistiques(force : int , dexterite : int , vitesse : int)
+        }
+        class Elfe extends Race{
+            +<<create>> Race(race : String ,Statistiques(force : int , dexterite : int , vitesse : int)
+        }
+        class Halfelin extends Race{
+            +<<create>> Race(race : String ,Statistiques(force : int , dexterite : int , vitesse : int)
+        }
+        class Humain extends Race{
+            +<<create>> Race(race : String ,Statistiques(force : int , dexterite : int , vitesse : int)
         }
 
-        class MJ extends Entite {
-         -m_Partie : Partie
 
-         +void commentaireMJ(nom : String)
-         +void afficherAction()
-         +void choixAction(donjon : Donjon)
-         +void choixCible(donjon : Donjon)
-        }
+    }
+    abstract class Entite <<abstract>>{
+      -m_nom : String
+      -m_pseudo : String
+      -m_stat : statistiques
+      -m_position : position
 
-        class Statistiques{
-            -m_pv : int
-            -m_pvMax : int
-            -m_force : int
-            -m_initiative : int
-            -m_vitesse : int
-            -m_dexterite : int
+      +<<create>> Entite(nom : String)
+      +<<create>> Entite(nom : String, position : Position ,statistiques : Statistiques)
 
-            +boolean estVivant()
-            +void healMax()
-            +{static} boolean monstresVivant(entites : List<EntiteJouable> , nbMonstre : int)
-            +void afficherStat()
-        }
+      + abstract void choixAction(donjon : Donjon)
+      + abstract void choixCible(donjon : Donjon)
+      + void attaquer(cible : EntiteJouable , degats : String)
+    }
+
+    class MJ extends Entite {
+     -m_Partie : Partie
+
+     +<<create>> Mj()
+
+     +abstract String setPseudo(nom : String)
+     +String getNom()
+     +String getPseudo()
+     +Position getPosition()
+     +Statistiques getStatistiques()
+     +abstract String getDegat()
+     +void commentaireMJ(nom : String)
+     +void afficherAction()
+     +void choixAction(donjon : Donjon)
+     +void choixCible(donjon : Donjon)
+     +String getDegat()
+     +String setPseudo(nom : String)
+    }
+
+    class Statistiques{
+        -m_pv : int
+        -m_pvMax : int
+        -m_force : int
+        -m_initiative : int
+        -m_vitesse : int
+        -m_dexterite : int
+
+        +<<create>> Statistiques(Force : int,dexterite : int ,vitesse : int)
+        +<<create>> Statistiques()
+        +<<create>> Statistiques(Pv : int)
+
+        +boolean estVivant()
+        +void healMax()
+        +{static} boolean monstresVivant(entites : List<EntiteJouable> , nbMonstre : int)
+        +void afficherStat()
+        +static void setStat(perso : Personnage)
+        +void setDexterite(dexterite : int)
+        +int getDexterite()
+        +void seVitesse(vitesse : int)
+        +int getVitesse()
+        +void setInitiative(Initiative : int)
+        +int getInitiative()
+        +void setForce(Force : int)
+        +int getForce()
+        +void setPvMax(PvMax : int)
+        +int getPvMax()
+        +void setPv(Pv : int)
+        +int getPv()
+
 
     }
 
