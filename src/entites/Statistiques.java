@@ -8,6 +8,11 @@ import java.util.List;
 import static partie.De.lancerDe;
 import static partie.Affichage.afficherPhrase;
 
+/**
+ * Classe des statistiques
+ * Ils possèdent la vie, la vie max, la force, l'initiative (pour avoir l'ordre des entités qui jouent),
+ * la vitesse (pour avoir le nombre de déplacements par action possible) et la dextérité (pour les armes à distance=)
+ */
 public class Statistiques {
  private int m_pv=0;
  private int m_pvMax=0;
@@ -16,7 +21,15 @@ public class Statistiques {
  private int m_vitesse=0;
  private int m_dexterite=0;
 
- //Constructeur pour les armes/armures et monstre
+
+ /**
+  * Constructeur pour les armes/armures et les monstres
+  * @param pv la vie
+  * @param force la force
+  * @param initiative l'initiative
+  * @param vitesse la vitesse
+  * @param dexterite la dextérité
+  */
  public Statistiques(int pv, int force, int initiative, int vitesse, int dexterite) {
   m_pv=pv;
   m_pvMax=pv;
@@ -27,6 +40,11 @@ public class Statistiques {
  }
 
  //Constructeur pour les Personnages
+
+ /**
+  * Constructeur pour les personnages joueurs
+  * Chaques statistiques est définie par un jé de dés avec un ajout de 3
+  */
  public Statistiques(){
  int stat;
  String de="4d4";
@@ -41,32 +59,115 @@ public class Statistiques {
  }
 
  //Constructeur pour les classes
+
+ /**
+  * Constructeur pour les classes, ce qui définit la vie des joueurs
+  * @param pv vie
+  */
  public Statistiques(int pv) {
   m_pv=pv;
   m_pvMax=pv;
  }
- //pour les races Halfelin,Elfe,Nain
+
+ /**
+  * Constructeur pour les races
+  * ce qui donne un bonus pour le joueur en fonction de sa race
+  * @param force force
+  * @param dexterite dextérité
+  * @param vitesse vitesse
+  */
  public Statistiques(int force,int dexterite,int vitesse) {
   m_force=force;
   m_dexterite=dexterite;
   m_vitesse=vitesse;
  }
+
  //Getters
+
+ /**
+  * Méthode qui renvoie la vie
+  * @return la vie
+  */
  public int getPv() {return m_pv;}
+
+ /**
+  * Méthode qui renvoie la vie max
+  * @return la vie max
+  */
  public int getPvMax() {return m_pvMax;}
+
+ /**
+  * Méthode pour affecté les pv max
+  * @param pv vie max
+  */
  public void setPvMax(int pv) {m_pvMax=pv;}
+
+ /**
+  * Méthode pour affecter les pv
+  * @param pv vie
+  */
  public void setPV(int pv){m_pv=pv;}
+
+ /**
+  * Méthode qui renvoie la force
+  * @return la force
+  */
  public int getForce() {return m_force;}
+
+ /**
+  * Méthode pour affecter la force
+  * @param force force
+  */
  public void setForce(int force){m_force=force;}
+
+ /**
+  * Méthode qui renvoie l'initiative
+  * @return l'initiative
+  */
  public int getInitiative() {return m_initiative;}
+
+ /**
+  * Méthode pour affecter l'initiative
+  * @param initiative initiative
+  */
  public void setInitiative(int initiative){m_initiative=initiative;}
+
+ /**
+  * Méthode qui renvoie la vitesse
+  * @return la vitesse
+  */
  public int getVitesse() {return m_vitesse;}
+
+ /**
+  * Méthode pour affecter la vitesse
+  * @param vitesse vitesse
+  */
  public void setVitesse(int vitesse){m_vitesse=vitesse;}
+
+ /**
+  * Méthode qui renvoie la dextérité
+  * @return la dextérité
+  */
  public int getDexterite() {return m_dexterite;}
+
+ /**
+  * Méthode pour affecter la dextérité
+  * @param dexterite dextérité
+  */
  public void setDexterite(int dexterite){m_dexterite=dexterite;}
 
  //Méthodes
- public void retirerPv(int pv){m_pv-=pv;}
+
+ /**
+  * Méthode qui retire les pv
+  * @param pvPerdu pv à retirer
+  */
+ public void retirerPv(int pvPerdu){m_pv-=pvPerdu;}
+
+ /**
+  * 
+  * @return
+  */
  public boolean estVivant(){
   return getPv() > 0;
  }
