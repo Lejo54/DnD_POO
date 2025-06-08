@@ -1,0 +1,183 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+left to right direction
+skinparam style strictuml
+hide empty members
+skinparam linetype ortho
+class Main
+{
+    +{static} main(args:String[*])
+}
+Main .-> partie.MJ : <<Instantiate>> >
+package entites #Orange{
+    package race{
+        abstract class Race <<abstract>>{
+            +<<create>> Race(race : String, statistiques : Statistiques)
+            +String toString()
+            +Statistiques getStatistiques()
+        }
+        class Nain extends Race{
+            +<<create>> Race(race : String ,Statistiques(force : int , dexterite : int , vitesse : int)
+        }
+        class Elfe extends Race{
+            +<<create>> Race(race : String ,Statistiques(force : int , dexterite : int , vitesse : int)
+        }
+        class Halfelin extends Race{
+            +<<create>> Race(race : String ,Statistiques(force : int , dexterite : int , vitesse : int)
+        }
+        class Humain extends Race{
+            +<<create>> Race(race : String ,Statistiques(force : int , dexterite : int , vitesse : int)
+        }
+
+
+    }
+    abstract class Entite <<abstract>>{
+      -m_nom : String
+      -m_pseudo : String
+      -m_stat : statistiques
+      -m_position : position
+
+      +<<create>> Entite(nom : String)
+      +<<create>> Entite(nom : String, position : Position ,statistiques : Statistiques)
+
+      + abstract void choixAction(donjon : Donjon)
+      + abstract void choixCible(donjon : Donjon)
+      + void attaquer(cible : EntiteJouable , degats : String)
+    }
+
+    class MJ extends Entite {
+     -m_Partie : Partie
+
+     +<<create>> Mj()
+
+     +abstract String setPseudo(nom : String)
+     +String getNom()
+     +String getPseudo()
+     +Position getPosition()
+     +Statistiques getStatistiques()
+     +abstract String getDegat()
+     +void commentaireMJ(nom : String)
+     +void afficherAction()
+     +void choixAction(donjon : Donjon)
+     +void choixCible(donjon : Donjon)
+     +String getDegat()
+     +String setPseudo(nom : String)
+    }
+
+    class Statistiques{
+        -m_pv : int
+        -m_pvMax : int
+        -m_force : int
+        -m_initiative : int
+        -m_vitesse : int
+        -m_dexterite : int
+
+        +<<create>> Statistiques(Force : int,dexterite : int ,vitesse : int)
+        +<<create>> Statistiques()
+        +<<create>> Statistiques(Pv : int)
+
+        +boolean estVivant()
+        +void healMax()
+        +{static} boolean monstresVivant(entites : List<EntiteJouable> , nbMonstre : int)
+        +void afficherStat()
+        +static void setStat(perso : Personnage)
+        +void setDexterite(dexterite : int)
+        +int getDexterite()
+        +void seVitesse(vitesse : int)
+        +int getVitesse()
+        +void setInitiative(Initiative : int)
+        +int getInitiative()
+        +void setForce(Force : int)
+        +int getForce()
+        +void setPvMax(PvMax : int)
+        +int getPvMax()
+        +void setPv(Pv : int)
+        +int getPv()
+
+
+    }
+
+    package jouable{
+        abstract class EntiteJouable extends Entite{
+          +void perdrePv(int pvRetire)
+          +abstract void afficherInfoEntite()
+          +{static} void afficherBandeauTour(tour : int , e : Entite ,entites : List<EntiteJouable> )
+          +abstract void desequiperTout()
+          +abstract void afficherAction()
+          +abstract void choixEquipement()
+          +{static} boolean estCorpsACops(attaquant : EntiteJouable , cible : EntiteJouable )
+          +{static} boolean estAPortee(attaquant : EntiteJouable , cible : EntiteJouable )
+          +sta{static}tic boolean estResistant(cible : EntiteJouable ,stat : int )
+          +{static} boolean estResistant(cible : EntiteJouable ,stat : int )
+          +abstract void ramasser(donjon : Donjon ,entite : Entite)
+        }
+
+        class Personnage extends EntiteJouable{
+            -m_race : Race
+            -m_nom : String
+            -m_classe : CharClasse
+            -m_inventaire : List<Equipement>
+
+            +List<Equipement> baseStuff(classe : CharClasse)
+            +void afficherAction()
+            +EntiteJouable choixCible(donjon : Donjon)
+            +void choixEquipement()
+            +void changementEquipement()
+            +void afficherEquipements()
+            +String getDegat()
+            +int getPortee()
+            +void ramasser(donjon : Donjon , entite : Entite)
+            +void afficherInfoEntite()
+            +String infoBref()
+            +void afficheArmureEquipee()
+            +void afficheArmeEquipee()
+            +String toString()
+        }
+        class Monstre extends EntiteJouable{
+            -m_numero : int
+            -m_portee : int
+            -m_degat : String
+            -m_class_armure : int
+
+            +String infoBref()
+            +void afficherInfoEntite()
+            +String toString()
+            +String creerDegat()
+            +void afficherAction()
+            +void choixAction(donjon : Donjon)
+            +EntiteJouable choixCible(donjon : Donjon)
+            +void ramasser(donjon : Donjon , entite : Entite)
+            +void choixEquipement()
+            +void desequiperTout()
+            +void afficherArme()
+            +void afficherArmure()
+            +void afficherEntite()
+        }
+    }
+    package classe{
+        abstract class CharClasse{
+            -m_classe : String
+            -m_statistiques : Statistiques
+        }
+        class Clerc extends CharClasse{
+            +String toString()
+        }
+        class Guerrier extends CharClasse{
+            +String toString()
+        }
+        class Magicien extends CharClasse{
+            +String toString()
+        }
+        class Roublard extends CharClasse{
+            +String toString()
+        }
+    }
+}
+
+package donjons #Lightgreen{
+    class Donjon{
+
+    }
+
+@enduml
