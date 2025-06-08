@@ -232,14 +232,47 @@ public class Statistiques {
   perso.getStatistiques().setForce(perso.getStatistiques().getForce()+perso.getRace().getStatistiques().getForce());
   perso.getStatistiques().setVitesse(perso.getStatistiques().getVitesse()+perso.getRace().getStatistiques().getVitesse());
   perso.getStatistiques().setPvMax(perso.getClasse().getStatistiques().getPvMax());
+ }
 
-  if(perso.getArmureEquipee()!=null){
-   perso.getStatistiques().setVitesse(perso.getStatistiques().getVitesse()+perso.getArmureEquipee().getStat().getVitesse());
-  }
+ /**
+  * Méthode pour ajouter les statistiques de l'arme ou de l'armure équipée
+  * @param perso le personnage dont on ajoute les statistiques
+  */
+ public static void setStatAjoutArme(Personnage perso){
   if(perso.getArmeEquipee()!=null){
    perso.getStatistiques().setForce(perso.getStatistiques().getForce()+perso.getArmeEquipee().getStat().getForce());
    perso.getStatistiques().setVitesse(perso.getStatistiques().getVitesse()+perso.getArmeEquipee().getStat().getVitesse());
   }
+ }
 
+ /**
+  * Méthode pour ajouter les statistiques de l'armure équipée
+  * @param perso le personnage dont on ajoute les statistiques
+  */
+ public static void setStatAjoutArmure(Personnage perso){
+  if(perso.getArmureEquipee()!=null){
+   perso.getStatistiques().setVitesse(perso.getStatistiques().getVitesse()+perso.getArmureEquipee().getStat().getVitesse());
+  }
+ }
+
+ /**
+  * Méthode pour retirer les statistiques de l'arme ou de l'armure retirée
+  * @param perso le personnage dont on retire les statistiques
+  */
+ public static void setStatRetireArme(Personnage perso){
+  if(perso.getArmeEquipee()!=null){
+   perso.getStatistiques().setForce(perso.getStatistiques().getForce()-perso.getArmeEquipee().getStat().getForce());
+   perso.getStatistiques().setVitesse(perso.getStatistiques().getVitesse()-perso.getArmeEquipee().getStat().getVitesse());
+  }
+ }
+
+ /**
+  * Méthode pour retirer les statistiques de l'armure retirée
+  * @param perso le personnage dont on retire les statistiques
+  */
+ public static void setStatRetireArmure(Personnage perso){
+  if(perso.getArmureEquipee()!=null){
+   perso.getStatistiques().setVitesse(perso.getStatistiques().getVitesse()-perso.getArmureEquipee().getStat().getVitesse());
+  }
  }
 }

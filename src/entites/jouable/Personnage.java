@@ -76,7 +76,7 @@ public class Personnage extends EntiteJouable {
             case "Clerc":
                 equipements.add(new ArmeCourante("masse d arme","",false));
                 equipements.add(new ArmeDistante("arbalete legere","",false));
-                equipements.add(new ArmureLourde("armure d ecaille","",false));
+                equipements.add(new ArmureLourde("armure d ecailles","",false));
                 break;
             case "Magicien":
                 equipements.add(new ArmeDistante("fronde","",false));
@@ -182,13 +182,17 @@ public class Personnage extends EntiteJouable {
             while (indexEquipement<=0 || indexEquipement> this.getInventaire().size()+1) {
                 indexEquipement = demanderInt("Entrez le numéro de l'arme ou armure à équiper: \n");
             }
+            if(this.getArmureEquipee()==null || this.getArmeEquipee()==null){
+                this.getInventaire().get(indexEquipement-1).equipe(this);
+                return;
+            }
             if(this.getInventaire().get(indexEquipement-1).toString().equals("arme")){
                 this.getArmeEquipee().desequipe(this);
             }
             else {
                 this.getArmureEquipee().desequipe(this);
             }
-            this.getInventaire().get(indexEquipement).equipe(this);
+            this.getInventaire().get(indexEquipement-1).equipe(this);
         }
     }
 
