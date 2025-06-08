@@ -4,7 +4,7 @@ import donjons.Position;
 import entites.Statistiques;
 import entites.jouable.Personnage;
 
-import static entites.Statistiques.setStat;
+import static entites.Statistiques.*;
 
 /**
  * Classe abstraite des équipements.
@@ -78,7 +78,12 @@ public abstract class Equipement {
      */
     public void equipe(Personnage p){
         this.m_actif=true;
-        setStat(p);
+        if(this.toString().equals("arme")){
+            setStatAjoutArme(p);
+        }
+        else {
+            setStatAjoutArmure(p);
+        }
     }
 
     /**
@@ -86,8 +91,16 @@ public abstract class Equipement {
      * Reforme ses statistiques si l'arme a des bonus ou malus
      */
     public void desequipe(Personnage p){
+        if(p.getArmureEquipee()==null) return;
+        if(p.getArmeEquipee()==null) return;
+        if(this.toString().equals("arme")){
+            setStatRetireArme(p);
+        }
+        else {
+            setStatRetireArmure(p);
+        }
         this.m_actif=false;
-        setStat(p);
+
     }
 
 }

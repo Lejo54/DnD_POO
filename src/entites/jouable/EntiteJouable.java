@@ -202,7 +202,7 @@ public abstract class EntiteJouable extends Entite {
  public void setPosition(int xd, int yd) {
   int x=0;
   int y=0;
-  while(x<=1||x>xd || y<=1 || y>yd) {
+  while(x<=0||x>xd || y<=0 || y>yd) {
    x=demanderInt("Position horizontale de "+this.getNom()+" (entre 1 et "+xd+"):\n");
    y=demanderInt("Position verticale de "+this.getNom()+"(entre 1 et "+yd+"):\n");
   }

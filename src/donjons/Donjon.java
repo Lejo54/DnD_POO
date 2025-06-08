@@ -77,7 +77,7 @@ public class Donjon {
         List<Equipement> res = new ArrayList<>();
         String[] tabstuff = {
          " ","baton", "masse d'armes", "arc court", "arbalete legere", "fronde",
-         "epee longue", "rapiere", "epee à deux mains","armure d ecaille","demi plate","cotte de mailles", "harnois"
+         "epee longue", "rapiere", "epee à deux mains","armure d ecailles","demi plate","cotte de mailles", "harnois"
         };
         Equipement nouvelleArme=null;
         for (int i = 0; i < nbe; i++) {
@@ -94,31 +94,31 @@ public class Donjon {
             switch (numero) {
                 case 1,2:
                     nouvelleArme = new ArmeCourante(tabstuff[numero],
-                     demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)\n"),
+                     demanderString("Donnez une description pour "+tabstuff[numero]+" ? (sinon appuyez sur entrée)\n"),
                      false);
                     break;
 
                 case 3,4,5:
                     nouvelleArme = new ArmeDistante(tabstuff[numero],
-                     demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
+                     demanderString("Donnez une description pour "+tabstuff[numero]+" ? (sinon appuyez sur entrée)"),
                      false);
                     break;
 
                 case 6,7,8:
                     nouvelleArme = new ArmeGuerre(tabstuff[numero],
-                     demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
+                     demanderString("Donnez une description pour "+tabstuff[numero]+" ? (sinon appuyez sur entrée)"),
                      false);
                     break;
 
                 case 9,10:
-                    nouvelleArme = new ArmureLegere(tabstuff[numero],
-                     demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
+                    nouvelleArme = new ArmureLourde(tabstuff[numero],
+                     demanderString("Donnez une description pour "+tabstuff[numero]+" ? (sinon appuyez sur entrée)"),
                      false);
                     break;
 
                 case 11,12:
-                    nouvelleArme = new ArmureLourde(tabstuff[numero],
-                     demanderString("Donnez une description pour cette arme ? (sinon appuyez sur entrée)"),
+                    nouvelleArme = new ArmureLegere(tabstuff[numero],
+                     demanderString("Donnez une description pour "+tabstuff[numero]+" ? (sinon appuyez sur entrée)"),
                      false);
                     break;
             }
@@ -143,7 +143,6 @@ public class Donjon {
         int xd=this.getTailleX();
         int yd=this.getTailleY();
         for(int i =0 ; i<nbo ; i++){
-            this.afficherDonjon();
             int x=0,y=0;
             while(x<=0 || x>xd || y<=0 || y>yd) {
                 x =demanderInt("position x de votre obstacle (entre 1 et "+xd+") ?\n");

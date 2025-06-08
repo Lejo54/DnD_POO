@@ -23,7 +23,7 @@ public class ArmureLegere extends Armure {
      * @param nom de l'armure
      * @return la classe d'armure
      */
-    public int calculclasseArmure(String nom){
+    private static int calculclasseArmure(String nom){
         switch (nom.toLowerCase()) {
             case "cotte de mailles":
                 return 11 ;
