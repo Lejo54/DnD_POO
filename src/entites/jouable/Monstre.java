@@ -115,7 +115,7 @@ public class Monstre extends EntiteJouable {
         afficherPhrase(this.getNom()+" , c'est à vous, que voulez vous faire ?\n");
         afficherPhrase("1 - attaquer un ennemi\n");
         afficherPhrase("2 - se deplacer dans le donjon\n");
-        afficherPhrase("5 - Ne rien faire\n");
+        afficherPhrase("3 - Ne rien faire\n");
         afficherPhrase("chaque ligne correspond a une action (1 = action citez à la ligne 1 etc...\n");
     }
 
@@ -131,7 +131,9 @@ public class Monstre extends EntiteJouable {
                 break;
             case 2: deplacement(donjon,this);
                 break;
-            case 3:break;
+            case 3: afficherPhrase("Vous ne faites rien pour ce tour\n");
+                break;
+            default:break;
         }
     }
 

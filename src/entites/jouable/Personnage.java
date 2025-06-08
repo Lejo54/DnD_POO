@@ -124,7 +124,9 @@ public class Personnage extends EntiteJouable {
                 break;
             case 4: this.changementEquipement();
                 break;
-            case 5: break;
+            case 5: afficherPhrase("Vous ne faites rien pour ce tour\n");
+                break;
+            default:break;
         }
     }
 
@@ -161,8 +163,11 @@ public class Personnage extends EntiteJouable {
         afficherPhrase(this.getNom()+"\n");
         for(int i=0;i<2;i++) {
             this.afficherEquipements();
-            int indexEquipement = demanderInt("Entrez le numéro de l'arme à équiper: \n") - 1;
-            this.getInventaire().get(indexEquipement).equipe(this);
+            int indexEquipement=0;
+            while (indexEquipement<=0 || indexEquipement> this.getInventaire().size()+1) {
+                indexEquipement = demanderInt("Entrez le numéro de l'arme ou armure à équiper: \n");
+            }
+            this.getInventaire().get(indexEquipement-1).equipe(this);
         }
     }
 
@@ -173,8 +178,11 @@ public class Personnage extends EntiteJouable {
         afficherPhrase(this.getNom()+"\n");
         for(int i=0;i<2;i++) {
             this.afficherEquipements();
-            int indexEquipement = demanderInt("Entrez le numéro de l'arme à équiper: \n") - 1;
-            if(this.getInventaire().get(indexEquipement).toString().equals("arme")){
+            int indexEquipement=0;
+            while (indexEquipement<=0 || indexEquipement> this.getInventaire().size()+1) {
+                indexEquipement = demanderInt("Entrez le numéro de l'arme ou armure à équiper: \n");
+            }
+            if(this.getInventaire().get(indexEquipement-1).toString().equals("arme")){
                 this.getArmeEquipee().desequipe(this);
             }
             else {
