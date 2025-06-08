@@ -68,10 +68,7 @@ public class Statistiques {
  //Méthodes
  public void retirerPv(int pv){m_pv-=pv;}
  public boolean estVivant(){
-  if(getPv()<=0){
-   return false;
-  }
-  return true;
+  return getPv() > 0;
  }
  public static boolean persosVivant(List<EntiteJouable> entites) {
   for (EntiteJouable perso: entites){
@@ -106,9 +103,10 @@ public void afficherStat(){
  public static void setStat(Personnage perso) {
   perso.getStatistiques().setDexterite(perso.getStatistiques().getDexterite()+perso.getRace().getStatistiques().getDexterite());
   perso.getStatistiques().setPV(perso.getClasse().getStatistiques().getPv());
-  perso.getStatistiques().setForce(perso.getStatistiques().getForce()+perso.getRace().getStatistiques().getForce());
-  perso.getStatistiques().setVitesse(perso.getStatistiques().getVitesse()+perso.getRace().getStatistiques().getVitesse());
+  perso.getStatistiques().setForce(perso.getStatistiques().getForce()+perso.getRace().getStatistiques().getForce()+perso.getArmeEquipee().getStat().getForce());
+  perso.getStatistiques().setVitesse(perso.getStatistiques().getVitesse()+perso.getRace().getStatistiques().getVitesse()+perso.getArmeEquipee().getStat().getVitesse()+perso.getArmureEquipee().getStat().getVitesse());
   perso.getStatistiques().setPvMax(perso.getClasse().getStatistiques().getPvMax());
+
 
  }
 }

@@ -6,6 +6,11 @@ import entites.jouable.Personnage;
 import entites.jouable.EntiteJouable;
 import entites.jouable.Monstre;
 import equipements.*;
+import equipements.arme.ArmeCourante;
+import equipements.arme.ArmeDistante;
+import equipements.arme.ArmeGuerre;
+import equipements.armure.ArmureLegere;
+import equipements.armure.ArmureLourde;
 
 import static entites.jouable.EntiteJouable.afficherBandeauTour;
 import static entites.Statistiques.persosVivant;
