@@ -95,10 +95,10 @@ public class Partie {
             }
 
             afficherPhrase("Choisir votre classe parmis:\n");
-            afficherPhrase("1/ Clerc:\n");
-            afficherPhrase("2/ Guerrier:\n");
-            afficherPhrase("3/ Roublard:\n");
-            afficherPhrase("4/ Magicien:\n");
+            afficherPhrase("1/ Clerc: 16 pv, une masse d'arme, une armure d'écaille et une arbalète légère\n");
+            afficherPhrase("2/ Guerrier 20 pv, une cotte de maille, une épée longue, une arbalète légère:\n");
+            afficherPhrase("3/ Roublard: 16 pv, une rapière, un arc court\n");
+            afficherPhrase("4/ Magicien: 12 pv, un bâton, une fronde\n");
             CharClasse classe = new Clerc();
             int numeroclasse = 0;
             while (numeroclasse != 1 && numeroclasse != 2 && numeroclasse != 3 && numeroclasse != 4) {
@@ -119,10 +119,10 @@ public class Partie {
             }
 
             afficherPhrase("Choisir votre Race parmis:\n");
-            afficherPhrase("1/ Humain:\n");
-            afficherPhrase("2/ Elfe:\n");
-            afficherPhrase("3/ Halfelin:\n");
-            afficherPhrase("4/ Nain:\n");
+            afficherPhrase("1/ Humain: toutes les statistiques ont +2\n");
+            afficherPhrase("2/ Elfe: dextérité +6\n");
+            afficherPhrase("3/ Halfelin: dextérité +4, vitesse +2\n");
+            afficherPhrase("4/ Nain: force +6\n");
             Race race = new Humain();
             int numerorace = 0;
             while (numerorace != 1 && numerorace != 2 && numerorace != 3 && numerorace != 4) {
