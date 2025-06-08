@@ -57,6 +57,8 @@ public class Position {
              E en haut à droite
              W en bas à gauche
              X en bas à droite
+             R pour ne pas se déplacer
+             O pour annuler le déplacement et revenir à la position initiale
              
              """);
             String erreur= "entite sur le chemin ou passage hors de la carte \n";
