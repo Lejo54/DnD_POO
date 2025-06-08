@@ -2,9 +2,12 @@ package donjons;
 
 
 import entites.*;
+import entites.jouable.Personnage;
+import entites.jouable.EntiteJouable;
+import entites.jouable.Monstre;
 import equipements.*;
 
-import static entites.EntiteJouable.afficherBandeauTour;
+import static entites.jouable.EntiteJouable.afficherBandeauTour;
 import static entites.Statistiques.persosVivant;
 import static entites.Statistiques.monstresVivant;
 

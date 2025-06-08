@@ -1,6 +1,8 @@
-package entites;
+package entites.jouable;
 
 import donjons.Donjon;
+import entites.Entite;
+import entites.Statistiques;
 
 import static donjons.Position.deplacement;
 import static partie.Affichage.*;
@@ -11,7 +13,7 @@ public class Monstre extends EntiteJouable {
     String m_degat;
     int m_class_armure;
 
-    public Monstre(String espece, int numero, int portee,int classe_armure,Statistiques stat) {
+    public Monstre(String espece, int numero, int portee, int classe_armure, Statistiques stat) {
         super(espece,stat);
         m_numero = numero;
         m_portee = portee;
@@ -79,7 +81,7 @@ public class Monstre extends EntiteJouable {
         }
         return donjon.getAllEntites().get(indexCible);
     }
-    public void ramasser(Donjon donjon,Entite entite){}
+    public void ramasser(Donjon donjon, Entite entite){}
     public void choixEquipement(){}
     public void afficherArme(){}
     public void desequiperTout(){}

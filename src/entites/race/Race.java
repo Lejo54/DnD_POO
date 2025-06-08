@@ -1,4 +1,6 @@
-package entites;
+package entites.race;
+
+import entites.Statistiques;
 
 public abstract class Race {
  private String m_race;

@@ -1,5 +1,5 @@
 package donjons;
-import entites.EntiteJouable;
+import entites.jouable.EntiteJouable;
 import static partie.Affichage.afficherPhrase;
 import static partie.Affichage.demanderChar;
 

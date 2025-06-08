@@ -1,5 +1,8 @@
 package entites;
 
+import entites.jouable.Personnage;
+import entites.jouable.EntiteJouable;
+
 import java.util.List;
 
 import static partie.De.lancerDe;

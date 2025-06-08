@@ -1,7 +1,9 @@
-package entites;
+package entites.jouable;
 
 import donjons.Donjon;
 import donjons.Position;
+import entites.Entite;
+import entites.Statistiques;
 
 import java.util.List;
 
@@ -9,7 +11,7 @@ import static partie.Affichage.afficherPhrase;
 import static partie.Affichage.demanderInt;
 import static partie.De.lancerDe;
 
-public abstract class EntiteJouable extends Entite{
+public abstract class EntiteJouable extends Entite {
 
 
  public EntiteJouable(String nom) {

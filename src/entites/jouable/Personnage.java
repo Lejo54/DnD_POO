@@ -1,16 +1,19 @@
-package entites;
+package entites.jouable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import donjons.Donjon;
+import entites.Entite;
+import entites.classe.CharClasse;
+import entites.race.Race;
 import equipements.*;
 
 import static donjons.Position.deplacement;
 import static partie.Affichage.*;
 
 
-public class Personnage extends EntiteJouable{
+public class Personnage extends EntiteJouable {
     private Race m_race;
     private String m_nom;
     private CharClasse m_classe;
