@@ -165,12 +165,18 @@ public class Statistiques {
  public void retirerPv(int pvPerdu){m_pv-=pvPerdu;}
 
  /**
-  * 
-  * @return
+  * Méthode qui vérifie si les pv sont supérieurs à 0
+  * @return true si les pv sont positifs, false sinon
   */
  public boolean estVivant(){
   return getPv() > 0;
  }
+
+ /**
+  * Méthode qui vérifie si tous les personnages sont vivants
+  * @param entites liste des entites
+  * @return false si un personnage est mort, true sinon
+  */
  public static boolean persosVivant(List<EntiteJouable> entites) {
   for (EntiteJouable perso: entites){
    if(!perso.getStatistiques().estVivant() && perso.toString().equals("Personnage")){
@@ -179,9 +185,20 @@ public class Statistiques {
   }
   return true;
  }
+
+ /**
+  * Méthode pour remettre la vie au maximum
+  */
  public void healMax(){
   m_pv=getPvMax();
  }
+
+ /**
+  * Méthode qui vérifie si les monstres sont vivants
+  * @param entites liste des entites
+  * @param nbMonstre nombre de monstres dans le donjon
+  * @return true si tous les monstres sont morts, false sinon
+  */
  public static boolean monstresVivant(List<EntiteJouable> entites, int nbMonstre) {
   int nbMort=0;
   for (EntiteJouable monstre: entites){
@@ -191,7 +208,11 @@ public class Statistiques {
   }
   return nbMort != nbMonstre;
  }
-public void afficherStat(){
+
+ /**
+  * Méthode pour afficher les statistiques
+  */
+ public void afficherStat(){
   afficherPhrase(
    "Vie:"+this.getPv()+"/"+this.getPvMax()+"\n"
    +"Force:"+this.getForce()+"\n"
@@ -201,6 +222,10 @@ public void afficherStat(){
   );
 }
 
+ /**
+  * Méthode qui affecte les statistiques en fonction de la classe, la race et des équipements équipés
+  * @param perso le personnage dont un affecte les statistiques
+  */
  public static void setStat(Personnage perso) {
   perso.getStatistiques().setDexterite(perso.getStatistiques().getDexterite()+perso.getRace().getStatistiques().getDexterite());
   perso.getStatistiques().setPV(perso.getClasse().getStatistiques().getPv());
