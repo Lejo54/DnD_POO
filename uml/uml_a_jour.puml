@@ -1,0 +1,133 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+left to right direction
+skinparam style strictuml
+hide empty members
+skinparam linetype ortho
+class Main
+{
+    +{static} main(args:String[*])
+}
+Main .-> partie.MJ : <<Instantiate>> >
+package entites #Orange{
+    package race{
+        abstract class Entite <<abstract>>{
+          -m_nom : String
+          -m_pseudo : String
+          -m_stat : statistiques
+          -m_position : position
+
+          + abstract void choixAction(donjon : Donjon)
+          + abstract void choixCible(donjon : Donjon)
+          + void attaquer(cible : EntiteJouable , degats : String)
+        }
+
+        class MJ extends Entite {
+         -m_Partie : Partie
+
+         +void commentaireMJ(nom : String)
+         +void afficherAction()
+         +void choixAction(donjon : Donjon)
+         +void choixCible(donjon : Donjon)
+        }
+
+        class Statistiques{
+            -m_pv : int
+            -m_pvMax : int
+            -m_force : int
+            -m_initiative : int
+            -m_vitesse : int
+            -m_dexterite : int
+
+            +boolean estVivant()
+            +void healMax()
+            +{static} boolean monstresVivant(entites : List<EntiteJouable> , nbMonstre : int)
+            +void afficherStat()
+        }
+
+    }
+
+    package jouable{
+        abstract class EntiteJouable extends Entite{
+          +void perdrePv(int pvRetire)
+          +abstract void afficherInfoEntite()
+          +{static} void afficherBandeauTour(tour : int , e : Entite ,entites : List<EntiteJouable> )
+          +abstract void desequiperTout()
+          +abstract void afficherAction()
+          +abstract void choixEquipement()
+          +{static} boolean estCorpsACops(attaquant : EntiteJouable , cible : EntiteJouable )
+          +{static} boolean estAPortee(attaquant : EntiteJouable , cible : EntiteJouable )
+          +sta{static}tic boolean estResistant(cible : EntiteJouable ,stat : int )
+          +{static} boolean estResistant(cible : EntiteJouable ,stat : int )
+          +abstract void ramasser(donjon : Donjon ,entite : Entite)
+        }
+
+        class Personnage extends EntiteJouable{
+            -m_race : Race
+            -m_nom : String
+            -m_classe : CharClasse
+            -m_inventaire : List<Equipement>
+
+            +List<Equipement> baseStuff(classe : CharClasse)
+            +void afficherAction()
+            +EntiteJouable choixCible(donjon : Donjon)
+            +void choixEquipement()
+            +void changementEquipement()
+            +void afficherEquipements()
+            +String getDegat()
+            +int getPortee()
+            +void ramasser(donjon : Donjon , entite : Entite)
+            +void afficherInfoEntite()
+            +String infoBref()
+            +void afficheArmureEquipee()
+            +void afficheArmeEquipee()
+            +String toString()
+        }
+        class Monstre extends EntiteJouable{
+            -m_numero : int
+            -m_portee : int
+            -m_degat : String
+            -m_class_armure : int
+
+            +String infoBref()
+            +void afficherInfoEntite()
+            +String toString()
+            +String creerDegat()
+            +void afficherAction()
+            +void choixAction(donjon : Donjon)
+            +EntiteJouable choixCible(donjon : Donjon)
+            +void ramasser(donjon : Donjon , entite : Entite)
+            +void choixEquipement()
+            +void desequiperTout()
+            +void afficherArme()
+            +void afficherArmure()
+            +void afficherEntite()
+        }
+    }
+    package classe{
+        abstract class CharClasse{
+            -m_classe : String
+            -m_statistiques : Statistiques
+        }
+        class Clerc extends CharClasse{
+            +String toString()
+        }
+        class Guerrier extends CharClasse{
+            +String toString()
+        }
+        class Magicien extends CharClasse{
+            +String toString()
+        }
+        class Roublard extends CharClasse{
+            +String toString()
+        }
+    }
+}
+
+package donjons #Lightgreen{
+    class Donjon{
+
+    }
+
+@enduml
