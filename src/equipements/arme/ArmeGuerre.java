@@ -23,7 +23,7 @@ public class ArmeGuerre extends Arme {
      * @param nom de l'arme
      * @return la portée de l'arme
      */
-    private static int calculportee(String nom){
+    public int calculportee(String nom){
         switch (nom.toLowerCase()) {
             case "epee longue":
                 return 1;
@@ -41,7 +41,7 @@ public class ArmeGuerre extends Arme {
      * @param nom de l'arme
      * @return les dégats de l'arme
      */
-    private static String calculdegat(String nom){
+    public String calculdegat(String nom){
         switch (nom.toLowerCase()) {
             case "epee longue":
                 return "1d8";

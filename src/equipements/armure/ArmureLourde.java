@@ -24,7 +24,7 @@ public class ArmureLourde extends Armure {
      * @param nom de l'armure
      * @return la classe d'armure
      */
-    private static int calculclasseArmure(String nom){
+    public int calculclasseArmure(String nom){
         switch (nom.toLowerCase()) {
             case "armure d ecailles":
                 return 9 ;

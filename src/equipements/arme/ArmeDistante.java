@@ -23,7 +23,7 @@ public class ArmeDistante extends Arme {
      * @param nom de l'arme
      * @return la portée de l'arme
      */
-    private static int calculportee(String nom){
+    public int calculportee(String nom){
         switch (nom.toLowerCase()) {
             case "arc court","arbalete legere":
                 return 16;
@@ -39,7 +39,7 @@ public class ArmeDistante extends Arme {
      * @param nom de l'arme
      * @return les dégats de l'arme
      */
-    private static String calculdegat(String nom){
+    public String calculdegat(String nom){
         switch (nom.toLowerCase()) {
             case "arc court":
                 return "1d6";
