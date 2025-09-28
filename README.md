@@ -1,32 +1,14 @@
 # DOOnjon&Dragon Project
+**Il s'agit d'un prochain encadrée réalisé durant notre 1er année de BUT à l'IUT Robert Schuman**
 
 On souhaite développer une application pour **un nouveau un jeu D&D**.
 C'est un jeu de rôle de Medieval Fantasy où les joueurs incarnent des personnages affrontant des monstres dans plusieurs donjons successifs.
 
 ## Organisation
 
-- Travail en **binôme** au sein d'un même groupe de TP
-- Le travail doit être réalisé sur un fork du projet dans le groupe <nom_etudiant_1>-<nom_etudiant_2> que vous aurez créé
+- Travail en **binôme** avec [Jonathan B.](https://github.com/toki-tofu)
 - Durée : 5 semaines
-- Nombre de séances :
-   - 8h encadrées en groupe de TD
-   - 12h encadrées, en groupe TP
-   - 10h tutorées, en promo complète
-   - travail non-encadré (SAé libre)
-- Sujet dévoilé en deux phases :
-  - Phase 1 dévoilée **Lundi 5 mai** sur les deux premières semaines
-  - Phase 2 dévoilée le **Lundi 19 mai**
-
-## Calendrier
-
-- Lundi **5 mai** : début du projet
-- Dimanche **18 mai** : rendu intermédiaire
-- Lundi 19 mai : début de la phase 2
-- Dimanche **8 Juin** à minuit : rendu final
-- De Mercredi **11** à Vendredi **13 juin** : soutenances
-
-De plus, il y aura un rendu hebdomadaire avant chaque **dimanche, minuit**.
-
+- Rendu **hebdomadaire**: code fonctionnel,UML à jour
 
 
 ## Le jeu
@@ -202,129 +184,10 @@ Un donjon se termine lorsqu'un joueur est tué (défaite) ou lorsque tous les mo
 
 En cas de victoire, les personnages regagnent l'intégralité de leur vie et passent au donjon suivant.
 
-### Exemple d'affichage
 
-```console
-********************************************************************************
-Donjon 2:
-                                    Caelynn (Elfe magicienne)              
-
-********************************************************************************
-Tour 3:
-   And   Andry (Naine Clerc, 15/16)
-   X(    Demogorgon (25/45)
-   Dar   Darvin (Humain Guerrier, 13/20)
--> Cae   Caelynn (Elfe Magicienne, 10/12)
-   X^    Dragon bleu (35/50)
-   Alt   Alton (Halfelin Roublard, 14/16)
-
-      A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W
-   *-----------------------------------------------------------------------*
-1  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-2  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-3  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-4  |  .  .  .  .  X^ .  .  .  .  .  *  .  .  .  .  .  .  .  .  .  .  .  .  |
-5  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-6  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-7  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  *  .  .  .  .  .  .  |
-8  |  .  .  .  .  .  .  .  .  . [ ] .  .  .  .  .  .  .  .  .  .  .  .  .  |
-9  |  .  .  .  .  .  .  .  .  . [ ][ ] .  .  .  .  .  .  .  .  .  .  .  .  |
-10 |  .  .  .  .  .  .  .  .  .  . [ ] . Alt .  .  .  .  .  .  .  .  .  .  |
-11 |  .  .  .  .  .  .  .  .  .  . [ ] .  .  .  .  .  .  .  .  .  .  .  .  |
-12 |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-13 |  .  .  .  .  .  .  .  .  .  .  . Cae .  .  .  .  .  .  .  .  .  .  .  |
-14 |  .  .  .  .  .  .  .  .  .  .  . And .  .  .  X( .  .  .  *  .  .  .  |
-15 |  .  .  .  .  *  .  .  .  .  *  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-16 |  .  .  .  .  .  .  .  .  .  .  .  .  . Dar .  .  .  .  .  .  .  .  .  |
-17 |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-18 |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-   *-----------------------------------------------------------------------*
-    * Equipement   |   [ ] Obstacle  |
-
-Caelynn
-  Vie : 10/12
-  Armure: aucune
-  Arme: fronde (degat: 1d4, portee: 6)
-  Inventaire: [1] baton
-  Force: 8
-  Dextérité: 16
-  Vitesse: 12
-
-Caelynn il vous reste 2 actions que souhaitez vous faire ?
-  - laisser le maître du jeu commenter l'action précédente (mj <texte>)
-  - commenter action précédente (com <texte>)
-  - attaquer (att <Case>)
-  - se déplacer (dep <Case>)
-  - s'équiper (equ <numero equipement>)
-```
-
-```
-  $ att P14
-  Lancer un dé de 20 (appuyer sur n'importe quelle touche)
-  $
-  Vous avez fait 13
-  Votre attaque est de 13+16(Dextérité)=29.
-  Votre attaque perce l'armure du Demogorgon (18).
-  Lancer un dé de 4 pour infliger des dégâts (appuyer sur n'importe quelle touche)
-  $
-  Le Demogorgon subit 3 dégâts!
-  Il lui reste 22 PV.
-```
 
 Il n'est pas nécessaire de reproduire le visuel tel quel mais toutes les informations doivent être présentes.
 
 ### Fin du jeu
 
 À la fin du jeu, un écran affiche "Vous avez perdu" ou "Vous avez gagné" et indique la cause de la défaite ou de la victoire.
-## Rendus hebdomadaires
-
-Votre projet doit être un fork de ce dépôt dans un groupe ayant pour nom `<nom_etudiant_1>-<nom_etudiant_2>`.
-Votre enseignant en TP et le responsable du module doivent être ajoutés comme Reporter à votre projet.
-
-Vous devez effectuer un rendu par semaine au plus tard le dimanche soir à minuit : la régularité des rendus sera prise en compte dans l'évaluation.
-Un rendu est une branche qui a pour nom `rendu<numéro-rendu>`.
-Le dernier rendu sera évalué en tant que rendu final.
-
-Chaque rendu doit contenir :
-
-- un programme qui compile dont les sources sont dans le répertoire `src/`,
-- un diagramme de classes à jour placé dans le répertoire `uml/` ayant pour nom `semaine<numero>.puml`,
-
-La structure du dépôt git doit être la suivante :
-```bash
-.
-├── README.md
-├── .gitignore
-├── src/
-    ├── Main.java
-    ├── ...
-├── uml/
-    ├── semaine1.puml
-    ├──...
-```
-
-## Rendus évalués
-
-#### 1er rendu : 18 mai
-
-Seront évalués :
-
-- Diagramme de classes complet de la phase 1
-  - respect des conventions UML
-- Code
-  - cohérence avec l'UML
-
-## Quelques consignes
-
-Veillez :
-
-- à respecter les [P21 Guidelines](https://git.unistra.fr/p21/p21/-/blob/main/guidelines.pdf?ref_type=heads)
-- à la bonne conception du code : il doit être lisible et facile à corriger, à réutiliser, à modifier et à étendre.
-
-## Quelques conseils
-
-- N'essayez pas d'implémenter toutes les fonctionnalités en une seule fois. Commencez par un programme simple mais fonctionnel et intégrez progressivement les fonctionnalités.
-- Il s'agit d'une version très simplifiée de Donjon et Dragon. Il peut être tentant d'améliorer le projet et d'intégrer beaucoup de fonctionnalités et règles du jeu originel. Cependant cela ne vous permettra pas d'augmenter votre note. Ne négligez pas le projet de base ni les projets des autres modules. Vous aurez tout le loisir d'améliorer le projet durant votre été.
-- Faites des commits réguliers sur vos branches de travail.
-- Concevez votre code de façon à ce qu'il soit facile à modifier et à étendre avec de nouvelles fonctionnalités, notamment en prévision de la phase 2.
-- La qualité de la conception et du code produit est plus importante que le nombre de fonctionnalités intégrées.
