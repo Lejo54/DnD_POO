@@ -1,14 +1,11 @@
-import Partie.De;
-
-import java.util.Scanner;
-
-import static Partie.De.lancerDe;
-
+import static partie.Affichage.afficherPhrase;
+import entites.Mj;
 public class Main {
     public static void main(String args[]) {
-        System.out.println("Bienvenue dans DOOnjon et Dragons");
-        int nb = lancerDe(4,5);
-        System.out.println(nb);
+
+        afficherPhrase("Vous allez maintenant entrez dans le monde de DOOnjon et Dragons\n Préparez vos armes et vos armures jeunes aventuriers il est temps de se préparer!\n");
+        Mj mj=new Mj();
+        mj.getPartie().lancerPartie(mj);
 
 
     }
