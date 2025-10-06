@@ -9,6 +9,7 @@ C'est un jeu de rôle de Medieval Fantasy où les joueurs incarnent des personna
 - Travail en **binôme** avec [Jonathan B.](https://github.com/toki-tofu)
 - Durée : 5 semaines
 - Rendu **hebdomadaire**: code fonctionnel,UML à jour
+- Langages utilisés: Java, UML
 
 
 ## Le jeu
